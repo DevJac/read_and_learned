@@ -1,0 +1,47 @@
+----------------
+Chapter 1
+---------------
+
+Why is the command line useful in the age of Python, R, Spark, etc?
+  The command line is old and very stable. It has withstood the test of time,
+  and may outlive Python, R, and Spark. It is available almost everywhere. It
+  is very close to the file system, which is where the data we care about is
+  stored.
+
+Data Science is "OSEMN".
+  - Obtain data
+  - Scrub data
+    - In “Data Jujitsu,” DJ Patil states that “80% of the work in any data project is in cleaning the data”.
+  - Explore data
+  - Model data
+  - iNterpret data
+
+New command line tools I learned:
+  tree
+  less
+    Use `-R` command to turn color codes into color
+
+-----------------
+Chapter 2
+-----------------
+
+Command lines can be extended with `\` or `|`.
+
+A shell function looks like this: `fac() { (echo 1; seq $1) | paste -s -d\* | bc; }`
+Shell arguments are referenced by `$1`, etc.
+
+The output of a command-line tool is by default passed on to the terminal,
+which displays it on our screen.
+
+`command > file` creates or overwrites file with the output of command.
+`command >> file` append to the file, it will create the file if needed.
+
+`< file command` pipes the file into the command.
+
+`help` is like `man` for builtin shell commands. E.g. `help cd`
+
+New command line tools I learned:
+  bc - a calculator language
+  paste - merge lines of files
+  seq - print a sequence of numbers
+  type - determine the type of a command
