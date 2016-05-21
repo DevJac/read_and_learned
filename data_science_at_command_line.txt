@@ -45,3 +45,45 @@ New command line tools I learned:
   paste - merge lines of files
   seq - print a sequence of numbers
   type - determine the type of a command
+
+-----------------------
+Chapter 3
+-----------------------
+
+PyPI contains a package called csvkit with the following useful utilities:
+  in2csv - converts Excel files to csv
+  csvlook - pretty print csv data
+  csvcut - select specific columns from csv data
+  sql2csv - connects to a database, runs a query, and outputs csv data
+
+New command line tools I learned:
+  curl - transfer files between computers using a variety of protocols
+  curlicue - allows you to use OAuth with curl
+
+---------------------
+Chapter 4
+---------------------
+
+`!!` refers to the last entered command.
+One use for this is `sudo !!`.
+`echo "!!" > file` saves the last command to file.
+
+`chmod u+x file` makes the file executable only for the owner.
+`chmod +x file` makes the file executable for the owner, group, and everyone.
+
+The proper shebang is usually like `#!/usr/bin/env bash`, this is most portable
+between systems.
+
+`$1`, `$2`, etc, refer to arguments given to a bash script.
+Named arguments can be had with the following pattern:
+  ARG_NAME="$1"
+  command_needs_arg $ARG_NAME
+
+Command line tools written in other languages should stream from stdin, do their
+work, then stream to stdout.
+
+New command line tools I learned:
+  tr - translate, delete, or dedup characters
+  uniq - filter or report repeated lines
+  sort - sort lines of text
+  head - print the first lines
