@@ -87,3 +87,34 @@ New command line tools I learned:
   uniq - filter or report repeated lines
   sort - sort lines of text
   head - print the first lines
+
+---------------------
+Chapter 5
+---------------------
+
+`head -n -4` prints all the the last 4 lines.
+`tail -n +4` prints all lines after the 4th.
+
+`grep -i pattern` does case insensitive matching.
+`grep -E pattern` does regular expression matching.
+
+Data Science at the Command Line has some useful tools at their github repo:
+https://github.com/jeroenjanssens/data-science-at-the-command-line
+
+$ echo ' hello   world!' | sed -re 's/hello/bye/;s/\s+/ /g;s/\s+//'
+bye world!
+
+Substitute regex:
+  `s/a/b/` replace "a" with "b", the regex can only be applied once.
+  `s/a/b/g` replace "a" with "b", the regex can be applied "globally", meaning
+    it can be applied multiple times to the same line.
+
+New command line tools I learned:
+  sed, awk - stream processing languages especially suited for the command line
+  tail - print the last lines
+  cut - remove characters from each line
+  tee - split stdin into stdout and files
+  csvsql - run SQL against one or more csv files
+  Commands from DS/CL github repo:
+    sample - allow a certain percentage, or periodic, lines to pass
+    header, body, cols - apply commands to specific parts of a CSV
