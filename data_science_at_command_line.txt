@@ -109,12 +109,25 @@ Substitute regex:
   `s/a/b/g` replace "a" with "b", the regex can be applied "globally", meaning
     it can be applied multiple times to the same line.
 
+`curl -sL`:
+  s means silent, a progress bar wont mess up the output
+  L means location; follow redirects
+
+Converting between HTML, CSV, and JSON was too much trouble, because I couldn't
+get the needed tools installed. xml2json required node/npm, and json2csv
+required Go. There may be room for one tool that can convert between all of
+these.
+
 New command line tools I learned:
   sed, awk - stream processing languages especially suited for the command line
   tail - print the last lines
   cut - remove characters from each line
   tee - split stdin into stdout and files
   csvsql - run SQL against one or more csv files
+  csvgrep - grep for CSV data
+  csvjoin - join CSV files on a given column or columns
+  jq - powerful language for transforming and working with JSON
   Commands from DS/CL github repo:
     sample - allow a certain percentage, or periodic, lines to pass
     header, body, cols - apply commands to specific parts of a CSV
+    scrape - run xpaths against html
