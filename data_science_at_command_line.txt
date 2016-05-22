@@ -131,3 +131,27 @@ New command line tools I learned:
     sample - allow a certain percentage, or periodic, lines to pass
     header, body, cols - apply commands to specific parts of a CSV
     scrape - run xpaths against html
+
+---------------------------
+Chapter 6
+---------------------------
+
+Drake is like make for data. It's based on Java. I'm not interested in Drake
+specifically, because there are so many similar systems.
+
+------------------
+Chapter 7
+------------------
+
+`less -S` - the `-S` switch causes long lines to not be wrapped, this can be
+especially useful when combined with `csvlook`.
+
+`feedgnuplot` is a unique way to make plots in the terminal. Other plotting
+tools are probably better used within a full programming environment.
+
+New command line tools I learned:
+  csvstat - print summary statistics about a CSV
+  Rio - allows simple R scripts in command line pipelines
+  ggplot2 - an R plotting library
+  gnuplot - a plotting library
+  feedgnuplot - print plots to the command line
