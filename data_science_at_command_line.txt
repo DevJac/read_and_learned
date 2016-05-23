@@ -199,3 +199,29 @@ running any commands. `parallel` can be installed from Ubuntu repositories.
 
 `awscli` is a command line interface to AWS. It can do almost anything the AWS
 online console can. It is written in Python and installable by `pip`.
+
+-------------------------------
+Chapter 9
+-------------------------------
+
+scikit-learn has a command line utility called `skll` which can be installed
+by `pip`. The config file was fairly long, probably about as long as it would
+take to perform the task in plain old Python, so I am skeptical of its utility.
+
+This chapter shows the power of building your own command line tools. The
+pipelining capabilities of the command line are impressive and underutilized.
+If I ever create any of my own utilities, I should err on the side of simplicity.
+
+auto-sklearn needs a command line tool.
+
+-----------------------------
+Chapter 10
+-----------------------------
+
+`echo "Be Patient, Be Creative, Be Practical" | cowsay`
+
+---------------
+Appendix
+---------------
+
+dseq - Like `seq` for dates
