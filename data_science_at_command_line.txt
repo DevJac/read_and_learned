@@ -155,3 +155,47 @@ New command line tools I learned:
   ggplot2 - an R plotting library
   gnuplot - a plotting library
   feedgnuplot - print plots to the command line
+
+---------------------
+Chapter 8
+---------------------
+
+Bash supports "brace expansion". `{0..10..2}` = "0 2 4 6 8 10"
+Bash support for loops:
+  $ for i in {0..100..2}
+  > do
+  > echo "$i^2" | bc
+  > done | tail
+
+Note that the output of loops can be piped to other commands.
+Note that `$i` is used to get the value of i.
+
+While loop example: `$ while read i; do echo "You typed: $i."; done < /dev/stdin`
+
+Looping over filenames:
+  $ for filename in *.csv
+  > do
+  > echo "Processing ${filename}."
+  > done
+
+Note that `*.csv` is expanded just like `{0..10}` was. Try: `echo *.csv` to see.
+
+`bc -l` performs regular division instead of integer division.
+
+Many commands have a `-print0` or `-0` switch to enable working with files that
+have special characters.
+
+`$RANDOM` is a random number between 0 and 32,767.
+`echo $((RANDOM % 5))` prints a random number between 0 and 4. The `$((...))`
+syntax must be special. It seems to support addition, subtraction,
+multiplication, and integer division.
+
+`&` at the end of a bash command causes it to be run in the background.
+
+`parallel` can run commands in parallel. Use `--dryrun` to have it print the
+commands it would run. This is a good way to practice and debug without actually
+running any commands. `parallel` can be installed from Ubuntu repositories.
+`parallel` can also run commands on remote machines.
+
+`awscli` is a command line interface to AWS. It can do almost anything the AWS
+online console can. It is written in Python and installable by `pip`.
