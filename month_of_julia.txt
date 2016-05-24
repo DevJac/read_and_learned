@@ -1,0 +1,87 @@
+This is a blog series found at: https://github.com/DataWookie/MonthOfJulia
+
+-----------------
+Day 1
+-----------------
+
+The evaluation of an expression is automatically printed unless you end the line
+with a `;`.
+
+`ans` refers to the value of the last expression.
+
+Type `?` at the prompt will activate help mode.
+
+Staring a line with `;` make it a shell command.
+
+Pressing `ctrl+r` activates an awesome search through the command history.
+This also work in the regular system shell!
+
+`ctrl+l` clears the console. This also works in the regular system shell!
+
+There are lots of escape codes and special characters available in Julia, see:
+https://github.com/JuliaLang/julia/blob/master/doc/manual/unicode-input-table.rst
+
+`x\^2` followed by tab will print "X squared" in a nice unicodey format.
+`x\_2` followed by tab will create a subscript 2.
+
+-----------------------------
+Day 2
+-----------------------------
+
+There is an Atom IDE for Julia named uber-juno. I had to install `cmake` to get
+this Atom plugin to install properly.
+
+Juno features:
+  Press `ctrl+enter` to evaluate a line.
+  Press `ctrl+space` for autocomplete.
+
+There is also an Jupyter plugin for Julia.
+
+--------------------
+Day 3
+--------------------
+
+Variables work as expected:
+  a = 1
+  b = c = d = 2
+  e, f = 3, 4
+
+Julia has compound expressions with 2 syntaxes:
+  x = begin
+      a = 1
+      b = 2
+      a + b
+  end
+
+  x = (a = 1; b = 2; a + b)
+
+`const v = 1` makes it so the type of `v` cannot change. The value can change,
+but a warning will be issued if it does.
+
+`typeof(x)` gives you the type of `x`.
+`Any` is at the root of the type hierarchy.
+`isa(x, Type)` returns true if `x` is a subtype of `Type`.
+`super(Type)` gives the supertype of `Type`. `subtypes` is the opposite function.
+
+Some of Julia's numeric types:
+  Int8
+  Int32
+  Int64
+  UInt64
+  Float64
+  BigInt
+  BigFloat
+  Complex
+
+Strings are immutable. There is ASCIIString and UTF8String. I think I saw that
+this will change in a github issue, and that the two String types will be
+unified.
+
+Julia strings are indexed starting with 1. `end` is a special variable that
+refers to the ending index of a String.
+
+Regex strings are of the form `r"a regex"i`. Regex related functions are:
+  ismatch
+  match
+
+Type conversion can use the `convert` function, or a lower-cased type function.
