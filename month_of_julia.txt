@@ -166,3 +166,105 @@ Note mutable values in an immutable type can still be mutated.
 --------------------
 Day 7
 --------------------
+
+Julia has:
+  map
+  filter
+  reduce
+  mapreduce
+
+`map` can be applied to multiple collections if the function to be mapped takes
+multiple arguments.
+
+Find primes with `isprime`.
+
+----------------
+Day 8
+----------------
+
+If statements:
+  if cond
+    ...
+  elseif cond
+    ...
+  else
+    ...
+  end
+
+  if (cond) true_result else false_result end
+
+  cond ? true_cond : false_cond
+
+For loop:
+  for x in xs
+    ...
+  end
+
+`1:10` is a Range object. You can often treat these are regular arrays, except
+they are generated lazily.
+
+Julia has `enumerate` like Python.
+
+Exception handling:
+  try
+    ...
+  catch
+    ...
+  finally
+    ...
+  end
+
+Exception functions: throw, error, warn, info
+
+All exceptions are a subtype of `Exception`.
+
+Julia has dollar sign substitution like bash, inside strings: "x value is: $x"
+
+---------------------------
+Day 9
+---------------------------
+
+Output: print, println
+Input: readline
+
+Files: open, close, write, tempfile, readlines, readall, eachline
+
+Delimited Files: readdlm, readcsv, writedlm, writecsv
+
+The `do` keyword forms an anonymous function which is passed as the first
+argument to the function:
+  y = map([1, 2, 3]) do x
+    2x
+  end
+
+This allows automatic file closing like in Python:
+  open("a file") do f
+    process(f)
+  end
+
+Note, `2*x` can be written `2x`.
+
+Julia's `...` in function definitions acts like Pythons `*`, and allows a
+variable number of arguments to functions. Julia also support default values,
+and keywords arguments similar to Python.
+
+------------------------
+Day 10
+------------------------
+
+Modules are namespaces, they look like so:
+  module MyModule
+    export some, vars
+    __init__() = println("__init__ is run to initialize the module.")
+    ...
+  end
+
+Modules can be brought into the current namespace using `import` or `using`.
+Both behave slightly differently. Python like imports can be had with:
+  import MyModule
+  import MyModule: some, other, vars
+  importall MyModule
+
+---------------------------------
+Day 11
+---------------------------------
