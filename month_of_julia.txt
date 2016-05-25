@@ -85,3 +85,84 @@ Regex strings are of the form `r"a regex"i`. Regex related functions are:
   match
 
 Type conversion can use the `convert` function, or a lower-cased type function.
+
+----------------------
+Day 4
+----------------------
+
+Functions are JIT compiled the first time they are run.
+
+Functions can be declared a variety of ways:
+  function square(x)
+    return x^2
+  end
+
+  square(x) = x^2
+
+  x -> x^2
+
+  square = function(x)
+    x^2
+  end
+
+The last expression of a function is it's return value,
+the "return" keyword is optional.
+
+By convention, functions that end in `!` mutate their first argument.
+
+`methods(foo)` can be used to see all the implementations of a function.
+
+Type assertions `::` can be used to specify more specific function
+implementations and assert types.
+
+--------------------
+Day 5
+--------------------
+
+A 1D array: x = [1, 2, 3]
+
+`eltype(x)` gives the element type inside an array or collection.
+
+If an array has multiple types inside of it, it might get "promoted" to an
+`Array{Any,1}`.
+
+Arrays support slicing with Python-like syntax.
+
+Common array functions: shift!, unshift!, pop!, push!, append!
+Note all of those function mutate the array in place.
+
+Matrix: `M = [1 2 3; 4 5 6; 7 8 9]`
+
+When indexing `:` is the same as `1:end` (beginning to end).
+
+Dictionary: `Dict(1 => "one", 2 => "two")``
+
+Set: `Set([1, 2, 3])`
+
+-------------------------
+Day 6
+-------------------------
+
+A custom type:
+  type MyType
+    attribute :: Type
+  end
+
+Subclassing:
+  type MyType <: SuperType
+    ...
+  end
+
+Concrete types can be instantiated but not subclassed.
+Abstract types can be subclassed but not instantiated.
+
+Immutable type:
+  immutable MyType
+    ...
+  end
+
+Note mutable values in an immutable type can still be mutated.
+
+--------------------
+Day 7
+--------------------
