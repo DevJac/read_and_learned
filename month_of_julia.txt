@@ -268,3 +268,60 @@ Both behave slightly differently. Python like imports can be had with:
 ---------------------------------
 Day 11
 ---------------------------------
+
+`:` prevents the evaluation of it's arguments.
+
+`:a` is a the "Symbol" a.
+`:(2 + 2)` is an "Expr".
+
+Symbols and Expr can be evaluated using the `eval` function.
+
+`fieldnames(x)` is like `dir(x)` in Python.
+
+Macros begin with an `@`. `macroexpand` can be used to see the code that a macro
+expands to. Macros do not need parentheses to be called.
+
+`@time` and `@assert` are two common macros.
+
+-----------------
+Day  12
+-----------------
+
+Lambdas that take no arguments look like: `() -> 1 + 2`
+
+`produce`, `consume`, and `Task` can be used to make a coroutine.
+
+Starting Julia with `julia -p 4` will start 4 worker processes, and one master
+process. `nprocs` gives the total number of processes.
+
+`remotecall` runs a function on a give worker. See also:
+  workers
+  fetch
+  @everywhere
+  @spawn
+  @spawnat
+  @parallel
+  pmap
+
+`@parallel` and `pmap` are the most likely to be useful to beginners.
+
+----------------
+Day 13
+----------------
+
+Packaging is pretty straight forward, relevant functions are:
+  Pkg.add
+  Pkg.update
+  Pkg.dir - shows where packages are installed
+  Pkg.available
+  Pkg.installed
+  Pkg.status
+  Pkg.pin / Pkg.free
+
+---------------------
+Break
+---------------------
+
+I've reviewed all the core language features. The rest of this blog series
+is focused on a variety of packages available for Julia. I am going to postpone
+the study of these packages until I need to use them.
