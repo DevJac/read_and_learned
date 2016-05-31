@@ -1,0 +1,60 @@
+An online book found at: http://neuralnetworksanddeeplearning.com/
+
+---------------------
+Thoughts
+---------------------
+
+Q: Do neural networks reinforce correct answers, or only wrong answers?
+A: They attempt to correct errors. There is almost always some error, so they
+   would reinforce correct answers a small amount. They punish incorrect answers
+   much more generally. This is desirable behavior.
+
+Q: Why are the weights updated in proportion to the incoming activations?
+A: ???
+
+---------------------
+Chapter 1 & 2
+---------------------
+
+I implemented a working neural network in about 60 lines of Julia. It is trained
+by backpropagation as described in chapter 2.
+
+Julia supports automatic differentiation of functions using a variety of
+methods. I tried the Calculus and ForwardDiff packages. Both perform very
+similarly.
+
+`sigmoid(n) = 1 / (1 + e^(-n))` is a common activation function. It is an
+s-shaped function from 0 to 1. sigmoid(0) = 5
+
+Any computation can be build from NAND gates, and a neuron in a neural network
+can simulate a NAND gate, so a properly trained neural network can perform
+any computation.
+
+"In the early days of AI research people hoped that the effort to build an AI
+ would also help us understand the principles behind intelligence and, maybe,
+ the functioning of the human brain. But perhaps the outcome will be that we end
+ up understanding neither the brain nor how artificial intelligence works!"
+    -- Michael Nielsen
+
+Here's my rough summary of backpropagation:
+
+  1) Feed some data forward through the network. Take note of how the output differs
+     from the desired result.
+  2) Set the error of the output layer to be equal to the difference between
+     the desired result and the actual result.
+  3) Backpropagate the error. The error of a layer is equal to the weights times
+     the error of the following layer, and then times the gradient (slope) of the
+     activation function during the forward pass.
+  4) Update the biases in direct proportion to the error.
+  5) Update the biases in proportion to the error time the incoming activation
+     values.
+
+Conditions that will cause slow learning:
+  - The output is close to the desired result. In this case you don't want to
+    change the network much, because it's already behaving well.
+  - A saturated activation function. Because the error is multiplied by the
+    gradient of the activation function. If the activation function has a low
+    slope (at the point used during the forward pass), it will cause the error
+    to be multiplied by a small number and thus learning will be slow.
+  - The error applied to weights is multiplied by the incoming activations. Thus
+    if an incoming activation is small, the weight will be updated only a little.
