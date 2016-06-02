@@ -58,3 +58,88 @@ Conditions that will cause slow learning:
     to be multiplied by a small number and thus learning will be slow.
   - The error applied to weights is multiplied by the incoming activations. Thus
     if an incoming activation is small, the weight will be updated only a little.
+
+-----------------------
+Chapter 3
+-----------------------
+
+The cross-entropy cost function can speed up training. In practice, you just
+remove the activation function gradient from backpropagation (step 3). This way
+learning doesn't slow down at the flat portions of the activation function,
+which is usually "s" shaped.
+
+"Softmax" is useful at the output layer. In a softmax layer all the activations
+sum to 1, meaning the activations can be interpreted as percentages. Softmax
+is an activation function.
+
+When performing softmax, first calculate the weighted inputs to the activation
+function (z), then the activation function has the form:
+  a = (e^z) / (sum_for_all_zs_in_layer(e^z))
+where a is the activation values going out of the softmax layer, and z is the
+weighted values before the activation function (in this case, softmax)
+is applied.
+
+Beware of overfitting. Overfitting occurs when performance on the training set
+is improving, but the performance on the test set is falling.
+
+A common problem with neural networks is plateauing, where performance stops
+improving for a time, and then resumes.
+
+Regularizing weights can be done by multiplying all weights by a number slightly
+less than 1, thus pulling all weights towards zero. The weights will tend to be
+close to zero, although if it's highly beneficial to have a large weight, then
+it will overpower the pull towards zero. This can be described as
+"weight decay." This is also known as L2 regularization.
+
+L1 vs L2 regularization:
+  L1 regularization adds a constant amount to each weight to pull them to zero.
+  L2 regularization multiplies by a number slightly less than 1, causing the
+  weights to decay towards zero.
+
+  Note that small weights can be multiplied forever and never reach exactly zero
+  in L2 regularization. Thus, L2 regularization allows many non-zero weights
+  (or parameters). L2 has it's largest effect on large weights.
+  L2 regularization has almost no effect on small weights, which are already
+  near zero.
+
+  L1 regularization adds or subtracts a constant from all weights. Small
+  weights has the constant addition as large weights. Thus, small weights can
+  easily be "whipped out" and made to be zero. While large weights can grow
+  with less restriction as they become large.
+  L1 regularization tends to result in many weights/parameters being equal to
+  zero.
+
+  L1 regularization can be good for feature selection, but L2 regularization
+  usually results in better performance overall.
+
+Dropout is a regularization method in which half the hidden neurons are ignored
+during a feed-forward / backprop cycle. The neurons to be ignored are chosen
+randomly, and they are not used in the feed-forward calculation, and their
+parameters are not updated by the backpropagation. When all neurons are used
+in production, the weights coming out of the hidden layers have to be scaled
+to account for all the neurons being enabled, which is a different than the
+training conditions. Intuitively, the result of this training approach is that
+each neuron learns to be more self-sufficient, because it cannot depend on
+other neurons always being there, because those other neurons might be disabled.
+
+Another way to regularize it to artificially expand the training set by applying
+transformations to the original data that do not change the outcome. For example,
+to expand the MNIST dataset of hand-written digits you could slightly rotate the
+digits, or scale them in slight ways. A slightly rotated or skewed "5" is still
+a "5". Thus, you can artificially generate new training data, and the larger
+training set will reduce overfitting.
+
+"It sometimes happens that algorithm A will outperform algorithm B with one set
+ of training data, while algorithm B will outperform algorithm A with a
+ different set of training data.... Many papers focus on finding new tricks to
+ wring out improved performance on standard benchmark data sets. 'Our whiz-bang
+ technique gave us an improvement of X percent on standard benchmark Y' is a
+ canonical form of research claim.... It's entirely possible that the
+ improvement due to the whiz-bang technique would disappear on a larger data
+ set. In other words, the purported improvement might be just an accident of
+ history. The message to take away, especially in practical applications, is
+ that what we want is both better algorithms and better training data.
+ It's fine to look for better algorithms, but make sure you're not focusing on
+ better algorithms to the exclusion of easy wins getting more or better
+ training data."
+    -- Michael Nielsen
