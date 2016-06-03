@@ -143,3 +143,50 @@ training set will reduce overfitting.
  better algorithms to the exclusion of easy wins getting more or better
  training data."
     -- Michael Nielsen
+
+If the starting weights are to large in magnitude, the network will start
+saturated and take longer to train. The book suggests initializing weights with
+a Gaussian distribution centered and zero with a standard deviation of
+1 / sqrt(n), where n is the number of connections coming into the neuron.
+
+When approaching a new machine learning task, and learning is proving to be
+difficult to achieve. First, simplify the problem as much as possible and make
+the feedback loop short. Once you achieve a little bit of learning, turn the
+hyper-parameters to find further improvements. There are some automated ways to
+optimize hyper-parameters, e.g.: grid search, Bayesian optimization
+See:
+  http://papers.nips.cc/paper/4522-practical-bayesian-optimization-of-machine-learning-algorithms.pdf
+
+"There is a saying common among writers that books are never finished, only
+ abandoned. The same is also true of neural network optimization: the space of
+ hyper-parameters is so large that one never really finishes optimizing, one
+ only abandons the network to posterity."
+    -- Michael Nielsen
+
+Momentum based gradient decent is a "Hessian technique" that often converges
+more quickly than Stochastic Gradient Descent. In this method the gradient
+of the cost function does not direct determine the change of weights or biases,
+but instead influences a velocity vector. This is sort of like simulating a
+physical ball rolling down hill with momentum. The is a hyper-parameter that
+controls the amount of damping or "friction" on the velocity vector. To
+implement this you would need an additional matrix, the same size as the weights
+matrix, to store the velocity of the weights. The gradient of the cost function
+updates the velocities, which then update the weights. Remember to implement
+a damping (like friction) on the velocities, so they'll eventually settle down,
+and to use a learning rate scalar.
+
+"tanh" is an alternative to the regular sigmoid function. tanh is a scaled
+sigmoid function. It may learn faster than sigmoid.
+
+There are also "rectified linear neurons", which use the following activation
+function:
+  max(0, w*x+b)
+These can also compute any function with the correct weights and biases. This
+activation function has proven useful in image classification tasks.
+
+In neural network research we often have to rely on empirical evidence, because
+our mathematical understanding of neural networks is limited.
+
+------------------
+Chapter 4
+------------------
