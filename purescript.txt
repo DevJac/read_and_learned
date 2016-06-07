@@ -1,0 +1,44 @@
+-----------------------
+Chapter 1 & 2
+-----------------------
+
+Purescript is a Haskell inspired programming language that compiles to
+Javascript and has Javascript semantics for easy compatibility. Purescript
+can call Javascript functions, and Javascript can call Purescript functions.
+
+To use Purescript you need:
+  `psc` - the Purescript compiler
+  `npm` - the Node package manager
+  `pulp` - a Node package that can be installed with `npm`
+
+To install pulp I did: `npm install --prefix .node_modules -g pulp`
+The `pulp` binary can then be found in `~/.node_modules/bin/pulp`.
+
+Hello world example:
+  ```
+  module Main where
+  import Control.Monad.Eff.Console
+  main = log "Hello, World!"
+  ```
+
+Example build commands:
+  pulp run
+  pulp browserify
+  pulp build -O --to output.js
+  pulp build
+
+To install Purescript packages run a command like:
+  `bower install purescript-math --save`
+  `--save` causes the bower.json files to be automatically updated with the new
+  dependency.
+
+What is the difference between npm and bower?
+They are both package / dependency managers. npm comes with node, Bower is
+simpler. Bower is focused on front end dependencies. It appears there is some
+competition between these two programs. It appears the Purescript book uses
+Bower, for managing project dependencies.
+
+`print` from Haskell is called `logShow` in Purescript.
+
+A Purescript repl can be started by doing: `pulp psci`
+Type `:?` for help. There are only a handful of commands.
