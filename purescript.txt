@@ -42,3 +42,70 @@ Bower, for managing project dependencies.
 
 A Purescript repl can be started by doing: `pulp psci`
 Type `:?` for help. There are only a handful of commands.
+
+------------------------------
+Chapter 3
+------------------------------
+
+Purescript bower packages:
+  purescript-math
+  purescript-list
+
+Javascript has 3 primitive types:
+  number (float)
+  string
+  boolean
+
+Purescript defines 4 additional primitive types:
+  Int
+  Array
+  records
+  functions
+
+`psci` has `--multi-line-mode` where commands are terminated with Ctrl-D.
+
+A type:
+  ```
+  type Entry =
+    { firstName :: String
+    , lastName :: String
+    , address
+    :: Address
+    }
+  ```
+
+Note `List` and `Array` are different.
+
+Values are of a Type. Types are of a Kind.
+
+`<<<` and `>>>` are function composition operators in Purescript.
+
+---------------------------
+Chapter 4
+---------------------------
+
+Purescript bower packages:
+  purescript-maybe
+  purescript-arrays
+  purescript-strings
+  purescript-foldable-traversable
+  purescript-console
+  purescript-control
+  purescript-free
+  purescript-tailrec
+
+Purescript similarities to Haskell:
+  lambdas
+  infix functions by using backticks
+  wrap operators in parenthesis to use like normal functions
+
+Purescript has tail call optimization. The t.c.o. produces while loops in the raw
+Javascript.
+
+"One common way to turn a function which is not tail recursive into a tail recursive function is to use an
+accumulator parameter. An accumulator parameter is an additional parameter which is added to a function
+which accumulates a return value, as opposed to using the return value to accumulate the result."
+
+-------------------------------
+Chapter 5
+-------------------------------
