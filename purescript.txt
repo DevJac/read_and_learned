@@ -73,6 +73,8 @@ A type:
     :: Address
     }
   ```
+Note this uses the "type" keyword rather than "data". This is a record rather
+than an algebraic data type (ADTs).
 
 Note `List` and `Array` are different.
 
@@ -109,3 +111,109 @@ which accumulates a return value, as opposed to using the return value to accumu
 -------------------------------
 Chapter 5
 -------------------------------
+
+Purescript bower packages:
+  purescript-globals
+
+Purescript similarities to Haskell:
+  basic pattern matching
+  guards
+  pattern naming with the @ symbol
+  case expressions
+  algebraic data types
+  newtypes (data types with one constructor and one value)
+
+In Purescript you can match Arrays of a fixed length, this is different than
+Haskell. In Haskell you pattern match Lists, in Purescript you pattern match
+Arrays.
+
+Pure script has record patterns like:
+  `showPerson { first: x, last: y } = y ++ ", " ++ x`
+The above functions is "row polymorphic" because it can take any type, as long
+as it has the required record fields with the required types. This is different
+than Haskell.
+
+Purescript has `type`, `data`, and `newtype` just like Haskell.
+What is the difference between type and data?
+Does `type` simply create a type synonym like in Haskell? Yes, it appears so.
+
+-------------------------------------------------------
+Chapter 6
+-------------------------------------------------------
+
+Purescript bower packages:
+  purescript-tuples
+  purescript-either
+  purescript-functions
+  purescript-monoid
+  purescript-lists
+
+Purescript has typeclasses and instances like Haskell, except instances have
+names to make the generated Javascript more readable.
+
+Common typeclasses:
+  Eq
+  Ord
+  Num
+  Semigroup
+  Monoid
+  Foldable
+  Functor
+
+Purescript has typeclass restrictions like Haskell, but will not infer
+typeclass constraints automatically like Haskell will.
+
+Example typeclass:
+  ```
+  instance showArray :: (Show a) => Show (Array a) where
+    ...
+  ```
+This typeclass requires that `a` be an instance of `Show`. Thus, the functions
+inside the typeclass can use the functions defined in `Show` without knowing the
+concrete type of `a`.
+
+Typeclasses can have multiple parameters. This is not enabled by default in
+Haskell. Multi-parameter typeclasses can lead to some issue which are solved by
+"type families" or "functional dependencies".
+
+Purescript can have typeclasses with no parameters. These typeclasses can serve
+as a, sort of, tag on functions. For example, you might tag a function as being
+"partial". These are called "nullary typeclasses" and are available in a
+Haskell extension as well.
+
+Eq is a "superclass" of Ord. This is an example of superclasses:
+  ```
+  class (Eq a) <= Ord a where
+    compare :: a -> a -> Ordering
+  ```
+
+--------------------------
+Chapter 7
+--------------------------
+
+Purescript bower packages:
+  purescript-validation
+  purescript-parallel
+
+Purescript breaks ApplicativeFunctor into two typeclasses: Apply and Applicative.
+
+`<$>` is map from Functor.
+`<*>` is apply from Apply.
+
+Regular functions can be "lifted" to the Apply typeclass by functions like
+`lift2` or `lift3`, etc. The same can be acheived by using <$> and <*> on the
+regular function, e.g.:
+  regFunc <$> a <*> b <*> c
+
+This chapter talks a lot about form / data validation methods.
+
+The traversable typeclass:
+  ```
+  class (Functor t, Foldable t) <= Traversable t where
+    traverse :: forall a b f. (Applicative f) => (a -> f b) -> t a -> f (t b)
+    sequence :: forall a f. (Applicative f) => t (f a) -> f (t a)
+  ```
+
+-------------------------
+Chapter 8
+-------------------------
