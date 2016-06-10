@@ -217,3 +217,37 @@ The traversable typeclass:
 -------------------------
 Chapter 8
 -------------------------
+
+Purescript bower packages:
+  purescript-eff
+  purescript-random
+  purescript-exceptions
+  purescript-jquery
+  purescript-react
+  purescript-thermite
+  purescript-halogen
+
+In Purescript Monad is broken into Bind and Monad.
+
+Purescript uses the Eff Monad for side-effects. It is similar to the IO Monad in
+Haskell.
+
+The Eff Monad can specify exactly which side-effects will happen. Thus, the
+type signature of the `main` method can tell you what side effects the entire
+program will have.
+
+"""
+Functions such as print and random are called actions. Actions have the Eff type on the right hand side of
+their functions, and their purpose is to introduce new effects.
+This is in contrast to handlers, in which the Eff type appears as the type of a function argument. While actions
+add to the set of required effects, a handler usually subtracts effects from the set.
+"""
+
+Purescript has a ST Monad like Haskell. ST combined with `forE`, `foreachE`,
+`whileE`, and `untilE` allow mutable variables and traditional loops in the
+generated Javascript.
+
+virtual-dom is a useful Javascript library I should look into later.
+
+Making interactive webpages with Purescript still involves registering event
+handlers on the DOM.
