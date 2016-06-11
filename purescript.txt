@@ -251,3 +251,24 @@ virtual-dom is a useful Javascript library I should look into later.
 
 Making interactive webpages with Purescript still involves registering event
 handlers on the DOM.
+
+------------------------------
+Chapter 9
+------------------------------
+
+Purescript bower packages:
+  purescript-canvas
+  purescript-refs
+
+Purescript has STRef in the ST Monad, and Ref in the Eff Monad.
+
+This chapter has a in depth HTML canvas tutorial. This chapter is the first of
+latter chapters which cover more advanced and specific uses of Purescript. I am
+going to take a break from the book here, because I've learned about the basic
+features of Purescript and can look into the more advanced use-cases as needed.
+I've also found that Purescript is in a rather unstable state, and many of the
+examples in this book did not work with the latest version of Purescript. The
+creator of the Purescript language told me in an IRC channel he will eventually
+update the book.
+
+When I come back to this book I should start with the beginning of chapter 9.
