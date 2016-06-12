@@ -1,0 +1,91 @@
+Functional Reactive Programming from Manning Publications (2015)
+
+-------------------
+Chapter 1
+-------------------
+
+"So we could say that all programs are fundamentally state machines. But code written in a
+traditional state machine style tends to be unreadable and brittle. Any embedded C
+programmer will attest to this. It also tends to be extremely efficient, which is the usual excuse
+for using this style. So the job of the programmer could be seen as finding ways to organize
+state machines so they are maintainable."
+
+"How many software projects are there where they have given up entirely and just require a
+program restart to pick up the new configuration? When you change something on your ADSL router,
+does it take effect immediately, or are you required to reboot it?
+Why is program configuration, which should be simple, such an intractable problem in practice?
+Could this be indicative of something fundamental we have got wrong in the way we program?"
+
+The publisher encouraged some changes to common FRP naming conventions:
+  Behavior -> Cell
+  Event -> Stream
+
+"... sequence-dependent code can get complex. The
+problem with representing dependencies as a sequence comes when you go to change the
+code. To make something happen earlier or later, you need to make sure you fully understand
+the dependencies implicit in the existing sequence. In FRP, you express dependencies directly,
+so you can just add or remove the dependencies and the sequence is automatically updated.
+It's impossible to make a sequence mistake."
+
+"A program is a transformation from inputs to outputs."
+
+"Reify" (verb) is a functional programming term meaning to convert an abstract
+representation into real code.
+
+"FRP code has a structure like a directed graph, and an FRP engine derives execution
+order automatically from it."
+
+------------------
+Chapter 2
+------------------
+
+Java 8 has no fewer than 6 lambda syntaxes:
+  (Integer k) -> { return k+1; }
+  (k) -> { return k+1; }
+  k -> { return k+1; }
+  (Integer k) -> k+1
+  (k) -> k+1
+  k -> k+1
+
+"We designed Sodium to embody [the] basic
+concepts as minimally and completely as possible. Sodium and Java are just a convenient
+vehicle for this purpose so we hope you won't see this book as specific to a language or FRP
+system."
+
+Stream is also known as: event, event stream, observable, signal
+Cell is also known as: behavior, property, signal
+"Signal" is mostly used in systems that don't distinguish between Stream and Cell.
+
+"A stream contains events that fire at discrete times. A stream event only has a value
+instantaneously when it fires, but a cell always has a value that can be sampled at any time.
+Cell is how state is modeled in FRP."
+
+"Cells are how we model state in FRP, and they are the only mechanism for doing so."
+
+The 10 primative operations of FRP:
+  map - map a function to a stream or cell to produce a new stream or cell
+  merge - merge two streams, can define how to handle simultaneous events
+  hold - store an event value in a cell, cells always have a value
+  snapshot - fire on event from stream, read value from cell, output stream
+  filter - filter a stream with a predicate function
+  lift - combine two cells into a new cell using a function
+  never - a stream that never fires
+  constant - a cell that never changes
+  sample
+  switch
+
+"At its heart, FRP programming consists of applying primitive operations to values of type
+Stream and Cell to produce new values of these types. Primitives can be combined together
+into arbitrarily complex constructions, and this is what you will find yourself doing when writing
+FRP code."
+
+"Lift is a functional programming term meaning (more generally) to make a
+function that operates on values into a function that operates on some type of container of those
+values."
+
+"All state changes in FRP are caused by stream events. FRP is reactive..."
+
+Short list of Haskell FRP libraries to consider:
+  auto / varying - not "true" FRP, designed for games
+  reactive-banana - popular, mature, and well documented
+  reflex - has a lot of hype, claims to perform well, reflex-dom is cool
