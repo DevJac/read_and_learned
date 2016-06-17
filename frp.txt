@@ -71,8 +71,8 @@ The 10 primative operations of FRP:
   lift - combine two cells into a new cell using a function
   never - a stream that never fires
   constant - a cell that never changes
-  sample
-  switch
+  sample - get the value out of a cell
+  switch - modify the FRP graph; SorC (SorC x) -> SorC x
 
 "At its heart, FRP programming consists of applying primitive operations to values of type
 Stream and Cell to produce new values of these types. Primitives can be combined together
@@ -89,3 +89,90 @@ Short list of Haskell FRP libraries to consider:
   auto / varying - not "true" FRP, designed for games
   reactive-banana - popular, mature, and well documented
   reflex - has a lot of hype, claims to perform well, reflex-dom is cool
+
+------------------------------------
+Chapter 3, 4
+------------------------------------
+
+These are just extended examples, and focus a lot on the Java language. I'm
+going to skip them for now.
+
+-----------------------------------
+Chapter 5
+-----------------------------------
+
+When a processor requests the value from a memory block, the desired block and
+some surrounding memory is stored in the CPU cache. Teach processor has it's own
+cache. The cache(s) must be updated when a write to memory happens. If multiple
+processors are contending over a single piece of memory a lot of redundant work
+is getting done by the cache, hurting performance. Can this system scale to
+1000 processors?
+
+Compilers are not good at optimizing for CPU caches.
+
+"The general rule is
+that memory accessed temporally nearby should be physically nearby, and each processor
+should have its own local memory pool."
+
+"Q: Why are we in this strange situation?
+ A: Because modern machines are forced by current languages to pretend to be a machine
+ that hasn't existed since the 1970's."
+
+"In summary, we are programming in a bad way, because it's compatible with a non-
+existent, inefficient hardware architecture, forcing us to make complicated hardware
+emulations of it, so that it's complicated to optimize our software, further entrenching the
+hardware emulation."
+
+"FRP is still in its early days, and we are a long way from saying parallelism is a direct
+selling point of FRP. Current FRP implementations don't do much for parallelism yet. And in
+general, parallelism is not an easy problem. But FRP is inherently parallelizable in a way that
+traditional programming isn't."
+
+"We say FRP is compositional because it imposes mathematical rules that force the
+interaction of program elements to be simple and predictable, without subtleties. Their
+complexities add instead of multiplying, so overall complexity stays closer to proportional to
+program size. Put things together, and you don't get any surprises."
+
+"""
+1. Start with a complex problem
+2. Break the problem into simpler parts
+3. Solve the parts
+4. Compose the parts of the solution into a whole
+Step 4 is where we get into trouble.
+"""
+
+"cheap abstraction leads to a sort of “enlightenment” or “superconductor effect”,
+where simplicity compounds instead of complexity, and you find yourself programming at a
+higher level."
+
+---------------------------
+Chapter 6
+---------------------------
+
+This chapter is focused mostly on Rx.JS and the Elm language. I just skimmed the
+chapter. I will review it if I ever do FRP in Javascript.
+
+---------------------------
+Chapter 7
+---------------------------
+
+Explains the `sample` and `switch` primitives.
+
+Contains a few very verbose game examples.
+
+-----------------------
+Chapter 8
+-----------------------
+
+Switch types:
+  Stream (Stream x) -> Stream x
+  Cell (Cell x) -> Cell x
+
+Switch is kind of like a transistor, in that it takes a signal that controls
+the output signal. It takes a signal of signals.
+
+-------------------------
+Chapter 9
+------------------------
+
+"Transactions" in Sodium are often called "Moments" in other FRP libraries.
