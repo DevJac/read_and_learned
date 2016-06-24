@@ -190,3 +190,113 @@ our mathematical understanding of neural networks is limited.
 ------------------
 Chapter 4
 ------------------
+
+Neural networks and universal and can approximate any [continuous] function. So
+long as the neural network is sufficiently large, and is trained appropriately.
+
+Neural networks must using an appropriate activation function (like sigmoid) in
+order to be universal.
+
+----------------------------
+Chapter 5
+----------------------------
+
+In deep learning layers often get "stuck" during training and learn slowly.
+
+Early layers tend to learn slower than later layers.
+
+The gradients are unstable through several layers of back propagation, and can
+shrink or grow exponentially.
+
+-----------------------------
+Chapter 6
+-----------------------------
+
+A convolutional network is often used for image recognition tasks. It connects
+a small grid from the input to a single neuron in the hidden layer.
+
+For example, if there is a 5x5 grid, and a 40x40 input image, then the first
+hidden layer will be 36x36, if the grid "stride" is 1. Each of the 36 neurons
+in the hidden layer will use the same 5x5 weights and bias. This essentially
+means each of the neurons in the hidden layer detect the same "feature" from
+their corresponding grid in the input image.
+
+A convolutional layer is sometimes called a "feature map" and it's weights and
+biases are called "shared weights and biases". The weights can biases form
+a "kernel" or "filter".
+
+A convolutional layer can have dozens of "feature maps", forming a "layer of
+many layers".
+
+A "pooling layer" condenses information from another layer. A 24x24 layer might
+be followed by a 12x12 pooling layer for example. Pooling layers are often used
+after a convolutional layer. Pooling does not use learned weights and biases,
+but instead a simple functions like "max" or "average". For example, a pooling
+layer might have a neuron that represents the maximum value from a 2x2 section
+in the preceding layer.
+
+Convolutional layers have fewer weights and biases (parameters) than a fully
+connect layer of similar size. Even with several "feature maps".
+
+To make a deep network work:
+1) Reduce the number of parameters (weights and biases)
+2) Reduce overfitting
+3) Use better activation functions
+4) Use more CPU time (or a bigger CPU / GPU)
+
+"""
+ I've occasionally heard people adopt a deeper-than-thou attitude, holding that
+ if you're not keeping-up-with-the-Joneses in terms of number of hidden layers,
+ then you're not really doing deep learning. I'm not sympathetic to this attitude,
+ in part because it makes the definition of deep learning into something which
+ depends upon the result-of-the-moment. The real breakthrough in deep learning
+ was to realize that it's practical to go beyond the shallow 1- and 2-hidden
+ layer networks that dominated work until the mid-2000s. That really was a
+ significant breakthrough, opening up the exploration of much more expressive
+ models. But beyond that, the number of layers is not of primary fundamental
+ interest. Rather, the use of deeper networks is a tool to use to help achieve
+ other goals - like better classification accuracies.
+ """
+
+ "Adversarial images" are images which cannot be classified correctly by a
+ deep network, even they they are almost exactly the same as an image that
+ can be correctly classified. The two images are indistinguishable to a human,
+ but one is slightly different, only by a few pixels, and a deep network can
+ classify one correctly, but not the other. This is one example that shows we
+ have a lot to learn about neural networks still.
+
+ Other topics:
+  recurrent neural networks
+  Boltzmann machines
+  generative models
+  transfer learning
+  reinforcement learning
+
+"Recurrent neural networks" (RNNs) are NNs that have a "memory". Their output is not
+dependent only on the current input, but on all past input as well. They have
+been useful in speech recognition and in making "neural turning machines".
+
+"Long short term memory units" (LSTMs) are a varient of RNNs.
+
+"Deep belief networks" (DBFs) can be run backwards. For example, you could
+train a DBF on the handwritten digits, and then play it backwards to produce
+what looks like a hand written digit. They can also be used for unsupervised
+learning. They have not performed well on benchmarks, and thus are not getting
+a lot of attention currently, but are likely to be important in the long run.
+
+New vocabulary word: "insipid" - lacking flavor or distinction
+
+"Deep learning" is more about feature extraction in a hierarchy rather than
+neural networks specifically. You could have deep learning that does not
+involve neural networks.
+
+Conway's law:
+    Any organization that designs a system... will inevitably produce a design
+    whose structure is a copy of the organization's communication structure.
+
+"""
+AI, like controlled fusion and a few other technologies, has been 10 years away
+for 60 plus years. On the flipside, what we definitely do have in deep learning
+is a powerful technique whose limits have not yet been found, and many wide-open
+fundamental problems. That's an exciting creative opportunity.
+"""
