@@ -1,0 +1,108 @@
+Notes from "21st Century C" (2nd edition):
+
+-------------------------
+Preface
+-------------------------
+
+"""My telephone has 512 MB of memory, so why are our C text‐
+books still spending pages upon pages covering techniques to shave kilobytes off of
+our executables? I am writing this on a bottom-of-the-line red netbook that can
+accommodate 3,200,000,000 instructions per second; what do I care about whether
+an operation requires comparing 8 bits or 16?"""
+
+"""C++ was
+the best thing to ever happen to C. While every other language was bolting on extra
+syntax to follow the object-oriented trend and whatever other new tricks came to the
+authors’ minds, C stuck to the standard. The people who wanted stability and porta‐
+bility used C, the people who wanted more and more features so they could wallow in
+them like moist hundred dollar bills got C++, and everybody was happy."""
+
+-------------------------
+Chapter 1 - Setup
+-------------------------
+
+Clang is newer than GCC and has a simpler code base, with more focus on
+usability and good error messages.
+
+`#include <math.h>` effectively pastes `math.h` into the file.
+
+Header files define the form and types of the functions, and the "linker" is
+responsible for finding the actual implementations.
+
+gcc/clang options:
+  -lm        -- link `m`, the math library
+  -o         -- define the output name
+  -g         -- adds symbols for debugging
+  -std=gnu11 -- use C11 standard
+  -O3        -- optimization level 3
+  -Wall      -- turn on all warnings
+  -Werror    -- turn warnings into errors
+  -I         -- adds the given path to the include search path, which the compiler searches
+                for header files you #include d in your code
+  -L         -- adds to the library search path
+  LDADD=...  -- LDADD can be used to configure runtime linking
+  -include   -- automatically include libraries in source files
+
+gcc and clang have similar command line interfaces.
+
+There are header files, source files, and compiled object files.
+
+`pkg-config` can be used to generate the appropriate compiler flags. Using it
+inside of backticks on the shell can be useful. The shell replaces commands
+inside backtickts with their output. `--libs` seems to be the most commonly used
+option of `pkg-config`.
+
+Example `pkg-config` command: `pkg-config --libs gsl libxml-2.0`
+
+`ldd` can print shared library dependencies of a binary. The `LD_LIBRARY_PATH`
+environment variable is often used to configure runtime linking.
+
+Minimal make file:
+```
+P=program_name
+OBJECTS=
+CFLAGS = -g -Wall -O3
+LDLIBS=
+CC=c99
+$(P): $(OBJECTS)
+```
+
+You can set multiple environment variables for a single command like so:
+PANTS=kakhi PLANTS="ficus fern" env | grep 'P.*NTS'
+
+`getenv` is a c function to get an environment variable. There are also `getopt`
+or `arg_parse` libraries for c.
+
+Make variables:
+  $@ -- the full target filename
+  $* -- the target file without the suffix
+  $< -- the name of the file that caused this target to be triggered and made
+
+Make files have the form (`script` must be tab indented):
+target: dependencies
+        script
+
+Running `make` with no target will make the first defined target in the makefile.
+Or you can run make like `make target` and it will built `target` from the
+makefile.
+
+`make` has many default variables and scripts.
+If you’d like to see the full list of default rules and variables built in
+to your edition of make , try:
+make -p
+
+There are man pages for many c functions and libraries.
+`apropos` can be used to search the man pages.
+
+Tip: combine all headers you use into a big, single header file, then
+auto-include this in all your sources using `--include` options of gcc / clang.
+
+HERE DOCUMENTS:
+  `cat <<"EOF"` will build a file out of the following line until "EOF" is
+  encountered.
+  `cat <<EOF` is a variant that allows bash variables, like $PATH in the file.
+  `<<-` will strip leading tabs.
+
+------------------------------
+Appendix A - C Tutorial
+------------------------------
