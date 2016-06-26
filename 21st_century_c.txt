@@ -222,3 +222,60 @@ effectively make a new pointer.
 
 `void *x` is "a pointer to something", although the type system doesn't know
 what that something is.
+
+----------------------------
+Chapter 6 - Pointers
+----------------------------
+
+C has 3 modes of memory management:
+  1) automatic -- variables that go away when they go out of scope
+  2) static -- memory that does not change through the life of the program
+  3) manual -- using malloc and free
+
+Static variables are declared either outside a function or inside a function
+with the `static` keyword.
+
+When a program runs across this declaration in your code:
+  int an_array[32];
+the program will:
+• set aside a space on the stack big enough for 32 integers,
+• declare that an_array is a pointer, and
+• bind that pointer to point to the newly allocated space.
+When a program runs across this declaration in your code:
+  int *a_pointer;
+the program will only do one of the above steps:
+• declare that a_pointer is a pointer
+
+`static _Thread_local int counter;` is a static, thread local, variable. Static
+variables inside functions persist from one call to the next.
+
+When I tell my computer set A to B , I could mean one of two things:
+• Copy the value of B into A . When I increment A with A++ , then B doesn’t change.
+• Let A be an alias for B . Then A++ also increments B .
+Every time your code says set A to B , you need to know whether you are making a
+copy or an alias. This is in no way C-specific.
+
+You can declare array literals like this: `int abc[] = {0, 1, 2};`
+
+Structures Get Copied, Arrays Get Aliased
+
+`memmove(*dest, *src, bytes_to_copy)` is a memory copying function.
+
+The easiest way to avoid bugs related to malloc is not to use malloc .
+
+Pointers and memory allocation are separate concerns.
+
+"When used for a declaration, a star indicates a
+pointer; when not used as a declaration, a star indicates the value of the pointer."
+
+`int *i` means that `*i` is an integer.
+
+A few rules for notating arrays and their elements in practice:
+• Declare arrays either via the explicit pointer form, double *p or the
+static/automatic form, double p[100] .
+• In either case, the nth array item is p[n] . Don’t forget that the first item is zero,
+not one; it can be referred to with the special form p[0] == *p .
+• If you need the address of the nth element (not its actual value), use the amper‐
+sand: &p[n] . Of course, the zeroth pointer is just &p[0] == p .
+
+`typedef` can make a type alias: `typedef char* string;`
