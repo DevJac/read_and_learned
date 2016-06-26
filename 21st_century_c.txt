@@ -106,3 +106,119 @@ HERE DOCUMENTS:
 ------------------------------
 Appendix A - C Tutorial
 ------------------------------
+
+Almost everything in C is one of:
+1) A preprocessor directive
+2) A declaration of a variable or a type
+3) A function block containing expressions to evaluate
+
+On the shell `cmd_A && cmd_B` will only run cmd_B if cmd_A succeeded.
+
+All preprocessor directives begin with `#`. The preprocessor primarily substitutes
+text in place of a directive. It "copy and pastes" code, among other things.
+
+There is an "include path" and a "library path". In `#include <stdio.h>` the
+angle brackets indicate that stdio.h is on the include path. In `#include "mylib.h"`,
+the quotes indicate the file is in the working directory for the project.
+
+/* Multiline
+   comment in C */
+
+// Single line comment in C
+
+Header files are just plain code, but it's customary to only include declarations.
+
+printf codes:
+  \n A newline
+  \t A tab
+  %i Insert an integer value here
+  %g Insert a real number in general format here
+  %s Insert a string of text here
+  %% Insert a plain percent sign here
+  %zu formats the output of `sizeof`
+
+The basic types in C are: int, double, char, void
+
+`int array[10]` is an int array of 10 elements.
+
+Struct example:
+  typedef struct {
+      int numerator, denominator;
+      double value;
+  } ratio_s;
+  ratio_s new_ratio(int num, int den){
+      return (ratio_s){.numerator=num, .denominator=den, .value=num/(double)den};
+  }
+  void print_ratio(ratio_s r){
+      printf("%i/%i = %g\n", r.numerator, r.denominator, r.value);
+  }
+
+`sizeof` returns the size of the given type.
+
+Strings are arrays of characters, terminated by null. `strlen` gives the number
+of characters in a string, excluding the terminating null.
+
+String functions:
+  #include <string.h>
+  char *str1 = "hello", str2[100];
+  strlen(str1);
+  //get the length up to but excluding the ’\0’
+  strncpy(str2, str1, 100); //copy at most 100 bytes from str1 to str2
+  strncat(str2, str1, 100); //append at most 100 bytes from str1 onto str2
+  strcmp(str1, str2);
+  //are str1 and str2 different? zero=no, nonzero=yes
+  snprintf(str2, 100, "str1 says: %s", str1); //write to a string, as above.
+
+The main function must have one of the following forms:
+  int main() {}
+  int main(int argc, char** argv) {}
+
+Functions receive a copy of their arguments, and thus cannot modify the
+argument variables.
+
+x++; //increment x. Evaluates to x.
+++x; //increment x. Evaluates to x+1.
+x--; //decrement x. Evaluates to x.
+--x; //decrement x. Evaluates to x-1.
+x+=3;
+x-=7;
+x*=2;
+x/=2;
+x%=2;
+
+Only null / zero is falsey in C. Any other value is truthy.
+Zero and null are the same.
+
+Literals with decimal points are floats. There does not need to be a zero following
+the decimal for it to be a float.
+
+Integer division works like real division, but rounded towards zero.
+
+C has a trinary operator: `p ? t : f`
+
+C has while, do-while, and for-loops. The for-loop takes:
+1) an initializer
+2) a test condition
+3) a stepper
+
+malloc / free example:
+  int *intspace = malloc(3000*sizeof(int));
+  free(intspace)
+
+Arrays and pointers are similar, but not the same.
+
+`calloc` sets all memory to the default value.
+
+A star on a declaration line indicates a new pointer; a star on any other line
+indicates the value being pointed to.
+
+2 pointer value syntaxes:
+  ratio_s *pr = malloc(sizeof(ratio_s));
+  pr->numerator = 3; // first syntax
+  (*pr).numerator = 3; // second syntax
+
+If `x` is a variable `&x` refers to the address `x` is located at; this
+effectively make a new pointer.
+
+`void *x` is "a pointer to something", although the type system doesn't know
+what that something is.
