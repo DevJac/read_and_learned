@@ -1,0 +1,152 @@
+Verified Functional Programming in Agda
+  by Aaron Stump
+
+-----------------------------
+Preface
+-----------------------------
+
+"This book is about a new way to program, where instead of just testing programs
+on a finite number of inputs, we write mathematical proofs that demonstrate their
+correctness on all possible inputs."
+
+"Agda is, in some ways, the most advanced functional programming language in
+existence, and so if you learn how to program in Agda, you will have a very strong
+foundation for programming in other languages that use the idioms of functional
+programming."
+
+--------------------------
+Chapter 1 - Booleans
+--------------------------
+
+Needed Atom packages:
+  agda-language
+  agda-mode
+
+Ctrl-C Ctrl-L type checks the current file in Atom agda-mode.
+Ctrl-C Ctrl-D lets you evaluate the type of an expression.
+Ctrl-C Ctrl-N lets you evaluate an expression.
+
+Agda imports:
+  import something
+  open import something
+The "open" keyword means that you don't have to qualify the names in something.
+
+-- Agda comment.
+{- Agda comment. -}
+
+Booleans have the type Set. `Set` has the type `Set 1` and so on.
+
+{-# this is a compiler directive #-}
+
+Agda has an `infixr` like Haskell, and declares the precedence and associativity
+like Haskell.
+
+Operators and operands must be separated by spaces. This is because Agda allows
+such flexibility in operator names.
+
+Dot, semicolons, and parenthesis are special characters that cannot appear in
+variable names.
+
+In Atom, the View menu contains developer tools that let you edit CSS and change
+the style of the editor. You can increase the font in the agda-mode bottom
+panels by editing styles.less in your ~/.atom directory. The "fonts" package in
+Atom is also really useful for customizing the look.
+
+In an Agda type signature, Agda will try to infer the type of variables in curly
+braces.
+
+If types A and B both have types Set 0, then (A -> B) will also have type Set 0.
+
+-------------------------------
+Chapter 2
+-------------------------------
+
+`~ ~ tt \== tt` is a type; the type is Set.
+`~~tt : ~ ~ tt \== tt` is a proof named `~~t`.
+
+```
+~~b : ∀ (b : 𝔹) → ~ ~ b ≡ b
+~~b tt = refl
+~~b ff = refl
+```
+In the above example proof:
+  `refl` is "reflection", it is used when two forms evaluate to the same thing.
+  In this case `~ ~ tt` evaluates to `tt`, and thus `tt ≡ tt`.
+  The pattern matching in this function is sometimes called "pattern refinement".
+
+`?` is used for type holes. The agda-mode in Atom will help fill in the holes.
+
+```
+~~b : ∀ {b} → ~ ~ b ≡ b
+~~b {b = tt} = refl
+~~b {b = ff} = refl
+```
+In the above example proof:
+  `b` is made an implicit argument.
+  Note the curly brace notation. Note that curly braces support named arguments.
+
+```
+||≡ff₁ : ∀ {b1 b2} → b1 || b2 ≡ ff → b1 ≡ ff
+||≡ff₁ {ff} p = refl
+||≡ff₁ {tt} ()
+```
+In the above proof:
+  The first argument of the function must always be type var "declarations"? (This is just a guess.)
+  `()` is the "absurd pattern". That function doesn't need a definition because
+  it is an absurd case, I don't know the details, but if `b1` is `tt` then what
+  we are trying to prove is that tt == ff, which is absurd.
+
+`refl` is the only way to construct an equality proof.
+
+You cannot refine non-variable types equal to other non-variable types.
+
+A "dot pattern" is where you put a dot (.) in front of a type variable in
+curly braces. This tells Agda that the stuff in the curly braces is not a
+subpattern to match on, but rather, has a form with is dictated by the entire
+pattern.
+
+"In general, rewrite works as follows in Agda. Suppose you have a proof p of
+some equation X ✑ Y. The proof p is simply any expression which has X ✑ Y
+as its type; it does not have to be a variable, but could be a call to a lemma that
+has already been proved, for example. Then rewrite p instructs the Agda type
+checker to look in the goal for any occurrences of X, and transform those into Y.
+X and Y could be complex expressions; they do not have to be just variables."
+
+`∀` seems to appear in any term that introduces a new type variable.
+`≡` is used to express the "equality type".
+
+Two expressions are definitionally equal in Agda if they can be proved equal
+using their defining equations. `refl` can be used to prove these.
+
+Pattern matching can instantiate universally quantified variables which ap-
+pear in the type. This has the effect of specializing the desired formula to the
+specific instances of those variables.
+
+Assumptions in theorems are just treated as extra arguments to the programs
+which are serving as proofs of those theorems.
+
+If you use refl as the pattern for an equality assumption t ✑ t’, Agda
+will try to refine the type by making t and t’ definitionally equal. This will
+fail unless one of these expressions is definitionally equal to a [naked type] variable.
+
+-------------------------------
+Chapter 3 - Numbers
+-------------------------------
+
+```
+data ℕ : Set where
+  zero : ℕ
+  suc : ℕ → ℕ
+
+{-# BUILTIN NATURAL ℕ #-}
+```
+Above is a definition of the "Peano numbers" in Agda. The comment is a compiler
+directive to automatically consider, e.g., "2" with `suc (suc zero)`.
+
+All functions must provably terminate in Agda. One way to do this is for all
+recursive calls to operate on a "structurally smaller" input. For example, addition:
+  _+_ : ℕ → ℕ → ℕ
+  zero  + n = n
+  suc m + n = suc (m + n)
+The definition of addition is pulling uses of suc from the first summand out, until
+they have all been removed and the first summand is just zero.
