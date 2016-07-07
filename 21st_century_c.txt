@@ -281,7 +281,7 @@ sand: &p[n] . Of course, the zeroth pointer is just &p[0] == p .
 `typedef` can make a type alias: `typedef char* string;`
 
 --------------------------------------
-Chapter 2 - Debugging
+Chapter 2 (first half) - Debugging
 --------------------------------------
 
 C++ mangles code which makes debugging harder.
