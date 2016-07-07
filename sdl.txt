@@ -1,0 +1,25 @@
+http://lazyfoo.net/tutorials/SDL/
+
+-----------------------------
+Lesson 01 - 07
+-----------------------------
+
+You must first initialize SDL. There are various init flags like: video, audio,
+events, input, etc.
+
+SDL surfaces are software rendered.
+
+"Blitting" takes a surface and stamps it onto another surface.
+
+SDL is doubled buffered (at least sometimes, maybe not all the time), and you
+draw or "blit" to the inactive buffer. When reader to show the next frame call
+SDL_UpdateWindowSurface.
+
+SDL keeps an event queue you poll.
+
+SDL Textures work with SDL Renderers. SDL Surfaces work with SDL Windows, though
+I'm unsure about this latter statement, it appears to be the case from the
+examples I've seen.
+
+SDL_RenderCopy is like blitting for Textures.
+SDL_RenderPresent updates the screen.

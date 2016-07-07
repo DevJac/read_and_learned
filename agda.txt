@@ -106,7 +106,7 @@ subpattern to match on, but rather, has a form with is dictated by the entire
 pattern.
 
 "In general, rewrite works as follows in Agda. Suppose you have a proof p of
-some equation X ✑ Y. The proof p is simply any expression which has X ✑ Y
+some equation X ≡ Y. The proof p is simply any expression which has X ≡ Y
 as its type; it does not have to be a variable, but could be a call to a lemma that
 has already been proved, for example. Then rewrite p instructs the Agda type
 checker to look in the goal for any occurrences of X, and transform those into Y.
@@ -150,3 +150,55 @@ recursive calls to operate on a "structurally smaller" input. For example, addit
   suc m + n = suc (m + n)
 The definition of addition is pulling uses of suc from the first summand out, until
 they have all been removed and the first summand is just zero.
+
+Rewrite is a key-word? Is it built into the language?
+
+In `f a rewrite b`:
+  f is a function.
+  a is a pattern match
+  rewrite is a keyword built into the language (I think?)
+  b must be of the form `x ≡ y`, it will rewrite x to be y in the left equation
+
+Ctrl-C Ctrl-, (comma) will display the normalized goal of the current selected
+hole. You will also see any applicable assumptions, which are called the "context."
+
+Useful commands in Atom agda-mode (`c,` means Ctrl-c Ctrl-,):
+  c, -- display info about selected hole
+  c. -- display info about selected hole
+  u -- no normalization prefix
+  uu -- full normalization prefix
+  uuc, -- display info about selected hole with full normalization
+  ca -- attempt to automatically fill in the hole
+  cr -- try the current hole value, if it succeeds, remove the hole
+  cf -- next hole
+  cb -- previous hole
+  cc -- pick a type, and then pattern match on all possible values
+
+`refl` and `_≡_` are "builtins".
+
+```
++assoc : ∀ (a b c : ℕ) → a + (b + c) ≡ (a + b) + c
++assoc zero b c = refl
++assoc (suc a) b c rewrite +assoc a b c = refl
+```
+I made the following comments about how `rewrite` works here:
+  {-
+  So `rewrite +assoc a b c` is a rewrite directive saying that
+  `a + (b + c)` can be rewritten as `(a + b) + c`. Apparently `rewrite` can be used
+  with any `_≡_` equation, so this is valid.
+
+  The goal function is: suc (a + (b + c)) ≡ suc ((a + b) + c)
+  When we apply the rewrite directive we get:
+    suc ((a + b) + c) ≡ suc ((a + b) + c)
+
+  These are exactly equal. QED.
+  -}
+
+Q.E.D. is an initialism of the Latin phrase "quod erat demonstrandum", meaning "which is what had to be proven".
+
+Multiple rewrites can be separated by a pipe `|`.
+
+I implemented the following function myself with minimal help from the book:
+  *distribr : ∀ (a b c : ℕ) → (a + b) * c ≡ (a * c) + (b * c)
+  *distribr zero b c = refl
+  *distribr (suc a) b c rewrite *distribr a b c = +assoc c (a * c) (b * c)
