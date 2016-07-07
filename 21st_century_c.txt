@@ -279,3 +279,65 @@ not one; it can be referred to with the special form p[0] == *p .
 sand: &p[n] . Of course, the zeroth pointer is just &p[0] == p .
 
 `typedef` can make a type alias: `typedef char* string;`
+
+--------------------------------------
+Chapter 2 - Debugging
+--------------------------------------
+
+C++ mangles code which makes debugging harder.
+
+GNU has `gdb` and LLVM/Clang has `lldb`.
+
+gdb can run macros defined in `.gdbinit`. One use case is to define macros to
+print various data structures. lldb has `.lldbinit` for a similar purpose.
+
+`-Ofast` generates the fastest code, but might violate the C standard.
+`-Ofast` can prevent valgrind from finding errors.
+`-Os` and `-Oz` generates small executables.
+
+You can customize a make variable like this:
+```
+prog : CFLAGS = -g
+prog : prog.o foo.o bar.o
+```
+See https://www.gnu.org/software/make/manual/make.html#Target_002dspecific
+
+In gdb type "help" for a comprehensive guide. Some common commands:
+  run
+  list (list function_name)
+  break (break function_name)
+  print (print expression, print *var@10)
+  backtrace
+  frame (switch to a different frame from the backtrace)
+  up / down (move to different frames)
+  info threads (list threads)
+  thread 1 (debug thread 1)
+  set print thread-events off (don't show annoying thread notices)
+  info break (list breakpoints)
+  dis / enable / del (edit break points)
+  info local (list local variables)
+  disp / undisp (disp var, display a variable after every step)
+  until (like next, but will let a loop finish to go to the next line outside the loop)
+  make (run make from within gdb)
+  set $vd = my_model->dataset->vector->data (make a $vd variable)
+
+You can repeat the last command in gdb by just pressing enter.
+
+The output of every print command in gdb is assigned to the listed variables.
+
+lldb commands are verbose because the authors expect users to create aliases.
+
+`size_t` is a type that holds the size of objects. It is the type returned by
+`sizeof`. `size_t` is usually an unsigned integer.
+
+The `-pg` compiler flag turns on profiling. This causes the generated executable
+to pause every few milliseconds and record what code is executing.
+
+Valgrind runs a virtual machine that keeps close eye on memory usage.
+
+Valgrind command line options:
+  --db-attach=yes
+  --leak-check=full
+
+No tool will detect all bugs in a C program automatically.
+Valgrind does most checks against the heap, and fewer to the stack.
