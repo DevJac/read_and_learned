@@ -1,0 +1,50 @@
+------------------------------
+Tutorial
+------------------------------
+
+`cargo new project_name --bin` to start a new project.
+`cargo build` to build.
+`cargo run` to run.
+
+----------------------------------------
+Variable Bindings & Primitive Types
+----------------------------------------
+
+Examples:
+  let x = 5;
+  let (x, y) = (5, 10);
+
+The `(x, y)` in `let (x, y) = (1, 2)` is a pattern. All let statements have a
+pattern on the left side of the equal.
+
+Primitive Types:
+  i8
+  i16
+  i32
+  i64
+  isize - pointer sized i (signed integer)
+  u8
+  u16
+  u32
+  u64
+  usize - pointer size u (unsigned integer)
+  bool
+  char
+  f32
+  f64
+  arrays - fixed sized arrays of a specific type and [fixed] size
+  slices - like a pointer with a length, they can refer to arrays and maybe other things
+  str
+  tuples - like Haskell tuples, fixed size, but can hold multiple types
+           access tuple items with pattern matching or indexing
+  functions - functions have a type that shows what types they accept and what they return
+
+`let x: i64 = 5` shows a type annotation.
+
+Variables (or "bindings" as they're called in Rust) are immutable by default.
+Use the `mut` keyword to make them mutable.
+
+`println!` has `{}` formatting similar to Python.
+
+You can shadow bindings and create new blocks anywhere just by opening a new
+pair of curly-braces {}.
