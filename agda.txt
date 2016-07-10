@@ -202,3 +202,5 @@ I implemented the following function myself with minimal help from the book:
   *distribr : ∀ (a b c : ℕ) → (a + b) * c ≡ (a * c) + (b * c)
   *distribr zero b c = refl
   *distribr (suc a) b c rewrite *distribr a b c = +assoc c (a * c) (b * c)
+
+(On section 3.7.3)
