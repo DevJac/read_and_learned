@@ -48,3 +48,17 @@ Use the `mut` keyword to make them mutable.
 
 You can shadow bindings and create new blocks anywhere just by opening a new
 pair of curly-braces {}.
+
+--------------------------
+Modules
+--------------------------
+
+`use std::io` will bring the `io` name into scope.
+
+Rust will give a compile error if there are multiple definitions for the same
+name.
+
+Example of some advance uses:
+  use sayings::japanese::greetings as ja_greetings;
+  use sayings::japanese::farewells::*;
+  use sayings::english::{self, greetings as en_greetings, farewells as en_farewells};
