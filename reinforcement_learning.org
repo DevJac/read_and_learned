@@ -1,0 +1,19 @@
+* Chapter 1 - The Reinforcement Learning Problem
+** Exploration vs Exploitation
+** The agent is only part of the system.
+An agent engaged in reinforment learning might be a small part of a larger system. For example, monitoring the battery level in a robot, in this case the "robot" is the environment.
+** Elements of Reinforcement Learning
+*** Policy
+A mapping from perceived state to action.
+*** Reward signal
+The immediate reward from the environment. An agents single goal is to maximize the reward received over the long run.
+*** Value function
+An estimate of the long term rewards a state or action may lead to. The agent seeks to maximize value, the long term reward it will receive.
+*** Model
+A model of the environment used for planning. Not all reinforcement learning methods use a model.
+** Ideas
+*** Partitioned Agents
+How might you naturally or automatically break an agent down in to many smaller agents? Just like a neural network comprised of many simple neurons can do amazing things, many simple agents might be able to do amazing things which couldn't be acheived any other way.
+*** Don't be afraid to hard code behaviors.
+It's cool to imagine an agent learning from scratch, but it's probably more efficient to hard code some starting behaviors. Idealy, these would be soft behaviors that could be altered by the agent over time.
+* Chapter 2 - Multi-arm Bandits
