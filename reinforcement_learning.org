@@ -17,3 +17,28 @@ How might you naturally or automatically break an agent down in to many smaller 
 *** Don't be afraid to hard code behaviors.
 It's cool to imagine an agent learning from scratch, but it's probably more efficient to hard code some starting behaviors. Idealy, these would be soft behaviors that could be altered by the agent over time.
 * Chapter 2 - Multi-arm Bandits
+** Evaluation vs Instruction
+In reinforcement learning the learning happens by evaluating the agents actions, rather than instructing the agent on what the correct action is. This is why exploration is necessary.
+** Exploration vs Exploitation
+With no exploration, the optimal action may never be found. Too little exploration causes the optimal solution to be found slowly. However, too much exploration, by its nature, takes suboptimal actions, so too much exploration can be wasteful.
+** Way to balance Exploration and Exploitation
+*** Ɛ-greedy
+Explore a set percentage of the time, and exploit the rest of the time. The explore percentage may be decreased over time.
+*** Optimistic initial values
+By setting the initial value estimates high, the agent will try many action and be "disappointed" in all of them. But, it will be least disappointed the in best action. Thus, optimistic initial values can give us a natural way to encourage exploration. This method alone is not effective on non-stationary targets.
+** Tracking expected value
+- Average: Q_{n+1} = Q_n + 1/n (R_n - Q_n)
+- Fixed learning rate: Q_{n+1} = Q_n + ⍶ (R_n - Q_n)
+- Upper confidence bound: Q(a) + c * sqrt(log(t) / N(a))
+  where c is a learning rate scalar
+        N(a) is the number of times a has been selected in the past
+        t is the current time step
+- Gradient: e^(H(a)) / \sum e^(H(b))
+  where a is what is selected
+        b is the rest of the actions (the value on the bottom is a sum)
+  Gradient update rule for H: H_{t+1} = H(a) + c (R - avg(R)) (1 - prob(a))
+                              H_{t+1} = H(b) - c (R - avg(R)) prob(b)
+** Ideas
+*** Adjust agent hyperparameters using another agent.
+*** Track uncertainty of actions and slowly increase the uncertainty over time.
+If take an action and the result is unexpected, increase the uncertainty even further. You would probably have to assume the distribution shape to do this. E.g., you might assume the reward distributions are normal.
