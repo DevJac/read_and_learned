@@ -42,3 +42,18 @@ By setting the initial value estimates high, the agent will try many action and 
 *** Adjust agent hyperparameters using another agent.
 *** Track uncertainty of actions and slowly increase the uncertainty over time.
 If take an action and the result is unexpected, increase the uncertainty even further. You would probably have to assume the distribution shape to do this. E.g., you might assume the reward distributions are normal.
+* Chapter 3 - Finite Markov Decision Processes
+** The agent-environment interface
+The agent selects actions based on a policy, and the environment responds with an updated state and a reward value.
+** Be careful how you define the reward function
+** RL tasks can be episodic or continuous
+** What value function should be maximized?
+Agents seek to maximize a value function. The value function is the expected reward over a time. A simple sum is a good value function for episodic tasks, but for continuous tasks a discounting factor is used to reduce the value of rewards far in the future, otherwise the value function would go to infinity in many cases. In such cases an agent might act slowly (because why hurry? it can be rewarded later) or have other problems.
+** The Markov property / Markov states
+If a state has the Markov property, then it is equally as valuable as having every detail of the entire state history. E.g., in Checkers the state of the board has the Markov property, because although there may have been many ways to reach the current state, none of that really matters, and the board itself has all the information needed to continue with the game.
+
+States having the Markov property is an ideal to consider. However, success is still possible without the Markov property, and in some cases it is beneficial to throw out some information to help the algorithm focus on the more important information.
+** TODO Read: 3.6 Markov Decision Processes
+** Thoughts
+*** Only useful in systems that need to adapt?
+Is reinforcement learning only useful in systems that need to adapt to changing environments? In many of the use cases I have imagined a simple heuristic is both predictable and immediately effective.
