@@ -53,7 +53,22 @@ Agents seek to maximize a value function. The value function is the expected rew
 If a state has the Markov property, then it is equally as valuable as having every detail of the entire state history. E.g., in Checkers the state of the board has the Markov property, because although there may have been many ways to reach the current state, none of that really matters, and the board itself has all the information needed to continue with the game.
 
 States having the Markov property is an ideal to consider. However, success is still possible without the Markov property, and in some cases it is beneficial to throw out some information to help the algorithm focus on the more important information.
-** TODO Read: 3.6 Markov Decision Processes
+** Markov Decision Processes
+A RL task that has the Markov property is a Markov decision process (MDP). A MDP can be defined as p(s\prime, r | s, a). In other words, a MDP can be defined as a table of probabilities from state/action pairs to state/reward pairs.
+** Value Functions
+v_\pi(s) is the expected value of s, if we follow policy \pi. It is called the state-value function for policy \pi.
+q_\pi(s,a) is the expected value of action a from state s, if we follow policy \pi. It is called the action-value function for policy \pi.
+The policy \pi is mapping from state to action probabilities.
+v_\pi(s) = \sum_a \pi(a|s) \sum_{s',r} prob(s',r|s,a) (r + discount * v_\pi(s'))
+The above equation is a Bellman equation, which is related to dynamic programming. Roughly speaking, the equation proves that a dynamic programming solution is possible.
+** Optimal Policies
+v_*(s) is basically the same as v_\pi(s) but assumes an optimal policy.
+q_*(s,a) is basically the same as v_\pi(s,a) but assumes an optimal policy.
+There is always a policy that is better than or equal to the current policy.
+It is rarely possible to compute the optimal policy exactly, but there are ways of approximating it. The online nature of reinforcement learning allows effort to be spend on states that are likely to be encountered, while ignoring rare edge cases that would almost never be encountered. This sets RL appart from other approaches to solving MDPs.
+** Review
+Actions are the choices an agent can make, states are the bases for those choices, and rewards are the basis for evaluating choices.
+There is one correct (optimal) value function for a given MDP. But there can be many optimal policies.
 ** Thoughts
 *** Only useful in systems that need to adapt?
 Is reinforcement learning only useful in systems that need to adapt to changing environments? In many of the use cases I have imagined a simple heuristic is both predictable and immediately effective.
