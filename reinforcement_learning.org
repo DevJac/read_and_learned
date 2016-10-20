@@ -72,3 +72,37 @@ There is one correct (optimal) value function for a given MDP. But there can be 
 ** Thoughts
 *** Only useful in systems that need to adapt?
 Is reinforcement learning only useful in systems that need to adapt to changing environments? In many of the use cases I have imagined a simple heuristic is both predictable and immediately effective.
+* Chapter 4 - Dynamic Programming
+Dynamic programming (DP) is of limited utility; it requires a perfect model of the environment. But it does provide a good theoretical foundation.
+** Policy Evaluation
+v_\pi(s) is guarenteed to converge if the discount factor is less than one, or if the policy will inevitably reach a terminal state. v_\pi(s) can be calculated with an iterative algorithm.
+*** Calculating v_\pi(s) iteratively
+v_\pi(s) = \sum_a \pi(a|s) \sum_{s',r} p(s',r|s,a) (r + y * v_\pi(s'))
+The formula gives the update rule. Because the formula is self referential, it means you can update the value of one state based on the value of other states. Every time this is done a state moves closer to it's true value. After many iterations the algorithm will converge.
+** Policy Improvement
+To improve a policy, for each state, choose the action that maximizes:
+\sum_{s',r} prob(s',r|s,a) (r + y * v_\pi(s')) = \pi'(s)
+Ties can be decided arbitrarily. Notice that this equation uses v_\pi(s) which can be calculated using Policy Evaluation (above).
+** Policy Iteration
+By iterating between policy evaluation and policy improvement (both described above) an optimal policy can be found. There are a variety of ways to perform this iteration with different performance tradeoffs.
+** Terminology
+Policy evaluation - find the values of all states for a specific policy
+Policy improvement - improve a policy based on expected policy values
+Policy iteration - combine policy evaluation and improvement iteratively
+Value iteration - a specific method for policy iteration
+** There is a lot of room in how to structure policy iteration.
+As long as policy evaluation and improvement updates the values for each state, the algorithms will converge. Feel free to adjust the order of states, or even spend more time updating some states than others, etc.
+** Bootstrapping
+These dynamic programming methods update estimates (the value function is an estimate) based on estimates. This is called bootstrapping. This is obvious from the self referential definition of the functions.
+** Thoughts
+*** RL for autoscaling DynamoDB
+RL would probably be good for autoscaling reinforcement learning. The reward function could take into account hosting cost, the business cost of throttles, etc.
+*** RL for card games like Coup
+RL would make a good Coup AI. Coup is a bluffing card game.
+*** Things needed
+Looking at the formulas I see three things that must be tracked:
+- the policy, a function from state to action
+- the transition probabilities from state/action pairs to state/reward pairs
+- the value function which estimates how valuable a state will be under a certain policy
+*** Transition probabilities, a case for supervised machine learning
+Transition properties for very large spaces could use supervised machine learning algorithms, which are good for making predictions in large spaces and for states the have never seen before. There are probably other areas in reinforcement learning for supervised algorithms as well.
