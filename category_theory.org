@@ -1,0 +1,52 @@
+* Source
+YouTube series by Bartosz Milewski.
+* Video 1.1: Motivation and Philosophy
+** Category Theory (CT) is one of the most abstract forms of math
+** Programming abstractions
+*** Assembly
+*** Procedures
+*** Object Oriented Programming
+** Abstraction / Subtration -- Abstraction subtracts or hides details
+** The pains of OOP became apparent with concurrency and parallelism
+** OOP hides mutation and sharing, leads to race conditions
+** The OOP level abstraction doesn't handle concurrency and parallelism
+** From the high abstraction level of category of theory
+*** all programming languages look the same
+*** different fields of mathematics look the same, including logic
+** From a highly abstracted (subtracted) level, you can add in the required details to get a concreate implementation
+** is mathematics invented or discovered? category theory is what is discovered by mathematics
+** our brains have evolved to some things better than others
+*** our brains are very good at visual processing, this has been evolving the longest
+*** our higher level thinking abilities eveolved more recently, and were not super good at it
+**** this is why we must abstract things, because our brains cannot hold all the complexity at once
+**** without the strucutre provided by abstraction, we cannot "see"
+**** in everything we do, we want to "chop things up", we want to abstract
+** it seems category might be the study of abstraction
+** stemology - how we reason or learn about stuff
+** ontology - what things are
+* Video 1.2: What is a category?
+** The tools of our mind
+*** abstraction - subtracting unnecessary details
+*** composition
+*** identity - after you abstract, things that are technically different become the same
+** Category Theory focuses on composition and identity
+** A category is a bunch of objects
+** A morphism (or arrow) is something that goes between two "objects"
+** What is an object? It has no properties.
+** What is an arrow? It goes from one object to another, and has no other properties.
+** Objects are just the two ends of arrows.
+** This is sounding very much like edges and vertexes in graphs.
+*** These "graphs" can be infinite.
+** Composition
+*** If f is an arrow from a to b, and g is an arrow from b to c, then g o f (g "of" f) must exist and goes from a to c.
+** Identify
+*** For every object, there must be an identity arrow from a to a.
+** Arrows are associative: (f o g) o h = f o (g o h)
+** Example: Programming types and functions
+*** types are objects
+*** functions are arrows/morphisms
+** A category can be defined as a composition table
+** Forget the details
+I expect one of the difficulties will be getting to an abstract enough level. For example, with the category Set, it will be difficult to forget the details and get to the level of abstraction of a category. Remember, to abstract you must subtract details.
+** Maximum abstraction
+Category theory is as most abstract because you have abstracted away (subtracted) every detail about objects, except for relations (arrows) between them. You make no assumptions about the objects or the arrows. There is nothing left to subtract.
