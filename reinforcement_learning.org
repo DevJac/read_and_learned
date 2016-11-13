@@ -119,4 +119,6 @@ q(s) requires that all states and actions be visited at least several times, if 
 ** Thoughts
 *** Design states to be ML friendly
 States should have a the markov property, and also be useful to any ML algorithms you plan to use.
+*** First, get a little learning, then iterate
+Keep thing simple and acheive a small amount of learning, then iterate. As you attempt to improve upon an algorithm it becomes harder and harder not to undo the learning you have already acheived.
 ** TODO Read : 5.3
