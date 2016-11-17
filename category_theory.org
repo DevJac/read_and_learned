@@ -50,3 +50,75 @@ YouTube series by Bartosz Milewski.
 I expect one of the difficulties will be getting to an abstract enough level. For example, with the category Set, it will be difficult to forget the details and get to the level of abstraction of a category. Remember, to abstract you must subtract details.
 ** Maximum abstraction
 Category theory is as most abstract because you have abstracted away (subtracted) every detail about objects, except for relations (arrows) between them. You make no assumptions about the objects or the arrows. There is nothing left to subtract.
+* Video 2.1: Functions, epimorphisms
+** Function purity test: can you memoize it?
+** The input set of a function is the domain, the possible outputs are the "image" and the image might be a subset of a "codomain"
+** a function that is invertable is called an "isomorphism"
+** 2 reasons a function is not invertable:
+*** it maps 2 or more items in the domain to a single item in the codomain
+*** the image of the function does not fill the codoamin
+** injective / surjective functions
+*** an "injective" function does not "collapse"; it does not map any 2 values in the domain to the same value in the codomain
+*** a "surjective" function has an image that covers the entire codomain
+*** if a function is both injective and surjective, it is an isomorphism, meaning it is invertable
+** category theory terms
+*** injective -> monic / monomorphism
+*** surjective -> epic / epimorphism
+** epimorphism property in category theory
+if forall g1 and g2, if g1 o f = g2 o f is proof that g1 = g2, then f is an epimorphism
+** it appear category theory will provide a framework for thinking about abstractions, once you recognize that something fits the paterns of a certain category theory concept, you will know the implications from category theory
+* Video 2.2: Monomorphisms, simple types
+** monomorphism property in category theory
+if forall g1 and g2, if f o g1 = f o g2 is proof that g1 = g2, then f is an monomorphism
+** notice the definitions of mono/epimorphisms only look at composition, and no other details
+** just because something is a monomorphism and an epimorphism doesn't mean it's an isomorphism in all categories
+** if we can use a microscope, use a telescope
+*** to declare something a mono/epimorphism it's important to look at ALL possible g1,g2 pairs
+** Void, a type with no values, a set with no elements
+*** there is a function `id_Void :: Void -> Void` but you can never call it
+** Unit, a type with one value, a set with one value
+*** in Haskell `() :: ()` is the Unit
+*** `f :: () -> Int` must be a constant integer
+*** `f :: () -> Int` provides a trick to enumerate elements of a set at the category level
+** Bool
+*** any two element type/set is equivalent to Bool
+* Video 3.1: Examples of categories, orders, monoids
+** A category with no objects
+*** Like zero, it's mainly useful in context with other numbers or categories
+** A category with 1 object
+*** Has 1 arrow, the id arrow
+**** every category must have an id arrow for every object
+** If you start with a graph that is not a category, it's ALWAYS possible to add arrows to make it a category
+*** E.g. you might add id arrows
+*** you must have compositions arrows
+**** if an arrow goes from a to b, and another arrow goes from b to c, there must also be an arrow from a to c for it to be a category
+***** this results in a lot of complete graphs I'd guess, does it aways result in a complete graph?
+*** adding arrows to satisfy the axioms is called "free construction", and results in a "free category"
+**** are all categories free?
+** order category
+*** arrows mean "less than or equal"
+*** a "pre-order" might not have an arrow between certain objects, but a "total-order" will be total
+*** a "thin category" has a maximum of 1 arrow between any two objects
+**** there can only be a maximum of 1 arrow from a to b, but there can be an arrow from b to a
+*** a "partial order" is like a directed acyclic graph, there cannot be any "loops" between two objects or otherwise
+** a "home set" is a set of all arrows between two objects; it's written `c(a,b)`
+** it seems category theory is just graph theory combined with a lot of vocabulary to make it easy to talk about and reason about things
+** monoid - a category with 1 object
+*** in monoid, all arrows are composable, because they begin and end at the same object
+*** in monoid, the id arrow is called "unit"
+*** a monoid must have "unit" (id) and the associative property when composing arrows
+*** monoid examples: addition, multiplication, string concatenation
+*** a monoid has only 1 home set
+** definition of unit: \exists e \forall a  e * a = a * e = a
+* Video 3.2: Kleisli category
+** code simplicity
+*** is simplicity measured in the number of lines of code?
+*** simplicity is not easy
+*** beware of hidden dependencies and long distance interactions
+*** code smell: a function that "knows things" it shouldn't
+** functionality can be put into *composition* rather than into a regular function
+*** remember: category theory is about identity and composition
+*** when you hear or think abobut composition, you should think about category theory
+** in imperative programming, we don't think about composition
+*** I think this is the divide between imperative and functional programming
+*** a Monad provide an extra degree of freedom to composition
