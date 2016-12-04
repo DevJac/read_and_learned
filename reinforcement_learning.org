@@ -113,12 +113,27 @@ An obvious way to estimate the value function for a specific state is to simply 
 ** Monte Carlo methods do not bootstrap
 One implication of not bootstrapping is that you can start a simulation from any  state. You don't necissarily need to evaluate all states to get a good value estimate for a single state. You can just run many simulations starting at a single state, and end up with a good value estimate for that single state (and possibly some other states as well).
 This leads to a trick called exploring starts, where all states (or state/action pairs) have a chance of being selected as the starting state for an episode, and thus all states will eventually have been visited an infinite number of times. Of course, this can only be done in a simulated environment.
+*** Less harmed by violations of the Markov property
+Because Monte Carlo methods do not update value extimates based on other value estimates (they do not bootstrap), they are harmed less by violations of the Markov property.
 ** q(s) (the action-value function) is especially useful in MC methods
 *** Mantaining exploration with q(s)
-q(s) requires that all states and actions be visited at least several times, if not infinitely many times, and this does not normally happen when following a policy. Thus, exploration is necissary, and we have to balance exploration and exploitation.
+To have an accurate q(s) function requires that all states and actions be visited at least several times, if not infinitely many times, and this does not normally happen when following a policy. Thus, exploration is necissary, and we have to balance exploration and exploitation.
+** Off-Policy Learning
+In off-policy learning, learning about a "target policy" which approximates the optimal policy is different than the "behavior policy" which determines the actions to take during learning.
+This provides a more powerful framework in which to think about reinforcement learning. On-policy methods are just a special case of off-policy methods in which the target policy and behavior policy are the same.
+*** Importance sampling
+To estimate the target policy based on a behavior policy, observe the rewards from the behavior policy, and then scale them by p(\pi(a|s)) / p(\mu(a|s)) where \pi is the target policy and \mu is the behavior policy.
+This means that if the behavior policy does something the target policy would never do, the weight will be low, and if the behavior policy does something that the target policy is very likely to do, the weight will be high.
+*** 2 ways of averaging for the value function
+Let P be the ratio p(\pi(a|s)) / p(\mu(a|s)).
+Let G the the observed rewards after a visit to a state s.
+Simple scale: \sum P*G / length(G)
+Weighted importance sampling / weighted average: \sum P*G / \sum P
+*** Coverage
+The behavior policy must select all policies that the target policy might possibly pick over time. This is called coverage.
+In other words, the behavior policy must have a non-zero probability of picking any of the actions that the target policy could possibly pick. 
 ** Thoughts
 *** Design states to be ML friendly
 States should have a the markov property, and also be useful to any ML algorithms you plan to use.
 *** First, get a little learning, then iterate
 Keep thing simple and acheive a small amount of learning, then iterate. As you attempt to improve upon an algorithm it becomes harder and harder not to undo the learning you have already acheived.
-** TODO Read : 5.3
