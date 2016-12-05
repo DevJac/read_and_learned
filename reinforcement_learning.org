@@ -131,9 +131,45 @@ Simple scale: \sum P*G / length(G)
 Weighted importance sampling / weighted average: \sum P*G / \sum P
 *** Coverage
 The behavior policy must select all policies that the target policy might possibly pick over time. This is called coverage.
-In other words, the behavior policy must have a non-zero probability of picking any of the actions that the target policy could possibly pick. 
+In other words, the behavior policy must have a non-zero probability of picking any of the actions that the target policy could possibly pick.
 ** Thoughts
 *** Design states to be ML friendly
 States should have a the markov property, and also be useful to any ML algorithms you plan to use.
 *** First, get a little learning, then iterate
 Keep thing simple and acheive a small amount of learning, then iterate. As you attempt to improve upon an algorithm it becomes harder and harder not to undo the learning you have already acheived.
+* Chapter 6 - Temporal-Difference Learning
+"If one had to identify one idea as central and novel to reinforcement learning, it would undoubtedly be temporal-difference (TD) learning."
+** TD methods are a combination of DP and MC methods
+*** TD methods do not require a model of the environment, like MC methods
+*** TD methods bootstrap, like DP methods
+TD methods update estimates based, in part, on other estimattes. They bootstrap.
+*** TD methods update estimates based on experience, like MC methods
+** Comparison of how value functions are updated
+*** MC updates the value function once the return is known at the end of the episode
+V(S_t) <- V(S_t) + \alpha (G_t - V(S_t))
+*** TD updates the value function immediately, after reaching the next state
+V(S_t) <- V(S_t) + \alpha (R_{t+1} + \gamma V(S_{t+1}) - V(S_t))
+where
+\alpha - is a learning step rate
+\gamma - is a discount factor in the range [0, 1)
+**** TD error
+The term (R_{t+1} + \gamma V(S_{t+1})) gives a more accurate estimate of the true value of S_t. It is subtracted from the previous estimate (V(S_t)) to give a difference which is used when updating V. This patten is called the TD error.
+**** The state-action varient is very similar
+Q(S_t, A_t) <- Q(S_t, A_t) + \alpha (R_{t+1} + \gamma Q(S_{t+1}, A_{t+1}) - Q(S_t, A_t))
+** TD method advantages
+*** TD methods do not require a model of the environment
+*** TD methods utilize immediate feedback
+With MC methods, learning happens only at the end of an episode. TD methods are constantly learning after every single reward.
+*** TD methods do not require episodic tasks
+MC methods require that a task be broken into distinct episodes. TD methods can be used on both episodic and non-episodic tasks.
+** Prediction and Control
+In DP we have policy evaluation and policy improvement, and must iterate between these to reach the optimal policy.
+In general, these can be though of as "prediction" and "control" respectively.
+By iterating between improving our predictions based on experience, and controlling the actions we take, we can approach an optimal control policy.
+*** Two problems:
+- How will I improve my predictions based on experience?
+- How will I control my actions such that I behave optimally, while also providing all the experiences needed to improve my predictions?
+** Thoughts
+*** Control hyperparameters with reinforcement learning - recusrive reinforcement learning
+You could control \epsilon in \epsilon-greedy methods with a second reinforcement learning method.
+** TODO Read 6.5
