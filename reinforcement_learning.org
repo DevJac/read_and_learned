@@ -169,7 +169,38 @@ By iterating between improving our predictions based on experience, and controll
 *** Two problems:
 - How will I improve my predictions based on experience?
 - How will I control my actions such that I behave optimally, while also providing all the experiences needed to improve my predictions?
+*** Dynamic programming, Monte Carlo, and temporal difference are variations on prediction
+Issues of control are mostly the same with all three methods. The three methods are mainly variations on how to predict state/action values.
+** Q-learning
+Q(S_t, A_t) <- Q(S_t, A_t) + \alpha (R_{t+1} + \gamma max_a Q(S_{t+1}, a) - Q(S_t, A_t))
+*** Very similar to plain TD state-action update rule
+The only difference between Q-learning and the TD state-action update rule is the `max_a` term.
+I think this is because Q-learning is an off-policy method, and so it updates the state-action value based on the best possible choice rather than was was actually performed by the behavior policy.
+*** Sometimes there isn't much difference between on-policy and off-policy methods
+** Simplifying on/off-policy
+The simple takeaway of the on/off-policy concept is to simply remember that the best policy you're aware of isn't necissarily the policy you have to follow when making decisions.
+You don't have to be greedy.
+** Sarsa (State Action Reward State Actions)
+Q(S_t, A_t) <- Q(S_t, A_t) + \alpha (R_{t+1} + \gamma Q(S_{t+1}, A_{t+1}) - Q(S_t, A_t))
+*** Expected Sarsa
+Expected Sarsa is a varient that uses the expected value in place of `Q(S_{t+1}, A_{t+1})`:
+... + \gamma \sum_a \pi(a|S_{t+1}) Q(S_{t+1}, a) - ...
+In words, a sum of the value of all possible actions, weighted by how likely the policy is to choose that action.
+** Maximization Bias and Double Learning
+V and Q are estimates. Like all estimates, they are rarely exactly right, and thus are either too low or too high.
+Because Q-learning involves selecting the action that maximizes Q, there is significan "maximization bias", because the maximum value in Q is probably too high (which explains why it's the maximum).
+*** Double Learning
+One way to minimize the maximization bias is to use "double learning", which uses a twin Q function to estimate the maximum value. Half the time Q_1 is updated using estimates from Q_2, and the other half of the time vice-versa.
+*** Double learning update rule:
+Q_1(S_t, A_t) <- Q_1(S_t, A_t) + \alpha (R_{t+1} + \gamma Q_2(S_{t+1}, max_a Q_1(S_{t+1}, a)) - Q_1(S_t, A_t))
+** Adapt the reinforcement learning framework as needed
+Remember, reinforcement learning gives a framework as a guide, but there are special cases like:
+*** Afterstates
+Consider a turn based game. When a players turn begins, the game is in a certain state, the player then takes an action, and then the game is in an "afterstate" before the next player's turn begins.
+This usually occurs when the dynamics of the environment are, at least, partially known.
+Often it is more efficient to estimate the values of "afterstates" rather than distinguish between state and action as in the traditional reinforcement learning framework.
+** TD methods outside of RL
+TD methods have been used outside of reinforcement learning. They are a general way of making long term predictions about dynamical systems.
 ** Thoughts
 *** Control hyperparameters with reinforcement learning - recusrive reinforcement learning
 You could control \epsilon in \epsilon-greedy methods with a second reinforcement learning method.
-** TODO Read 6.5
