@@ -1,0 +1,52 @@
+* Description
+https://javascript30.com/
+A series of 30 videos which teach plain JavaScript.
+No frameworks. No compilers. No libraries. No boilerplate.
+* 01 - JavaScript Drum Kit
+** Custom HTML attributes: data-attributes
+Custom HTML attributes should begin with "data-". In this example they use "data-key" as a custom attribute.
+** In CSS selectors, a period "."is the prefix for classes
+** ES6 template strings: `a string with a template ${variable}`
+ES6 has template strings which use backticks, and can interpolate variables between ${ and }.
+** Rewind audio:
+You can do `audioElement.currentTime = 0;` to rewind an audio element.
+** Declare new variables using const when appropriate
+** Add and remove classes from elements:
+*** element.classList.add('someClass');
+*** element.classList.remove('someClass');
+*** element.classList.toggle('someClass');
+** CSS `transition` property can control how fast transitions happen
+** Arrow functions:
+(param1, param2, …, paramN) => { statements }
+(param1, param2, …, paramN) => expression
+// equivalent to: (param1, param2, …, paramN) => { return expression; }
+
+// Parentheses are optional when there's only one parameter:
+(singleParam) => { statements }
+singleParam => { statements }
+
+// A function with no parameters requires parentheses:
+() => { statements }
+() => expression // equivalent to: () => { return expression; }
+** `this` refers to the object that invokes the function calls the function, by default
+*** `call` and `apply` can be used to explicitly set the value of `this`
+** Event types:
+*** keydown
+*** transitionend
+** Other useful things:
+*** window.addEventListener
+*** console.log
+*** HTML audio element: <audio src="..."></audio>
+*** document.querySelector / document.querySelectorAll
+*** array.forEach
+* 02 - CSS + JS Clock
+** The `transform` CSS property has many different transformations
+*** One example is: `transform: rotate(90deg)`
+*** Use `transform-origin` to adjust the origin
+** transition-timing-functions:
+*** linear
+*** ease-in-out
+*** cubic-bezier - lets you define your own transition curve
+*** and others
+** `setInterval` can run functions periodically on a timer
+** The current time: `const now = new Date();`
