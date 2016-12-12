@@ -50,3 +50,42 @@ singleParam => { statements }
 *** and others
 ** `setInterval` can run functions periodically on a timer
 ** The current time: `const now = new Date();`
+* 03 - Playing with CSS Variables and JS
+** Input types:
+*** color - shows a color selection dialog
+*** range - shows a slider (a drag bar)
+** Psudo-classes - special CSS selectors
+*** Example: `:root {}`
+** Setting CSS variables in CSS:
+*** Declaring a property:
+element {
+  --main-bg-color: brown;
+}
+*** Using the property:
+element {
+  background-color: var(--main-bg-color);
+}
+*** CSS variables have scope; they "cascade" like other CSS properties
+*** CSS variables are not supported in all modern browsers
+** New event types:
+*** change
+*** mousemove
+** element.dataset - a set of data-* attributes
+<div id="user" data-id="1234567890" data-user="johndoe" data-date-of-birth>John Doe</div>
+
+var el = document.querySelector('#user');
+
+// el.id == 'user'
+// el.dataset.id === '1234567890'
+// el.dataset.user === 'johndoe'
+// el.dataset.dateOfBirth === ''
+
+el.dataset.dateOfBirth = '1960-10-03'; // set the DOB.
+
+// 'someDataAttr' in el.dataset === false
+
+el.dataset.someDataAttr = 'mydata';
+// 'someDataAttr' in el.dataset === true
+** Or (||) can be used to set default values like in Python:
+In Python you can say `x = maybeNone or 'default'`
+In JavaScript you can say: `const x = maybeNone || 'default';`
