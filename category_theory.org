@@ -1,124 +1,164 @@
-* Source
+* Course
+** Source
+"Category Theory for Programmers" by Bartosz Milewski.
+Found at: https://bartoszmilewski.com/2014/10/28/category-theory-for-programmers-the-preface/
+** Category Theory for Programmers: The Preface
+*** Composition is the essence of programming
+"I will attempt, in the space of a few paragraphs, to convince you that this book is written for you, and whatever objections you might have to learning one of the most abstract branches of mathematics in your “copious spare time” are totally unfounded.
+
+My optimism is based on several observations. First, category theory is a treasure trove of extremely useful programming ideas. Haskell programmers have been tapping this resource for a long time, and the ideas are slowly percolating into other languages, but this process is too slow. We need to speed it up.
+
+Second, there are many different kinds of math, and they appeal to different audiences. You might be allergic to calculus or algebra, but it doesn’t mean you won’t enjoy category theory. I would go as far as to argue that category theory is the kind of math that is particularly well suited for the minds of programmers. That’s because category theory — rather than dealing with particulars — deals with structure. It deals with the kind of structure that makes programs composable.
+
+Composition is at the very root of category theory — it’s part of the definition of the category itself. And I will argue strongly that composition is the essence of programming."
+*** Side effects don't scale
+"One of the forces that are driving the big change is the multicore revolution. The prevailing programming paradigm, object oriented programming, doesn’t buy you anything in the realm of concurrency and parallelism, and instead encourages dangerous and buggy design. Data hiding, the basic premise of object orientation, when combined with sharing and mutation, becomes a recipe for data races. The idea of combining a mutex with the data it protects is nice but, unfortunately, locks don’t compose, and lock hiding makes deadlocks more likely and harder to debug.
+
+But even in the absence of concurrency, the growing complexity of software systems is testing the limits of scalability of the imperative paradigm. To put it simply, side effects are getting out of hand. Granted, functions that have side effects are often convenient and easy to write. Their effects can in principle be encoded in their names and in the comments. A function called SetPassword or WriteFile is obviously mutating some state and generating side effects, and we are used to dealing with that. It’s only when we start composing functions that have side effects on top of other functions that have side effects, and so on, that things start getting hairy. It’s not that side effects are inherently bad — it’s the fact that they are hidden from view that makes them impossible to manage at larger scales. Side effects don’t scale, and imperative programming is all about side effects."
+** Category: The Essence of Composition
+*** What is a category?
+A category is an embarrassingly simple concept. A category consists of objects and arrows that go between them. That’s why categories are so easy to represent pictorially. An object can be drawn as a circle or a point, and an arrow… is an arrow.
+*** Arrows compose
+The essence of a category is composition. Or, if you prefer, the essence of composition is a category. Arrows compose, so if you have an arrow from object A to object B, and another arrow from object B to object C, then there must be an arrow — their composition — that goes from A to C.
+**** Arrows are also called "morphisms"
+*** 2 requirements for categories
+A category consists of objects and arrows (morphisms). Arrows can be composed, and the composition is associative. Every object has an identity arrow that serves as a unit under composition.
+**** Arrows / morphisms must be associative
+Associative reminder: (a + b) + c == a + (b + c)
+Addition is associative.
+**** Every object must have an identity arrow
+*** We need abstraction
+How do we solve problems? We decompose bigger problems into smaller problems. If the smaller problems are still too big, we decompose them further, and so on. Finally, we write code that solves all the small problems. And then comes the essence of programming: we compose those pieces of code to create solutions to larger problems. Decomposition wouldn’t make sense if we weren’t able to put the pieces back together.
+
+This process of hierarchical decomposition and recomposition is not imposed on us by computers. It reflects the limitations of the human mind. Our brains can only deal with a small number of concepts at a time. The bottom line is that we are unable to deal with the soup of objects or the spaghetti of code. We need structure not because well-structured programs are pleasant to look at, but because otherwise our brains can’t process them efficiently. We often describe some piece of code as elegant or beautiful, but what we really mean is that it’s easy to process by our limited human minds. Elegant code creates chunks that are just the right size and come in just the right number for our mental digestive system to assimilate them.
+* Video
 YouTube series by Bartosz Milewski.
-* Video 1.1: Motivation and Philosophy
-** Category Theory (CT) is one of the most abstract forms of math
-** Programming abstractions
-*** Assembly
-*** Procedures
-*** Object Oriented Programming
-** Abstraction / Subtration -- Abstraction subtracts or hides details
-** The pains of OOP became apparent with concurrency and parallelism
-** OOP hides mutation and sharing, leads to race conditions
-** The OOP level abstraction doesn't handle concurrency and parallelism
-** From the high abstraction level of category of theory
-*** all programming languages look the same
-*** different fields of mathematics look the same, including logic
-** From a highly abstracted (subtracted) level, you can add in the required details to get a concreate implementation
-** is mathematics invented or discovered? category theory is what is discovered by mathematics
-** our brains have evolved to some things better than others
-*** our brains are very good at visual processing, this has been evolving the longest
-*** our higher level thinking abilities eveolved more recently, and were not super good at it
-**** this is why we must abstract things, because our brains cannot hold all the complexity at once
-**** without the strucutre provided by abstraction, we cannot "see"
-**** in everything we do, we want to "chop things up", we want to abstract
-** it seems category might be the study of abstraction
-** stemology - how we reason or learn about stuff
-** ontology - what things are
-* Video 1.2: What is a category?
-** The tools of our mind
-*** abstraction - subtracting unnecessary details
-*** composition
-*** identity - after you abstract, things that are technically different become the same
-** Category Theory focuses on composition and identity
-** A category is a bunch of objects
-** A morphism (or arrow) is something that goes between two "objects"
-** What is an object? It has no properties.
-** What is an arrow? It goes from one object to another, and has no other properties.
-** Objects are just the two ends of arrows.
-** This is sounding very much like edges and vertexes in graphs.
-*** These "graphs" can be infinite.
-** Composition
-*** If f is an arrow from a to b, and g is an arrow from b to c, then g o f (g "of" f) must exist and goes from a to c.
-** Identify
-*** For every object, there must be an identity arrow from a to a.
-** Arrows are associative: (f o g) o h = f o (g o h)
-** Example: Programming types and functions
-*** types are objects
-*** functions are arrows/morphisms
-** A category can be defined as a composition table
-** Forget the details
+** Video 1.1: Motivation and Philosophy
+*** Category Theory (CT) is one of the most abstract forms of math
+*** Programming abstractions
+**** Assembly
+**** Procedures
+**** Object Oriented Programming
+*** Abstraction / Subtration -- Abstraction subtracts or hides details
+*** The pains of OOP became apparent with concurrency and parallelism
+*** OOP hides mutation and sharing, leads to race conditions
+*** The OOP level abstraction doesn't handle concurrency and parallelism
+*** From the high abstraction level of category of theory
+**** all programming languages look the same
+**** different fields of mathematics look the same, including logic
+*** From a highly abstracted (subtracted) level, you can add in the required details to get a concreate implementation
+*** is mathematics invented or discovered? category theory is what is discovered by mathematics
+*** our brains have evolved to some things better than others
+**** our brains are very good at visual processing, this has been evolving the longest
+**** our higher level thinking abilities eveolved more recently, and were not super good at it
+***** this is why we must abstract things, because our brains cannot hold all the complexity at once
+***** without the strucutre provided by abstraction, we cannot "see"
+***** in everything we do, we want to "chop things up", we want to abstract
+*** it seems category might be the study of abstraction
+*** stemology - how we reason or learn about stuff
+*** ontology - what things are
+** Video 1.2: What is a category?
+*** The tools of our mind
+**** abstraction - subtracting unnecessary details
+**** composition
+**** identity - after you abstract, things that are technically different become the same
+*** Category Theory focuses on composition and identity
+*** A category is a bunch of objects
+*** A morphism (or arrow) is something that goes between two "objects"
+*** What is an object? It has no properties.
+*** What is an arrow? It goes from one object to another, and has no other properties.
+*** Objects are just the two ends of arrows.
+*** This is sounding very much like edges and vertexes in graphs.
+**** These "graphs" can be infinite.
+*** Composition
+**** If f is an arrow from a to b, and g is an arrow from b to c, then g o f (g "of" f) must exist and goes from a to c.
+*** Identify
+**** For every object, there must be an identity arrow from a to a.
+*** Arrows are associative: (f o g) o h = f o (g o h)
+*** Example: Programming types and functions
+**** types are objects
+**** functions are arrows/morphisms
+*** A category can be defined as a composition table
+*** Forget the details
 I expect one of the difficulties will be getting to an abstract enough level. For example, with the category Set, it will be difficult to forget the details and get to the level of abstraction of a category. Remember, to abstract you must subtract details.
-** Maximum abstraction
+*** Maximum abstraction
 Category theory is as most abstract because you have abstracted away (subtracted) every detail about objects, except for relations (arrows) between them. You make no assumptions about the objects or the arrows. There is nothing left to subtract.
-* Video 2.1: Functions, epimorphisms
-** Function purity test: can you memoize it?
-** The input set of a function is the domain, the possible outputs are the "image" and the image might be a subset of a "codomain"
-** a function that is invertable is called an "isomorphism"
-** 2 reasons a function is not invertable:
-*** it maps 2 or more items in the domain to a single item in the codomain
-*** the image of the function does not fill the codoamin
-** injective / surjective functions
-*** an "injective" function does not "collapse"; it does not map any 2 values in the domain to the same value in the codomain
-*** a "surjective" function has an image that covers the entire codomain
-*** if a function is both injective and surjective, it is an isomorphism, meaning it is invertable
-** category theory terms
-*** injective -> monic / monomorphism
-*** surjective -> epic / epimorphism
-** epimorphism property in category theory
+** Video 2.1: Functions, epimorphisms
+*** Function purity test: can you memoize it?
+*** The input set of a function is the domain, the possible outputs are the "image" and the image might be a subset of a "codomain"
+*** a function that is invertable is called an "isomorphism"
+*** 2 reasons a function is not invertable:
+**** it maps 2 or more items in the domain to a single item in the codomain
+**** the image of the function does not fill the codoamin
+*** injective / surjective functions
+**** an "injective" function does not "collapse"; it does not map any 2 values in the domain to the same value in the codomain
+**** a "surjective" function has an image that covers the entire codomain
+**** if a function is both injective and surjective, it is an isomorphism, meaning it is invertable
+*** category theory terms
+**** injective -> monic / monomorphism
+**** surjective -> epic / epimorphism
+*** epimorphism property in category theory
 if forall g1 and g2, if g1 o f = g2 o f is proof that g1 = g2, then f is an epimorphism
-** it appear category theory will provide a framework for thinking about abstractions, once you recognize that something fits the paterns of a certain category theory concept, you will know the implications from category theory
-* Video 2.2: Monomorphisms, simple types
-** monomorphism property in category theory
+*** it appear category theory will provide a framework for thinking about abstractions, once you recognize that something fits the paterns of a certain category theory concept, you will know the implications from category theory
+** Video 2.2: Monomorphisms, simple types
+*** monomorphism property in category theory
 if forall g1 and g2, if f o g1 = f o g2 is proof that g1 = g2, then f is an monomorphism
-** notice the definitions of mono/epimorphisms only look at composition, and no other details
-** just because something is a monomorphism and an epimorphism doesn't mean it's an isomorphism in all categories
-** if we can use a microscope, use a telescope
-*** to declare something a mono/epimorphism it's important to look at ALL possible g1,g2 pairs
-** Void, a type with no values, a set with no elements
-*** there is a function `id_Void :: Void -> Void` but you can never call it
-** Unit, a type with one value, a set with one value
-*** in Haskell `() :: ()` is the Unit
-*** `f :: () -> Int` must be a constant integer
-*** `f :: () -> Int` provides a trick to enumerate elements of a set at the category level
-** Bool
-*** any two element type/set is equivalent to Bool
-* Video 3.1: Examples of categories, orders, monoids
-** A category with no objects
-*** Like zero, it's mainly useful in context with other numbers or categories
-** A category with 1 object
-*** Has 1 arrow, the id arrow
-**** every category must have an id arrow for every object
-** If you start with a graph that is not a category, it's ALWAYS possible to add arrows to make it a category
-*** E.g. you might add id arrows
-*** you must have compositions arrows
-**** if an arrow goes from a to b, and another arrow goes from b to c, there must also be an arrow from a to c for it to be a category
-***** this results in a lot of complete graphs I'd guess, does it aways result in a complete graph?
-*** adding arrows to satisfy the axioms is called "free construction", and results in a "free category"
-**** are all categories free?
-** order category
-*** arrows mean "less than or equal"
-*** a "pre-order" might not have an arrow between certain objects, but a "total-order" will be total
-*** a "thin category" has a maximum of 1 arrow between any two objects
-**** there can only be a maximum of 1 arrow from a to b, but there can be an arrow from b to a
-*** a "partial order" is like a directed acyclic graph, there cannot be any "loops" between two objects or otherwise
-** a "home set" is a set of all arrows between two objects; it's written `c(a,b)`
-** it seems category theory is just graph theory combined with a lot of vocabulary to make it easy to talk about and reason about things
-** monoid - a category with 1 object
-*** in monoid, all arrows are composable, because they begin and end at the same object
-*** in monoid, the id arrow is called "unit"
-*** a monoid must have "unit" (id) and the associative property when composing arrows
-*** monoid examples: addition, multiplication, string concatenation
-*** a monoid has only 1 home set
-** definition of unit: \exists e \forall a  e * a = a * e = a
-* Video 3.2: Kleisli category
-** code simplicity
-*** is simplicity measured in the number of lines of code?
-*** simplicity is not easy
-*** beware of hidden dependencies and long distance interactions
-*** code smell: a function that "knows things" it shouldn't
-** functionality can be put into *composition* rather than into a regular function
-*** remember: category theory is about identity and composition
-*** when you hear or think abobut composition, you should think about category theory
-** in imperative programming, we don't think about composition
-*** I think this is the divide between imperative and functional programming
-*** a Monad provide an extra degree of freedom to composition
+*** notice the definitions of mono/epimorphisms only look at composition, and no other details
+*** just because something is a monomorphism and an epimorphism doesn't mean it's an isomorphism in all categories
+*** if we can use a microscope, use a telescope
+**** to declare something a mono/epimorphism it's important to look at ALL possible g1,g2 pairs
+*** Void, a type with no values, a set with no elements
+**** there is a function `id_Void :: Void -> Void` but you can never call it
+*** Unit, a type with one value, a set with one value
+**** in Haskell `() :: ()` is the Unit
+**** `f :: () -> Int` must be a constant integer
+**** `f :: () -> Int` provides a trick to enumerate elements of a set at the category level
+*** Bool
+**** any two element type/set is equivalent to Bool
+** Video 3.1: Examples of categories, orders, monoids
+*** A category with no objects
+**** Like zero, it's mainly useful in context with other numbers or categories
+*** A category with 1 object
+**** Has 1 arrow, the id arrow
+***** every category must have an id arrow for every object
+*** If you start with a graph that is not a category, it's ALWAYS possible to add arrows to make it a category
+**** E.g. you might add id arrows
+**** you must have compositions arrows
+***** if an arrow goes from a to b, and another arrow goes from b to c, there must also be an arrow from a to c for it to be a category
+****** this results in a lot of complete graphs I'd guess, does it aways result in a complete graph?
+**** adding arrows to satisfy the axioms is called "free construction", and results in a "free category"
+***** are all categories free?
+*** order category
+**** arrows mean "less than or equal"
+**** a "pre-order" might not have an arrow between certain objects, but a "total-order" will be total
+**** a "thin category" has a maximum of 1 arrow between any two objects
+***** there can only be a maximum of 1 arrow from a to b, but there can be an arrow from b to a
+**** a "partial order" is like a directed acyclic graph, there cannot be any "loops" between two objects or otherwise
+*** a "home set" is a set of all arrows between two objects; it's written `c(a,b)`
+*** it seems category theory is just graph theory combined with a lot of vocabulary to make it easy to talk about and reason about things
+*** monoid - a category with 1 object
+**** in monoid, all arrows are composable, because they begin and end at the same object
+**** in monoid, the id arrow is called "unit"
+**** a monoid must have "unit" (id) and the associative property when composing arrows
+**** monoid examples: addition, multiplication, string concatenation
+**** a monoid has only 1 home set
+*** definition of unit: \exists e \forall a  e * a = a * e = a
+** Video 3.2: Kleisli category
+*** code simplicity
+**** is simplicity measured in the number of lines of code?
+**** simplicity is not easy
+**** beware of hidden dependencies and long distance interactions
+**** code smell: a function that "knows things" it shouldn't
+*** functionality can be put into *composition* rather than into a regular function
+**** remember: category theory is about identity and composition
+**** when you hear or think abobut composition, you should think about category theory
+*** in imperative programming, we don't think about composition
+**** I think this is the divide between imperative and functional programming
+**** a Monad provide an extra degree of freedom to composition
+** Video 4.1: Terminal and initial objects
+*** Kleisli category
+**** example: a -> (b, string)
+**** a -> (b, string) is a mirror of a -> b in another category
+**** identity in Kleisli category is a mirror of a -> (a, string) in another category
+**** composition works because you can break (b, string) up and then concatenate strings and recombine
+**** the mirroring between the Kleisli category and the other category is called a monad
