@@ -60,6 +60,35 @@ What’s the type corresponding to an empty set? This type is called "Void" in H
 absurd :: Void -> a
 
 The name is not coincidental. There is deeper interpretation of types and functions in terms of logic called the Curry-Howard isomorphism. The type Void represents falsity, and the type of the function absurd corresponds to the statement that from falsity follows anything, as in the Latin adage “ex falso sequitur quodlibet.”
+** 1.3 Categories Great and Small
+*** Empty category
+The most trivial category is one with zero objects and, consequently, zero morphisms.
+*** Simple graphs
+You can build categories just by connecting objects with arrows. You can imagine starting with any directed graph and making it into a category by simply adding more arrows. First, add an identity arrow at each node. Then, for any two arrows such that the end of one coincides with the beginning of the other (in other words, any two composable arrows), add a new arrow to serve as their composition. Every time you add a new arrow, you have to also consider its composition with any other arrow (except for the identity arrows) and itself. You usually end up with infinitely many arrows, but that’s okay.
+*** Orders
+A category where a morphism is a relation between objects: the relation of being less than or equal. Let’s check if it indeed is a category. Do we have identity morphisms? Every object is less than or equal to itself: check! Do we have composition? If a <= b and b <= c then a <= c: check! Is composition associative? Check!
+**** Preorder
+An binary relation is a preorder if it is both reflexive and transitive.
+***** Reflexive
+A binary relation is reflexive if `x R x` (x is related to itself) for every x.
+***** Transitive
+A binary relation is transitive if `a R b` and `b R c` implies `a R c`.
+**** Partial order
+A partial order is a preorder that is also antisymmetric.
+***** Antisymmetric
+A binary relation is antisymmetric if `a R b` and `b R a` implies that `a = b`.
+**** Total order (aka: linear order)
+A partial order that is also total.
+***** Total
+A binary relation is total if for any two values `a` and `b`, `a R b` or `b R a`.
+*** Monoid
+A monoid is a single object category. In fact the name monoid comes from Greek mono, which means single. Every monoid can be described as a single object category with a set of morphisms that follow appropriate rules of composition.
+
+All arrows compose, because all arrows in the Monoid category have the same beginning and end: the single object.
+*** Hom-set
+A set of morphisms from object a to object b in a category C is called a hom-set and is written as C(a, b) (or, sometimes, HomC(a, b)).
+
+A lot of interesting phenomena in category theory have their root in the fact that elements of a hom-set can be seen both as morphisms, which follow the rules of composition, and as points in a set.
 * Video
 YouTube series by Bartosz Milewski.
 ** Video 1.1: Motivation and Philosophy
