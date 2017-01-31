@@ -86,9 +86,11 @@ A monoid is a single object category. In fact the name monoid comes from Greek m
 
 All arrows compose, because all arrows in the Monoid category have the same beginning and end: the single object.
 *** Hom-set
-A set of morphisms from object a to object b in a category C is called a hom-set and is written as C(a, b) (or, sometimes, HomC(a, b)).
+A set of morphisms from object a to object b in a category C is called a hom-set and is written as C(a, b) (or, sometimes, Hom_C(a, b)).
 
 A lot of interesting phenomena in category theory have their root in the fact that elements of a hom-set can be seen both as morphisms, which follow the rules of composition, and as points in a set.
+** 1.4 Kleisli Categories
+A Kleisli category has, as objects, the types of the underlying programming language. Morphisms from type A to type B are functions that go from A to a type derived from B using the particular embellishment (e.g., logging). Each Kleisli category defines its own way of composing such morphisms, as well as the identity morphisms with respect to that composition.
 * Video
 YouTube series by Bartosz Milewski.
 ** Video 1.1: Motivation and Philosophy
