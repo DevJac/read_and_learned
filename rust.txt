@@ -62,3 +62,69 @@ Example of some advance uses:
   use sayings::japanese::greetings as ja_greetings;
   use sayings::japanese::farewells::*;
   use sayings::english::{self, greetings as en_greetings, farewells as en_farewells};
+
+-----------------------------------
+Basic Control Structures
+-----------------------------------
+
+If structures are statements, and thus can be used in assignment, like:
+  let y = if x == 1 { 1 } else { 0 };
+
+If statements without an else clause always evaluate to ().
+
+`loop` is like a `while True`, it just loops forever.
+
+For loops have the form: `for var in expression { code }`
+The expression must evaluate to an iterator using the IntoIterator trait.
+
+Rust has the standard `break` and `continue` keywords.
+
+Example of loop labels:
+  'outer: for x in 0..10 {
+      'inner: for y in 0..10 {
+          if x % 2 == 0 { continue 'outer; } // continues the loop over x
+          if y % 2 == 0 { continue 'inner; } // continues the loop over y
+          println!("x: {}, y: {}", x, y);
+      }
+  }
+
+------------------------------------------
+Vectors
+------------------------------------------
+
+Examples of creating vectors:
+  let v = vec![0; 10]; // ten zeroes
+  let v = vec![1, 2, 3, 4, 5]; // v: Vec<i32>
+
+Accessing vector items is done with square braces starting with zero, like in
+Python or most languages.
+
+----------------------------------
+Ownership, Borrowing, Lifetimes
+----------------------------------
+
+Each value (or piece of data) can only be "owned" by only one binding (or variable name)
+at a time. It is an error to use the value a binding refers to if that binding does
+not have ownership.
+
+The `Copy` trait results in values being copied rather than ownership
+being transfered.
+
+`&` creates a reference. References are immutable by default, but there are
+`&mut` references as well.
+
+The rules of references:
+  - A reference can't have a larger scope than the owner.
+  - You can have exactly one mutable reference, OR many immutable references.
+
+Lifetimes describe the scope in which a reference is valid.
+
+All references have a lifetime, but some are implicit and can be omitted:
+  // implicit
+  fn foo(x: &i32) {
+  }
+  // explicit
+  fn bar<'a>(x: &'a i32) {
+  }
+
+(TODO: Review the 3 concepts again, especially lifetimes, what are they useful for?)
