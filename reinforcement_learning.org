@@ -204,3 +204,7 @@ TD methods have been used outside of reinforcement learning. They are a general 
 ** Thoughts
 *** Control hyperparameters with reinforcement learning - recusrive reinforcement learning
 You could control \epsilon in \epsilon-greedy methods with a second reinforcement learning method.
+* Chapter 7 - Multi-step Bootstrapping
+Multi-step TD generalizes both MC and TD methods so that you can switch from one to the other smoothly.
+They also decouple the action interval and the bootstrapping interval.
+** TODO Read: 7.1

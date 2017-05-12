@@ -91,6 +91,27 @@ A set of morphisms from object a to object b in a category C is called a hom-set
 A lot of interesting phenomena in category theory have their root in the fact that elements of a hom-set can be seen both as morphisms, which follow the rules of composition, and as points in a set.
 ** 1.4 Kleisli Categories
 A Kleisli category has, as objects, the types of the underlying programming language. Morphisms from type A to type B are functions that go from A to a type derived from B using the particular embellishment (e.g., logging). Each Kleisli category defines its own way of composing such morphisms, as well as the identity morphisms with respect to that composition.
+** 1.5 Follow the Arrows
+*** Universal construction
+There is a common construction in category theory called the universal construction for defining objects in terms of their relationships. One way of doing this is to pick a pattern, a particular shape constructed from objects and morphisms, and look for all its occurrences in the category. If it’s a common enough pattern, and the category is large, chances are you’ll have lots and lots of hits. The trick is to establish some kind of ranking among those hits, and pick what could be considered the best fit.
+*** Initial object
+The initial object is the object that has one and only one morphism going to any object in the category.
+*** Terminal object
+The terminal object is the object with one and only one morphism coming to it from any object in the category.
+*** Duality
+You can’t help but to notice the symmetry between the way we defined the initial object and the terminal object. The only difference between the two was the direction of morphisms. It turns out that for any category C we can define the opposite category C_op just by reversing all the arrows. The opposite category automatically satisfies all the requirements of a category, as long as we simultaneously redefine composition. If original morphisms f::a->b and g::b->c composed to h::a->c with h=g∘f, then the reversed morphisms f_op::b->a and g_op::c->b will compose to h_op::c->a with h_op=f_op∘g_op. And reversing the identity arrows is a no-op.
+
+Duality is a very important property of categories because it doubles the productivity of every mathematician working in category theory. For every construction you come up with, there is its opposite; and for every theorem you prove, you get one for free.
+
+It follows then that a terminal object is the initial object in the opposite category.
+**** "Co" categories
+The constructions in the opposite category are often prefixed with “co”, so you have products and coproducts, monads and comonads, cones and cocones, limits and colimits, and so on. There are no cocomonads though, because reversing the arrows twice gets us back to the original state.
+*** Isomorphisms
+Isomorphic objects look the same — they have the same shape. It means that every part of one object corresponds to some part of another object in a one-to-one mapping. As far as our instruments can tell, the two objects are a perfect copy of each other. Mathematically it means that there is a mapping from object a to object b, and there is a mapping from object b back to object a, and they are the inverse of each other. In category theory we replace mappings with morphisms. An isomorphism is an invertible morphism; or a pair of morphisms, one being the inverse of the other.
+**** Any two initial objects are isomorphic.
+Let’s suppose that we have two initial objects i1 and i2. Since i1 is initial, there is a unique morphism f from i1 to i2. By the same token, since i2 is initial, there is a unique morphism g from i2 to i1. What’s the composition of these two morphisms?
+
+The composition g∘f must be a morphism from i1 to i1. But i1 is initial so there can only be one morphism going from i1 to i1. Since we are in a category, we know that there is an identity morphism from i1 to i1, and since there is room for only one, that must be it. Therefore g∘f is equal to identity. Similarly, f∘g must be equal to identity, because there can be only one morphism from i2 back to i2. This proves that f and g must be the inverse of each other. Therefore any two initial objects are isomorphic.
 * Video
 YouTube series by Bartosz Milewski.
 ** Video 1.1: Motivation and Philosophy
