@@ -42,11 +42,52 @@ a state is the total amount of reward an agent can expect to accumulate over the
 future, starting from that state."
 ** Drills
 *** Elements of Reinforcement Learning                              :drill:
-What are the 3 basic elements of reinforcement learning?
+What are the 3 basic components of a reinforcement learning system?
 **** Answer
 - policy
 - reward signal
 - value function
 * Chapter 2 - Multi-arm Bandits
-** TODO Skim chapter 2
-Focus especially on the various exploration/exploitation methods.
+** Drills
+*** Formula 1                                                       :drill:
+What is the formula for exponential, recency-weighted average?
+**** Answer
+Q_{n+1} = Q_n + \alpha(R_n - Q_n)
+*** Formula 2                                                       :drill:
+What is the formula for upper confidence bound?
+**** Answer
+A_t = argmax_a [ Q_t(a) + c * sqrt( log t / N_t(a) ) ]
+
+Where N_t(a) is the number of times a has been chosen.
+*** Formula 3                                                       :drill:
+What is the formula for the gradient bandit algorithm?
+**** Answer
+Pr{A_t = a} = \pi_t(a) = e^{H(a)} for action a, divided by e^{H(a)} for all actions.
+
+The update rules are:
+
+H_{t+1}(a) = H_t(a) + \alpha (R_t - avg(R)) (1 - \pi_t(a))    for the action a that was chosen
+H_{t+1}(a) = H_t(a) - \alpha (R_t - avg(R)) \pi_t(a)          for all other actions (the actions that were not chosen)
+
+Where avg(R) is the average of all rewards received, including the current time step.
+* Chapter 3 - Finite Markov Decision Processes
+** Drills
+*** Markov property                                                 :drill:
+What is the Markov property?
+**** Answer
+A state signal that summarizes past sensations compactly,
+yet in such a way that all relevant information is retained.
+
+This normally requires more than the immediate sensations,
+but never more than the complete history of all past sensations. A state signal
+that succeeds in retaining all relevant information is said to be Markov, or to
+have the Markov property.
+
+For example, a checkers position—the current configuration of all the pieces on
+the board—would serve as a Markov state.
+*** Discounted return                                               :drill:
+What is the formula for discounted return?
+**** Answer
+G_t = R_{t+1} + \gamma{} R_{t+2} + \gamma{}^2 R_{t+3} + ...
+
+Where \gamma is a discount rate between 0 and 1.
