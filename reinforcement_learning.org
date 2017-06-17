@@ -1,3 +1,4 @@
+#+StARTUP: entitiespretty
 * Chapter 1 - The Reinforcement Learning Problem
 ** Exploration vs Exploitation
 ** The agent is only part of the system.
@@ -207,4 +208,43 @@ You could control \epsilon in \epsilon-greedy methods with a second reinforcemen
 * Chapter 7 - Multi-step Bootstrapping
 Multi-step TD generalizes both MC and TD methods so that you can switch from one to the other smoothly.
 They also decouple the action interval and the bootstrapping interval.
-** TODO Read: 7.1
+** TODO Continue reading chapter 7 from section 7.1
+* Chapter 8 - Planning and Learning with Tabular Methods
+** TODO Read all of chapter 8
+* Chapter 9 - On-policy Prediction with Approximation
+Many problems have state spaces that are too large for tabular methods. Here we can use function approximation.
+** Bootstrapping machine learning models
+A machine learning model might bootstrap and use it's own output to adjust it's own weights.
+** Model limitations
+A function approximation model is a compression (of sorts) of all states. This is most likely a lossy compression though. You probably cannot encode all state-value pairs 100% correctly. Some models will be better than others at encoding the state-value pairs.
+** General stochastic gradient descent (SGD) method
+\theta_{t+1} = \theta_t + \alpha * ( U_t - v(S_t, \theta_t) ) * \Delta{}v(S_t, \theta_t)
+
+Where:
+- \theta are parameters to a function approximation method
+- \alpha is the step size parameter
+- v(S_t, \theta_t) is the function approximation method
+- U_t is an approximation to the actual long-term value of a state, it is the goal of v(S_t, \theta_t) to approximate U_t as closely as possible
+- \Delta{}v(S_t, \theta_t) is the gradient descent, it is a vector which points the direction we must adjust \theta to reduce the error / difference between U_t and v(S_t, \theta_t)
+** Bootstrapping bias
+Bootstrapping can cause the function approximation model to hold onto biases. If the model is wrong about something, it will tend to continue being wrong about that thing because it is bootstrapping. Even so, bootstrapping often performs better in practice.
+** Feature selection
+As with other machine learning method, feature engineering is important. It is a good way to import knowledge about the problem at hand.
+
+"Choosing features appropriate to the task is an important way of adding prior domain knowledge to reinforcement learning systems. Intuitively, the features should correspond to the natural features of the task, those along which generalization is most appropriate. If we are valuing states of a mobile robot, then we might want to have features for locations, degrees of remaining battery power, recent sonar readings, and so on."
+** Feature combination techniques
+Not all models can recognize interactions between different features. Here are some techniques to combine features to make their interactions visible to such models.
+*** Polynomials
+We can combine 2 states (s1, s2), with a polynomial which gives us (s1, s2, s1 * s2) or (s1, s2, s1 * s2, s1^2 * s2, s1 * s2^2, s1^2 * s2^2), etc.
+*** Fourier Basis
+"Another linear function approximation method is based on the time-honored Fourier series, which expresses periodic functions as a weighted sum of sine and cosine basis functions of different frequencies."
+This can be helpful for periodic or repetitive tasks.
+*** Coarse Coding / Tile Coding
+Example: You could dividie up a 2D plane into several overlapping circles. The circles will become binary features to a model. If a point (a state) in the 2D plane is inside one of the circles, that feature will be 1, and otherwise 0, etc.
+You can divide the space up in an orderly manner or randomly. It may help to have multiple "layers", each of which divides the state space in a different way, and each "layer" corresponds to several features.
+*** Radial basis functions
+These are similar to coarse coding or tile coding, but instead of binary features they use "soft edges" (like a bell curve). This adds complexity but produces a smooth feature space.
+** Thought: Don't undervalue simple models
+"Nonlinear methods may be able to fit target functions much more precisely, but the downside is greater computational complexity and, often, more manual tuning before learning is robust and efficient."
+It's cool to use fancy machine learning models and marvel at what they can do, but it's also cool to deploy reinforcement learning agents that you know are robust and will respond to changes quickly and reliably.
+** TODO Continue reading at section 9.7
