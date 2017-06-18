@@ -247,4 +247,5 @@ These are similar to coarse coding or tile coding, but instead of binary feature
 ** Thought: Don't undervalue simple models
 "Nonlinear methods may be able to fit target functions much more precisely, but the downside is greater computational complexity and, often, more manual tuning before learning is robust and efficient."
 It's cool to use fancy machine learning models and marvel at what they can do, but it's also cool to deploy reinforcement learning agents that you know are robust and will respond to changes quickly and reliably.
-** TODO Continue reading at section 9.7
+* Chapter 10 - On-policy Control with Approximation
+** TODO Read chapter 10
