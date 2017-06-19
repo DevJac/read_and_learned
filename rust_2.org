@@ -1,0 +1,100 @@
+* The Rust Programming Language - Second Edition
+* Chapter 3 - Common Programming Concepts
+** Variables
+- variables are immutable by default
+- create new variables with the let keyword: let x = 5;
+- create mutable variables with the mut keyword: let mut x = 5;
+- variables can be shadowed by new variables with the same name
+** Constants
+- are always immutable, not just immutable by default like variables
+- must have a type annotation
+- may only be set to a constant expression, they cannot be assigned the result of a function call
+- conventionally, are named in ALL_CAPS with underscores
+- constants are valid for the entire time a program runs, within the scope they were declared in
+** Scalar vs Compound Types
+- scalar represents single values; e.g.: ints, floats, booleans, characters
+- compund types combine scalar types; e.g.: tuples, arrays
+** Type Annotations
+let x: i32 = 10;
+let y: (i32, bool) = (10, false);
+** Tuples
+*** Destructuring
+fn main() {
+    let tup = (500, 6.4, 1);
+
+    let (x, y, z) = tup;
+
+    println!("The value of y is: {}", y);
+}
+*** Index Access
+fn main() {
+    let x: (i32, f64, u8) = (500, 6.4, 1);
+
+    let five_hundred = x.0;
+
+    let six_point_four = x.1;
+
+    let one = x.2;
+}
+** Arrays
+- can only contain one type of element
+- are allocated on the stack
+- elements can be accessed using indexes; use square braces for indexing, like in Python
+- bounds checking happens are runtime
+** Functions
+- declared with the fn keyword
+- by convention, are named in snake_case style
+- parameters must have type annotations
+- those end expression of a function is it's return value
+- example:
+  fn plus_one(x: i32) -> i32 {
+      x + 1
+  }
+** Statements and Expressions
+- assignment is one of the only things that cannot be an expression, only a statement
+- if a line ends in a semi-colon, it is a statement
+- expressions evaluate (simplify) to a single value
+** Comments
+- comments begin with //
+** if Expressions
+- if expressions can be used as expressions (hence the name)
+- example:
+  fn main() {
+      let number = 3;
+
+      if number != 0 {
+          println!("number was something other than zero");
+      }
+  }
+- example:
+  fn main() {
+      let number = 6;
+
+      if number % 4 == 0 {
+          println!("number is divisible by 4");
+      } else if number % 3 == 0 {
+          println!("number is divisible by 3");
+      } else if number % 2 == 0 {
+          println!("number is divisible by 2");
+      } else {
+          println!("number is not divisible by 4, 3, or 2");
+      }
+  }
+** Loops
+- Rust has 3 loop types: loop, while, for
+- can "break" out of loops
+- for loop example:
+  fn main() {
+      let a = [10, 20, 30, 40, 50];
+
+      for element in a.iter() {
+          println!("the value is: {}", element);
+      }
+  }
+fn main() {
+    let a = [10, 20, 30, 40, 50];
+
+    for element in a.iter() {
+        println!("the value is: {}", element);
+    }
+}
