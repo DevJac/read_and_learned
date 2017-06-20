@@ -199,3 +199,108 @@ let a = [1, 2, 3, 4, 5];
 let slice = &a[1..3];
 *** String literals are slices
 Functions should usually take &str instead of &String, because &String can be easily turned into &str by slicing the whole string.
+* Chapter 5 - Structs
+- struct is short for structure
+- they are sort of like a named tuple
+- it's possible for a struct to store references, but this requires lifetimes
+** Struct example:
+struct Rectangle {
+    length: u32,
+    width: u32,
+}
+
+fn main() {
+    let rect1 = Rectangle { length: 50, width: 30 };
+
+    println!(
+        "The area of the rectangle is {} square pixels.",
+        area(&rect1)
+    );
+}
+
+fn area(rectangle: &Rectangle) -> u32 {
+    rectangle.length * rectangle.width
+}
+** Printing and Debugging Structs
+- use {:?} or {:#?} to print structs with println!
+*** Example:
+#[derive(Debug)]
+struct Rectangle {
+    length: u32,
+    width: u32,
+}
+
+fn main() {
+    let rect1 = Rectangle { length: 50, width: 30 };
+
+    println!("rect1 is {:?}", rect1);
+}
+** Struct Methods Example:
+#[derive(Debug)]
+struct Rectangle {
+    length: u32,
+    width: u32,
+}
+
+impl Rectangle {
+    fn area(&self) -> u32 {
+        self.length * self.width
+    }
+}
+
+fn main() {
+    let rect1 = Rectangle { length: 50, width: 30 };
+
+    println!(
+        "The area of the rectangle is {} square pixels.",
+        rect1.area()
+    );
+
+    // This is an associated function.
+    // Notice it does not have a self parameter.
+    fn square(size: u32) -> Rectangle {
+        Rectangle { length: size, width: size }
+    }
+}
+* Chapter 6 - Enums and Pattern Matching
+- enum is short for enumeration
+- enums are similar to algebraic data types (ADTs)
+** Enum Example:
+enum IpAddr {
+    V4(u8, u8, u8, u8),
+    V6(String),
+}
+
+let home = IpAddr::V4(127, 0, 0, 1);
+
+let loopback = IpAddr::V6(String::from("::1"));
+** Option<T> Example:
+let some_number = Some(5);
+let some_string = Some("a string");
+let absent_number: Option<i32> = None;
+** Match Example:
+fn plus_one(x: Option<i32>) -> Option<i32> {
+    match x {
+        None => None,
+        Some(i) => Some(i + 1),
+    }
+}
+
+let five = Some(5);
+let six = plus_one(five);
+let none = plus_one(None);
+** if let
+If you write a match that only takes action on a single value, and then uses a wildcard for the rest of the values, consider using an if let statement.
+*** Example:
+let some_u8_value = Some(0u8);
+match some_u8_value {
+    Some(3) => println!("three"),
+    _ => (),
+}
+
+Above is equivalent to:
+
+if let Some(3) = some_u8_value {
+    println!("three");
+}
+// You can also have an else clause in if let statements.
