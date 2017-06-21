@@ -289,6 +289,8 @@ fn plus_one(x: Option<i32>) -> Option<i32> {
 let five = Some(5);
 let six = plus_one(five);
 let none = plus_one(None);
+** Match can have guards:
+This is an example of a clause in a match which has a guard: Err(ref error) if error.kind() == ErrorKind::NotFound => {...
 ** if let
 If you write a match that only takes action on a single value, and then uses a wildcard for the rest of the values, consider using an if let statement.
 *** Example:
@@ -304,3 +306,36 @@ if let Some(3) = some_u8_value {
     println!("three");
 }
 // You can also have an else clause in if let statements.
+* Chapter 7 - Modules
+- mod.rs acts like __init__.py in Python modules
+- modules can be declared in src/lib.rs, but defined in another file
+- the use keyword can help with long namespace name
+- extern crate is required to access functions (etc) from another crate
+- a project is considered to be 2 separate crates rooted at src/main.rs and src/lib.rs
+- modules and functions (etc) are private by default
+* Chapter 8 - Common Collections
+** TODO Read chapter 8
+* Chapter 9 - Error Handling
+** Panic vs abort
+Panic will cause the stack to unwind, and for cleanups to happen. You can abort instead to instantly end the process and let the OS cleanup. Configuring Rust/Cargo to use abort can lead to smaller binaries.
+** unwrap and expect
+unwrap and expect can be used on Results if you just want to panic on the Err condition.
+** ? syntax
+    let f = File::open("hello.txt");
+
+    let mut f = match f {
+        Ok(file) => file,
+        Err(e) => return Err(e),
+    };
+
+can be shortened to
+
+    let mut f = File::open("hello.txt")?;
+
+Notice the ?
+** To panic or not to panic
+- In examples, prototypes, and tests, go ahead and panic.
+- Consider marking areas where you panic for ease of implementation, so they can be improved later.
+- Sometimes you know something will never fail, go ahead and unwrap then. If you'd feel comfortable using an assert, then you could also use an unwrap.
+* Chapter 10 - Generic Types, Traits, and Lifetimes
+** TODO Read chapter 10
