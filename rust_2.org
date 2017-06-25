@@ -130,7 +130,7 @@ fn takes_ownership(some_string: String) { // some_string comes into scope.
 
 fn makes_copy(some_integer: i32) { // some_integer comes into scope.
     println!("{}", some_integer);
-} // Here, some_integer goes out of scope. Nothing special happens.
+} // Here, some_integer goes orust trait intout of scope. Nothing special happens.
 *** Example 2
 fn main() {
     let s1 = gives_ownership();         // gives_ownership moves its return
@@ -451,3 +451,43 @@ impl<'a> ImportantExcerpt<'a> {
         self.part
     }
 }
+* Chapter 19 - Advanced Features
+** Associated Types
+*** Purpose
+"Associated types are a way of associating a type placeholder with a trait such that the trait method definitions can use these placeholder types in their signatures. The implementer of a trait will specify the concrete type to be used in this type's place for the particular implementation."
+*** Example
+pub trait Iterator {
+    type Item;
+    fn next(&mut self) -> Option<Self::Item>;
+}
+**** Explanation
+"This says that the Iterator trait has an associated type named Item. Item is a placeholder type, and the return value of the next method will return values of type Option<Self::Item>. Implementers of this trait will specify the concrete type for Item, and the next method will return an Option containing a value of whatever type the implementer has specified."
+*** Associated Types vs Generics
+Associated types and generics in a trait definition can serve similar purposes. The difference is a generic type allows a trait to be implemented multiple times over multiple types, while an associated type does not.
+** Default Generic Types
+Consider this trait and two implementations:
+
+trait Add<RHS=Self> {
+    type Output;
+
+    fn add(self, rhs: RHS) -> Self::Output;
+}
+
+...
+
+impl Add for Millimeters {
+    type Output = Millimeters;
+
+    fn add(self, other: Millimeters) -> Millimeters {
+        ...
+    }
+}
+
+impl Add<Meters> for Millimeters {
+    type Output = Millimeters;
+
+    fn add(self, other: Meters) -> Millimeters {
+        ...
+    }
+}
+
