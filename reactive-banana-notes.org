@@ -1,0 +1,246 @@
+* Data Types
+** Event a
+Discrete values and specific times.
+
+A functor. fmap applies a function to every event value.
+** Behavior a
+Continuous values that can change over time. There is a value for every point in time.
+
+A function and applicative.
+
+fmap applies a function to every point in time.
+
+pure creates a Behavior with a constant value through time.
+
+apply can apply a time-varying function contained in one Behavior to another Behavior.
+
+A Behavior is like a variable, maybe? A variable has a value at all times, and so does a Behavior. A Behavior can store state over time.
+** Moment a
+Represents a computation at a point in time.
+
+It is a Monad, and a MonadMoment. Which means it's a functor and an applicative as well.
+
+The MonadMoment is a typeclass containing Moment and MomentIO. These two types are similar. MomentIO is intended for adding inputs and outputs to the network.
+* Functions
+** Event functions
+*** never :: Event a
+An event that never occurs.
+*** unionWith :: (a -> a -> a) -> Event a -> Event a -> Event a
+Combine two event streams.
+*** filterE :: (a -> Bool) -> Event a -> Event a
+Filter an event stream.
+*** apply :: Behavior (a -> b) -> Event a -> Event b
+Apply a time varying function to an event stream. This is similar to fmap, except fmap is a constant function.
+
+(<@>) = apply
+*** accumE :: MonadMoment m => a -> Event (a -> a) -> m (Event a)
+Takes an initial value. Event (a -> a) is an event containing a function, and that function is applied to the value in accumE every time it fires. The function can change over time.
+
+Example: accumE "x" [(time1,(++"y")),(time2,(++"z"))] = [(time1,"xy"),(time2,"xyz")]
+*** stepper :: MonadMoment m => a -> Event a -> m (Behavior a)
+Holds the most recent value on an Event stream in a Behavior.
+*** observeE :: Event (Moment a) -> Event a
+*** switchE :: MonadMoment m => Event (Event a) -> m (Event a)
+When switchE is applied to an Event stream containing nested Event streams, it will produce an Event stream equal which is equal to the most recent nested Event.
+
+In a sense, it is a variable containing an Event stream, which can change over time. This is a loose way of looking at it though.
+*** filterJust :: Event (Maybe a) -> Event a
+*** filterApply :: Behavior (a -> Bool) -> Event a -> Event a
+*** whenE :: Behavior Bool -> Event a -> Event a
+*** split :: Event (Either a b) -> (Event a, Event b)
+*** unions :: [Event (a -> a)] -> Event (a -> a)
+** Behavior functions
+*** valueB :: MonadMoment m => Behavior a -> m a
+*** valueBLater :: MonadMoment m => Behavior a -> m a
+*** switchB :: MonadMoment m => Behavior a -> Event (Behavior a) -> m (Behavior a)
+Produces a Behavior which may change over time. The Event in the second argument causes this change to happen.
+*** accumB :: MonadMoment m => a -> Event (a -> a) -> m (Behavior a)
+*** mapAccum :: MonadMoment m => acc -> Event (acc -> (x, acc)) -> m (Event x, Behavior acc)
+* Related functions
+** Applicative functions
+*** pure :: a -> f a
+*** (<*>) :: f (a -> b) -> f a -> f b
+*** (*>) :: f a -> f b -> f b
+*** (<*) :: f a -> f b -> f a
+*** (<$>) :: Functor f => (a -> b) -> f a -> f b
+*** (<$) :: Functor f => a -> f b -> f a
+** Monoid
+*** mempty :: a
+*** mappend :: a -> a -> a
+*** mconcat :: [a] -> a
+*** (<>) = mappend
+* Library Observations
+** Structure of library
+Reactive.Banana.Combinators is the most useful module. You will spend most of your time with this module.
+** Recursion
+Recursion is important. "Value recursion" is frequently used, and is different than than the type of recursion I am used to seeing.
+
+In general, mutual recursion between several Events and Behaviors is always well-defined, as long as an Event depends on itself only via a Behavior, and vice versa.
+** Handlers
+Handlers of type (a -> IO ()) can be triggered by Events.
+** actuate runs the EventNetwork in a thread
+If the last call in your main thread is actuate, then the program will end immediately. In Haskell, the entire program ends when the main thread exits.
+
+actuate does not block. It will start the EventNetwork in another thread and then "return".
+** Changes to Behaviors are only visible after the "Moment" is past
+When you change the value of a Behavior in the Moment monad, that change is not visible until after the "Moment" has passed. If you need to take action on the new Behavior value right away you can use reactimate' along with the changes function.
+** Only fired Events cause reactimate to run, changing Behaviors do nothing
+Semantically, a Behavior is constantly changing, it is a continuous function. A change to a Behavior never causes a reactimate function to run, unless you transform the Behavior into an Event using the changes function.
+
+Just because a reactimate call appears in the code doesn't mean it will run. Remember that reactive-banana is declarative. The reactimate function will only run when the Event it is connected to fires. I have thought about the EventNetwork code as being an imperative loop at times, and then I get confused about why a reactimate call is not running; what is really happening is that the Event that reactimate function is connected to is not firing. Again, remember that the FRP code is not an imperative loop, it is a declarative description of a FRP network.
+* Questions
+** What is a Moment?
+It's a Monad that's required as an implementation detail.
+* Connecting to the outside world
+** Terms
+*** event graph
+The functions from Reactive.Banana.Combinators allow you to express the output events in terms of the input events. This expression is called an event graph.
+*** event network
+An event graph along with it's inputs and outputs.
+** Example
+main = do
+  -- initialize your GUI framework
+  window <- newWindow
+  ...
+
+  -- describe the event network
+  let networkDescription :: MomentIO ()
+      networkDescription = do
+          -- input: obtain  Event  from functions that register event handlers
+          emouse    <- fromAddHandler $ registerMouseEvent window
+          ekeyboard <- fromAddHandler $ registerKeyEvent window
+          -- input: obtain  Behavior  from changes
+          btext     <- fromChanges    "" $ registerTextChange editBox
+          -- input: obtain  Behavior  from mutable data by polling
+          bdie      <- fromPoll       $ randomRIO (1,6)
+
+          -- express event graph
+          behavior1 <- accumB ...
+          let
+              ...
+              event15 = union event13 event14
+
+          -- output: animate some event occurrences
+          reactimate $ fmap print event15
+          reactimate $ fmap drawCircle eventCircle
+
+  -- compile network description into a network
+  network <- compile networkDescription
+  -- register handlers and start producing outputs
+  actuate network
+** Functions
+*** fromAddHandler :: AddHandler a -> MomentIO (Event a)
+Obtain input events.
+The full type is: ((a -> IO ()) -> IO (IO ())) -> MomentIO (Event a)
+*** fromChanges :: a -> AddHandler a -> MomentIO (Behavior a) / fromPoll :: IO a -> MomentIO (Behavior a)
+Obtain input Behaviors. fromChanges should be prefered.
+*** reactimate :: Event (IO ()) -> MomentIO ()
+Animate output events.
+*** compile :: MomentIO () -> IO EventNetwork / actuate :: EventNetwork -> IO ()
+Start running the event network.
+** Types
+*** MomentIO
+Similar to a regular Moment, but used to add events and event handlers to the event graph.
+
+It is a MonadIO so liftIO can be used.
+*** EventNetwork
+Produced by the compile function. You can actuate and pause a EventNetwork.
+*** AddHandler
+A newtype of (a -> IO ()) -> IO (IO ())
+* Examples
+** Simple Vty integration
+import Control.Concurrent (threadDelay, forkIO)
+import Control.Monad (forever)
+import qualified Graphics.Vty as V
+import Reactive.Banana
+import Reactive.Banana.Frameworks
+
+main :: IO ()
+main = do
+    vty <- V.mkVty V.defaultConfig
+    actuate =<< network vty
+    threadDelay $ 10 * 1000000
+    V.shutdown vty
+
+update :: V.Vty -> V.Event -> IO ()
+update vty = V.update vty . V.picForImage . V.string V.defAttr . show
+
+network :: V.Vty -> IO EventNetwork
+network vty = compile $ do
+    (inputEvents, fireInputEvent) <- newEvent
+    _ <- liftIO $ forkIO $ forever $ fireInputEvent =<< V.nextEvent vty
+    reactimate $ fmap (update vty) inputEvents
+** pureNetwork
+import Control.Concurrent (threadDelay, forkIO)
+import Control.Monad (forever)
+import qualified Graphics.Vty as V
+import Reactive.Banana
+import Reactive.Banana.Frameworks
+
+main :: IO ()
+main = do
+    vty <- V.mkVty V.defaultConfig
+    actuate =<< network vty
+    threadDelay $ 10 * 1000000
+    V.shutdown vty
+
+update :: V.Vty -> [String] -> IO ()
+update vty = V.update vty . V.picForImage . mconcat . fmap (V.string V.defAttr)
+
+network :: V.Vty -> IO EventNetwork
+network vty = compile $ do
+    (inputEvents, fireInputEvent) <- newEvent
+    _ <- liftIO $ forkIO $ forever $ fireInputEvent =<< V.nextEvent vty
+    outputEvents <- liftMoment $ pureNetwork inputEvents
+    reactimate $ fmap (update vty) outputEvents
+
+pureNetwork :: Event V.Event -> Moment (Event [String])
+pureNetwork inputEvents = pure $ (replicate 2 . show) <$> inputEvents
+** Typing with case switching
+*** Description
+In this example, you can type out a string which will be accumulated into a Behavior. Pressing escape will toggle whether the string will be capitalized.
+*** Code
+import Control.Concurrent (threadDelay, forkIO)
+import Control.Monad (forever)
+import Data.Char (toUpper)
+import qualified Graphics.Vty as V
+import Reactive.Banana
+import Reactive.Banana.Frameworks
+
+main :: IO ()
+main = do
+    vty <- V.mkVty V.defaultConfig
+    actuate =<< network vty
+    threadDelay $ 20 * 1000000
+    V.shutdown vty
+
+update :: V.Vty -> [String] -> IO ()
+update vty = V.update vty . V.picForImage . mconcat . fmap (V.string V.defAttr)
+
+network :: V.Vty -> IO EventNetwork
+network vty = compile $ do
+    (inputEvents, fireInputEvent) <- newEvent
+    _ <- liftIO $ forkIO $ forever $ fireInputEvent =<< V.nextEvent vty
+    outputEvents <- liftMoment $ pureNetwork inputEvents
+    reactimate' =<< changes (fmap (update vty) outputEvents)
+
+isChar :: V.Event -> Bool
+isChar (V.EvKey (V.KChar _) _) = True
+isChar _                       = False
+
+isEsc :: V.Event -> Bool
+isEsc (V.EvKey (V.KEsc) _) = True
+isEsc _                    = False
+
+mightCapitalize :: Bool -> String -> String
+mightCapitalize True  = fmap toUpper
+mightCapitalize False = id
+
+pureNetwork :: Event V.Event -> Moment (Behavior [String])
+pureNetwork inputEvents = do
+    let inputChar = (\(V.EvKey (V.KChar c) _) -> pure c) <$> filterE isChar inputEvents
+        inputEsc = filterE isEsc inputEvents
+    accumedString <- accumB "" ((\new accumed -> accumed ++ new) <$> inputChar)
+    capitalizeSwitch <- accumE False (not <$ inputEsc)
+    maybeCapitalize <- switchB (pure $ mightCapitalize False) (pure . mightCapitalize <$> capitalizeSwitch)
+    pure $ fmap pure $ maybeCapitalize <*> accumedString
