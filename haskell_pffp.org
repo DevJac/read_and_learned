@@ -1,0 +1,370 @@
+* Chapter 1 - All You Need is Lambda
+** 1.1 - All You Need is Lambda
+Lambda calculus is a model of computation created in the 1930s by Alonzo Church.
+** 1.2 - What is functional programming?
+Haskell is a functional programming language with referential transparency.
+** 1.3 - What is a function?
+A function is a relationship between a set of inputs and a set of outputs.
+** 1.4 - The structure of lambda terms
+~\x.x~ is an anonymous lambda function.
+** 1.5 - Beta reduction
+"Beta reduction" is the process of applying lambda functions. The beta reduction process is over where there are no more lambda heads or no more function applications to make.
+
+In ~\x.xy~ ~x~ is a bound variable, and ~y~ is a free variable.
+** 1.6 - Multiple arguments
+Exercise answers:
+b
+c
+b
+** 1.7 - Evaluation is simplification
+After all possible function applications are complete, an expression is in "beta normal form".
+** 1.8 - Combinators
+A "combinator" is a function without any free variables.
+** 1.9 - Divergence
+~(\x.xx)(\x.xx)~ is a lambda expression called "Omega" that diverges. It enters an infinite loop.
+
+After one step of evaluation we have ~(\x.xx)(\x.xx)~ which is exactly what we started with.
+
+I wonder if there is any system that can detect infinite loops like this?
+** 1.10 - Summary
+Haskell (and functional programming) is centered around evaluating expressions rather than executing instructions.
+** 1.11 - Chapter Exercises
+*** Combinators
+y
+n
+y
+y
+n
+*** Normal form or diverge?
+normal
+diverge
+normal
+*** Beta reduce
+#+BEGIN_EXAMPLE
+(\abc.cba)zz(wv.w)
+(\bc.cbz)z(wv.w)
+(\c.czz)(wv.w)
+(wv.w)zz
+z
+
+(\xy.xyy)(\a.a)b
+(\y.(\a.a)yy)b
+(\a.a)bb
+b b
+
+(\y.y)(\x.xx)(\z.zq)
+(\x.xx)(\z.zq)
+(\z.zq)(\z.zq)
+(\z.zq)q
+q q
+
+(\z.z)(\z.zz)(\z.zy)
+(\z.zz)(\z.zy)
+(\z.zy)(\z.zy)
+(\z.zy)y
+y y
+
+(\xy.xyy) (\y.y) y
+(\y.(\a.a)yy) y
+(\a.a)yy
+y y
+
+(\a.aa)(\b.ba)c
+(\b.ba)(\b.ba)c
+(\b.ba)ac
+(aa)c
+a a c
+
+(\xyz.xz(yz))(\x.z)(\x.a)
+(\yz.(\x.z1)z(yz))(\x.a)
+(\z.(\x.z1)z((\x.a)z))
+(\z.z1 a)
+#+END_EXAMPLE
+** 1.12 - Answers
+My answers were correct.
+** 1.13 - Definitions
+In the lambda function ~\a.b~ ~\a~ is the "head".
+
+The normal order evaluation strategy applies the leftmod outermost lambdas first.
+* Chapter 2 - Hello, Haskell!
+** 2.1 - Hello, Haskell
+https://github.com/bitemyapp/learnhaskell has additional exercises and courses for learning Haskell. The https://github.com/data61/fp-course course looks especially good. I should try working through it after I finish this book to test how much I've learned.
+** 2.2 - Interacting with Haskell code
+Dante with Spacemacs seems to be working well. I got ghci working and have a good way to edit source files.
+** 2.3 - Understanding expressions
+Reducible expressions are called "redexes".
+** 2.4 - Functions
+Let's say you need to calculate the following:
+
+#+BEGIN_EXAMPLE
+(1 + 2) * 3
+(4 + 5) * 3
+(10 + 5) * 3
+#+END_EXAMPLE
+
+There is obviously a pattern that should be extracted into a function: ~triple x = x * 3~
+** 2.5 - Evaluation
+Exercises:
+
+1. I am using GHC 8.2, so I would not have to change those lines. I might have to use a ~let~ expression in older versions of GHC though.
+2.
+#+BEGIN_SRC haskell
+piSquare x = 3.14 * (x * x)
+#+END_SRC
+3.
+#+BEGIN_SRC haskell
+piSquare x = pi * (x * x)
+#+END_SRC
+** 2.6 - Infix operators
+Common infix precedences:
+(+) (-) infixl 6
+(*) (/) infixl 7
+(^)     infixr 8
+
+The math operators seem to be on the upper end of possible precedences, which ranges from 0-9.
+*** Exercises
+1. different
+2. same
+3. different
+** 2.7 - Declaring values
+Indentation matters in Haskell.
+*** Exercises
+The errors are:
+1. There is an extra space in ~3.14~.
+2. Mismatched variables
+3. The second line is indented too far.
+** 2.8 - Arithmetic functions in Haskell
+~quot~ and ~rem~ go together, and ~div~ and ~mod~ go together.
+#+BEGIN_EXAMPLE
+(quot x y)*y + (rem x y) == x
+(div x y)*y + (mod x y) == x
+#+END_EXAMPLE
+
+An easy way to remember this pairing is the "divmod" which is a common function name.
+
+The result of ~mod~ has the same sign as the devisor.
+The result of ~rem~ has the same sign as the dividend (numerator).
+** 2.9 - Parenthesization
+~(+1)~ is a "section".
+
+~(-1)~ is negative one, if you want a section instead, do ~(subtract 1)~.
+** 2.10 - Let and where
+~let~ is an expression, ~where~ is a syntactic construct.
+*** Exercises
+1. 5
+2. 25
+3. 30
+4. 6 (tricky)
+** 2.11 - Chapter Exercises
+1. 2 + (2 * 3) - 1
+2. (^) 10 (1 + 1)
+3. ((2^2)*(4^5)) + 1
+
+1. same
+2. same
+3. different
+4. different
+5. different
+** 2.12 - Definitions
+Operators are symbols and are infix by default.
+* Chapter 3 - Strings
+** 3.1 - Printings strings
+There is special syntax for strings.
+** 3.2 - A first look at types
+Use ~:type~ in the REPL to see the type of values or variables.
+** 3.3 - Printing simple strings
+You can customize ghci with a file at ~.ghci~.
+** 3.4 - Top-level versus local definitions
+Notice that ~d~ is a free variable in the function / value ~r~:
+#+BEGIN_SRC haskell
+area d = pi * (r * r)
+  where r = d / 2
+#+END_SRC
+** 3.5 - Types of concatenation functions
+Everything after ~::~ is about types, not values.
+
+Typeclasses provide functions that can work accross a set of types.
+** 3.6 - Concatenation and scoping
+#+BEGIN_SRC haskell
+printSecond :: String -> IO ()
+printSecond greeting = do
+  putStrLn greeting
+
+main :: IO ()
+main = do
+  putStrLn greeting
+  printSecond greeting
+    where greeting = "Yarrrrr"
+#+END_SRC
+** 3.7 - More list functions
+~head~ and ~!!~ are unsafe list functions.
+** 3.8 - Chapter Exercises
+Exercise 2:
+
+a -> d
+b -> c
+c -> e
+d -> a
+e -> b
+** 3.9 - Definitions
+A type is a classification of values.
+* Chapter 4 - Basic datatypes
+** 4.1 - Basic Datatypes
+Types can be used to accomplish the same things with less code?
+
+I've seen some toy examples of this, but I wonder how far it extends. It seems hard to imagine that a correct program in Haskell can be shorter than the same correct program in a dynamic language.
+** 4.2 - What are types?
+Every value has a type. Types are how we group a set of values together that share something in common.
+
+Logical operations like "and" or "or" from set theory have equivalents in Haskell's type system.
+** 4.3 - Anatomy of a data declaration
+~data Bool = False | True~
+
+~False~ and ~True~ are values. ~Bool~ is the name given to the set of values.
+
+"Type constructor"
+"Data constructor"
+
+Remember one is a type (a set / classification of values) and the other is a value (data).
+** 4.4 - Numeric types
+The "scientific" package provides a Scientific type that is more efficient than the Rational type.
+** 4.5 - Comparing values
+Haskell uses ~/=~ for not equal, this is different than many languages.
+** 4.6 - Go on and Bool me
+~&&~ and ~||~ are the and / or operators in Haskell.
+** 4.7 - Tuples
+For tuples, the type and the values are syntactically the same. For example ~(,,,) 1 2 3 4~ is a 4-tuple.
+** 4.8 - Lists
+Lists and Tuples are two types with special syntax in Haskell. Are there others?
+** 4.9 - Chapter Exercises
+- Define length
+- Define isPalidrome
+- Define myAbs
+
+#+BEGIN_SRC haskell
+myLength [] = 0
+myLength a = 1 + length (tail a)
+
+isPalidrome a = a == reverse a
+
+myAbs a = if a < 0 then negate a else a
+#+END_SRC
+** 4.10 - Definitions
+Haskell has a zero element tuple called "unit".
+
+A typeclass is a unique pairing of class and type. For example, there is only one ~Eq~ implementation for ~Int~.
+** 4.11 - Names and variables
+7 things in Haskell have names:
+- functions (term and type)
+- variables (term)
+- data constructors (term)
+- type variables (type)
+- type constructors (type)
+- typeclasses (type)
+- modules
+
+Variable names idea:
+- name type level variables a, b, c
+- name function parameters x, y, z, and if you need more come up with more descriptive names because a function taking 4 argument probably needs more than single letter parameters to be readable
+- don't follow these rules too strictly
+* Chapter 5 - Types
+** 5.1 - Types
+Data constructors are functions that create data.
+** 5.2 - What are types for?
+Haskell is just syntactic sugar over System F with a type system.
+
+System F was invented in the 1970s.
+** 5.3 - How to read type signatures
+#+BEGIN_EXAMPLE
+Couldn't match expected type ‘Double’
+with actual type ‘Int’
+In the second argument of ‘(+)’,
+namely ‘fifteenInt’
+In the expression: fifteenDouble + fifteenInt
+#+END_EXAMPLE
+
+I've often been confused about the "expected" and "actual" types. Sometimes the actual type is what I expect.
+
+To understand these errors better, look at the specific term the compiler is confused about. It is confused about "the second argument of (+)".
+
+It seems type variables are determined by the earliest possible argument, so the second argument doesn't match the expectation of the compiler.
+
+Once you know the specific term the compiler is confused about the error makes more sense.
+** 5.4 - Currying
+Haskell seems to have a lot of conveniences for functions with one or two parameters.
+** 5.5 - Polymorphism
+"poly" = "many"
+"morph" = "form"
+"ic" = "made of"
+"polymorphic" = "made of many forms"
+
+Type signatures may have 3 kinds of types:
+- concrete types
+- constrained polymorphic types (implemented with typeclasses in Haskell)
+- parametrically polymorphic types (type variables with no typeclass restrictions)
+
+The more polymorphic a type variable, the less we can do with it, but the more types it can accept.
+** 5.6 - Type inference
+Haskell will infer the most general type possible.
+** 5.7 - Asserting types for declarations
+"No instance for (Num String) arising from a use of `+`".
+
+Some notes about the form of this error:
+- Num is a class / typeclass
+- String is a type
+- (+) is a function defined in the Num class / typeclass
+** 5.8 - Chapter Exercises
+The "monomorphism restriction" means that top level declarations by default will have a concrete type.
+
+*** Define a function co :: (b -> c) -> (a -> b) -> a -> c
+#+BEGIN_SRC haskell
+co :: (b -> c) -> (a -> b) -> a -> c
+co f g = f . g
+#+END_SRC
+*** munge
+#+BEGIN_SRC haskell
+munge :: (x -> y)
+         -> (y -> (w, z))
+         -> x
+         -> w
+munge f g x = fst (g (f x))
+#+END_SRC
+** 5.9 - Definitions
+With parametricity (parametric polymorphism) the behavior of a function is uniform across all applications of the function, no matter the types.
+
+With ad-hoc polymorphism (constrained polymorphism) functions can behave differently depending on their types. This is the whole point of ad-hoc polymorphism.
+* Chapter 6 - Typeclasses
+** 6.1 - Typeclasses
+What are type-defaulting typeclasses?
+** 6.2 - What are typeclasses?
+In a sense, type (data) definitions define how types are create, and typeclasses define how they are consumed (in part).
+** 6.3 - Back to Bool
+Do not use the ~Read~ typeclass. (?)
+** 6.4 - Eq
+I wonder how the automatic deriving works? Will we learn how to make our out typeclasses that can be automatically derived in this book?
+** 6.5 - Writing typeclass instances
+You can have typeclass constraints in an instance: ~instance Eq a => Eq (Identity a) where ...~
+
+Avoid partial functions, enumerate all possibilities, or use a catchall if there are too many possibilities.
+
+It is better to list all possibilities explicitly if there are not too many.
+*** Exercise
+#+BEGIN_SRC haskell
+data EitherOr a b =
+    Hello a
+  | Goodbye b
+
+instance (Eq a, Eq b) => Eq (EitherOr a b) where
+  (Hello a) == (Hello b) = a == b
+  (Goodbye a) == (Goodbye b) = a == b
+  _ == _ = False
+#+END_SRC
+** 6.6 - Num
+Class definitions can have typeclass constraints: ~class (Real a, Enum a) => Integral a where ...~
+** 6.7 - Type-defaulting typeclasses
+Typeclasses can specify which type they will default to. For example, ~Num~ will default to ~Integer~.
+
+I've think it's good practice to avoid type defaulting altogether so I don't think this is too important.
+
+Remember, functions can be made more specific, but not more general. For example, if you have a function that works on ~Integers~ only, there are no tricks that will allow it to work on any ~Num~.
+** 6.8 - Ord
