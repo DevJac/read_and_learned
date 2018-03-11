@@ -368,3 +368,34 @@ I've think it's good practice to avoid type defaulting altogether so I don't thi
 
 Remember, functions can be made more specific, but not more general. For example, if you have a function that works on ~Integers~ only, there are no tricks that will allow it to work on any ~Num~.
 ** 6.8 - Ord
+~Maybe~ is an instance of ~Ord~. I wonder how it behaves?
+
+Functions have no ~Show~ instance and cannot be printed.
+
+When putting typeclass constraints on your functions, we want the minimally sufficient constraints. This will allow the function to be as flexible as possible. For example, if your function requires ~Eq~, you could require ~Ord~ instead, since ~Ord~ is a superclass of ~Eq~, but doing so would unnecessarily limit the number of types your function could operate on.
+** 6.9 - Enum
+The Haskell range syntax is one of four things:
+1. ~[first..]~
+2. ~[first, second..]~
+3. ~[first..last]~
+4. ~[first, second..last]~
+
+This is syntax sugar for the functions in the ~Enum~ typeclass.
+** 6.10 - Show
+There is more than just a ~show~ function inside the ~Show~ class.
+** 6.11 - Read
+~read~ is a partial function and should be avoided.
+** 6.12 - Instances are dispatched by type
+- a typeclass defines a set of functions and/or values
+- types have instances of that typeclass
+- an instance specifies the way the functions in the typeclass behave for the specific type
+** 6.13 - Gimme more operations
+Sometimes, defining a function on a concrete type might make too many operations available to the function. In such cases you might make a purposely polymorphic function, even though you only intend to use the function on one type.
+** 6.14 - Chapter Exercises
+Data constructors can be partially applied.
+** 6.15 - Chapter Definitions
+~Fractional~ inherits from ~Num~. This means that all Fractionals are Nums, but not all Nums must be Fractionals.
+~Num~ is a superclass of ~Fractional~
+~Fractional~ is a subclass of ~Num~
+* Chapter 7 - More functional patterns
+** 7.1 - Make it func-y
