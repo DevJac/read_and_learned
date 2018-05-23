@@ -10,43 +10,82 @@ An xy-coordinate and a tuple of ~(age, weight)~ are essentially the same. The op
 ** Tuple/point notation vs Vector notation
 Where we might write a tuple or a vector as ~(1, 2)~ traditionally, we would write a vertical column matrix in linear algebra:
 
+\begin{equation*}
 \begin{bmatrix}
 1 \\
 2
 \end{bmatrix}
+\end{equation*}
 * Basic vector operations
 ** Vector addition
+\begin{equation*}
 \begin{bmatrix}
 1 \\
 2
-\end{bmatrix} +
+\end{bmatrix}
++
 \begin{bmatrix}
 3 \\
 4
-\end{bmatrix} =
+\end{bmatrix}
+=
 \begin{bmatrix}
 1 + 3 \\
 2 + 4
-\end{bmatrix} =
+\end{bmatrix}
+=
 \begin{bmatrix}
 4 \\
 6
 \end{bmatrix}
+\end{equation*}
 
 A vector must contain values with units (types) that can be combined (added) in a sensible way.
 ** Vector scalar multiplication
-\begin{align*}
+\begin{equation*}
 3
 \begin{bmatrix}
 1 \\
 2
-\end{bmatrix} =
+\end{bmatrix}
+=
 \begin{bmatrix}
 3 \times 1 \\
 3 \times 2
-\end{bmatrix} =
+\end{bmatrix}
+=
 \begin{bmatrix}
 3 \\
 6
 \end{bmatrix}
-\end{align*}
+\end{equation*}
+** Scaling unit vectors
+The values in a column matrix scale "units" or "basis vectors". Notice the basic operations of addition and scalar multiplication in this single simple matrix.
+
+\begin{equation*}
+\begin{bmatrix}
+1 \\
+2
+\end{bmatrix}
+=
+\begin{bmatrix}
+1 \times \hat{i} \\
+2 \times \hat{j}
+\end{bmatrix}
+=
+1 \times \hat{i} + 2 \times \hat{j}
+\end{equation*}
+** Linear combinations
+\begin{equation*}
+a \times \hat{i} + b \times \hat{j}
+\end{equation*}
+
+Above is a "linear combination of $\hat{i}$ and $\hat{j}$". Notice, again, the basic operations of addition and scalar multiplication.
+* Spans
+The "span" of a set of vectors is the set of all possible linear combinations of those vectors.
+
+"Basis vectors" can be though of as your building blocks. You can add the blocks, and you can scale the blocks. The "span" is the set of all vectors you could possibly build from your basis vectors using only addition and scalar multiplication.
+** Linearly independent vectors
+A set of vectors is said to be "linearly independent" if no vector can be expressed as a linear combination of the other vectors.
+
+In other words, each vector brings something new (unique) to the table. Removing any of the vectors would reduce the span of the set.
