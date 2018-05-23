@@ -89,3 +89,84 @@ The "span" of a set of vectors is the set of all possible linear combinations of
 A set of vectors is said to be "linearly independent" if no vector can be expressed as a linear combination of the other vectors.
 
 In other words, each vector brings something new (unique) to the table. Removing any of the vectors would reduce the span of the set.
+* Matrix multiplication
+\begin{equation}
+\begin{bmatrix}
+a & b \\
+c & d
+\end{bmatrix}
+\begin{bmatrix}
+x \\
+y
+\end{bmatrix}
+=
+x
+\begin{bmatrix}
+a \\
+c
+\end{bmatrix}
++
+y
+\begin{bmatrix}
+b \\
+d
+\end{bmatrix}
+=
+\begin{bmatrix}
+ax + by \\
+cx + dy
+\end{bmatrix}
+\end{equation}
+
+This is possibly the most important equation in linear algebra.
+
+To understand it, remember that:
+
+\begin{equation*}
+\begin{bmatrix}
+x \\
+y
+\end{bmatrix}
+=
+x \times \hat{i} + y \times \hat{j}
+=
+x \hat{i} + y \hat{j}
+=
+x
+\begin{bmatrix}
+1 \\
+0
+\end{bmatrix}
++
+y
+\begin{bmatrix}
+0 \\
+1
+\end{bmatrix}
+\end{equation*}
+
+Because of the way matrix multiplication is defined, the above matrix multiplication will change the basis vectors such that:
+
+\begin{equation*}
+\hat{i}
+\text{ becomes }
+\begin{bmatrix}
+a \\
+c
+\end{bmatrix}
+\text{ and }
+\hat{j}
+\text{ becomes }
+\begin{bmatrix}
+b \\
+d
+\end{bmatrix}
+\end{equation*}
+
+And thus we arive back at the original formula, we have gone full circle.
+** Order of matrices in matrix multiplication
+The first matrix contains the new basis vectors. The order implies that a new basis is being applied to the second matrix.
+* A matrix represents a linear transformation of space
+All matrices represent linear transformations of space.
+** TODO What about non-square matrices?
+What does it mean for a non-square matrix to be the basis in matrix multiplication?
