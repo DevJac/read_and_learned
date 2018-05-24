@@ -89,6 +89,8 @@ The "span" of a set of vectors is the set of all possible linear combinations of
 A set of vectors is said to be "linearly independent" if no vector can be expressed as a linear combination of the other vectors.
 
 In other words, each vector brings something new (unique) to the table. Removing any of the vectors would reduce the span of the set.
+** "Column space"
+A set of vectors has a "span", a transformation matrix has a "column space", but the twho terms mean basically the same thing.
 * Matrix multiplication
 \begin{equation}
 \begin{bmatrix}
@@ -166,7 +168,39 @@ d
 And thus we arive back at the original formula, we have gone full circle.
 ** Order of matrices in matrix multiplication
 The first matrix contains the new basis vectors. The order implies that a new basis is being applied to the second matrix.
+
+This is similar to function application notation. The thing defining the transformation comes first.
 * A matrix represents a linear transformation of space
 All matrices represent linear transformations of space.
+** Inverse transformations
+The inverse of a transformation is denoted by "raising it to the power of -1".
+
+Composing any transformation with its inverse will give you the identity transformation. But not all transformations will have an inverse. If you "squish" all of space into a single point, there is no reversing that.
+
+If a transformation does have an inverse, it has a single unique inverse. In other words, a transformation will have either 0 or 1 inverses.
+** Rank
+The "rank" of a transformation is the number of dimensions in its output.
+
+The "rank" is also the number of linearly independent columns in the transformation matrix.
+
+If the rank of a matrix is equal to the number of columns in the matrix, it is called "full rank".
 ** TODO What about non-square matrices?
 What does it mean for a non-square matrix to be the basis in matrix multiplication?
+* Duality
+A matrix can simultaneously represent data-points and a transformation.
+
+Composing two transformation matrices will give a third matrix that is their composition.
+
+Matrix multiplication can be used to both compose transformations and apply transformations.
+* Determinant
+The determinant is the "scaling factor" of a transformation.
+
+For example, a determinant of 2 would mean that any area inside the original space would be doubled by the transformation.
+** Negative determinants
+Determinants may be negative, which means the transformation will invert the space.
+
+For example, a determinant of -0.5 would mean that the space will be inverted, and any area inside the original space will be halved.
+** Zero determinants
+A determinant of 0 means the original space will be transformed ("squished") into a lower dimension.
+
+It also means the vectors in the transformation matrix are linearly dependent (at least one of them is contributing nothing new to the span).
