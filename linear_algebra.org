@@ -16,6 +16,15 @@ Where we might write a tuple or a vector as ~(1, 2)~ traditionally, we would wri
 2
 \end{bmatrix}
 \end{equation*}
+** Vector / Matrix size notation
+\begin{bmatrix}
+1 \\
+2
+\end{bmatrix}
+
+Above is a 2 x 1 matrix: 2 rows x 1 column.
+
+Or you could say "length of vectors x number of vectors"; and since vector length is most basic, it comes first in the notation. This is how I remember the order of the notation.
 * Basic vector operations
 ** Vector addition
 \begin{equation*}
@@ -192,6 +201,8 @@ A matrix can simultaneously represent data-points and a transformation.
 Composing two transformation matrices will give a third matrix that is their composition.
 
 Matrix multiplication can be used to both compose transformations and apply transformations.
+** TODO Dot product duality?
+Notice that ~[a b]~ appears on both sides of the dot product equation. In this case a 1x2 matrix roughly behaves the same as a 2x1 column vector. Are there other cases like this? Maybe this is simply a result of the way the dot production operation is defined? Remember that one side of the equation is doing matrix multiplication and the other is doing a dot product, they are not the same operation.
 * Determinant
 The determinant is the "scaling factor" of a transformation.
 
@@ -204,3 +215,31 @@ For example, a determinant of -0.5 would mean that the space will be inverted, a
 A determinant of 0 means the original space will be transformed ("squished") into a lower dimension.
 
 It also means the vectors in the transformation matrix are linearly dependent (at least one of them is contributing nothing new to the span).
+* Dot product
+\begin{equation*}
+\begin{bmatrix}
+a & b
+\end{bmatrix}
+\begin{bmatrix}
+c \\
+d
+\end{bmatrix}
+=
+\begin{bmatrix}
+a \\
+b
+\end{bmatrix}
+\cdot
+\begin{bmatrix}
+c \\
+d
+\end{bmatrix}
+\end{equation*}
+
+The dot product is a projection into one dimension (a scalar).
+
+The dot product is commutative, the order of the operands does not effect the result.
+
+If a dot product is positive, it means the two vectors point in generally the same direction.
+If a dot product is negative, it means the two vectors point in generally opposite directions.
+If a dot product is zero, it means the two vectors are perpendicular.
