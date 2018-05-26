@@ -193,16 +193,39 @@ The "rank" of a transformation is the number of dimensions in its output.
 The "rank" is also the number of linearly independent columns in the transformation matrix.
 
 If the rank of a matrix is equal to the number of columns in the matrix, it is called "full rank".
-** TODO What about non-square matrices?
-What does it mean for a non-square matrix to be the basis in matrix multiplication?
+** Non-square matrices
+Non-square matrices can be used to project onto a space of different dimensions.
+
+Let's say we have a ~n x m~ matrix, it has ~n~ dimensions, and ~m~ vectors. We can apply a ~d x n~ matrix to that ~n x m~ matrix; ~d~ will be the number of dimensions in the new space. Notice that the number of vectors in the transformation is equal to the number of dimensions in the original space (or matrix). Thus, you must specify a new basis vector for each dimensions of the original space, but those new basis vectors can be of any dimension. A transformation that changes the number of dimensions will be a non-square matrix.
 * Duality
 A matrix can simultaneously represent data-points and a transformation.
 
 Composing two transformation matrices will give a third matrix that is their composition.
 
 Matrix multiplication can be used to both compose transformations and apply transformations.
-** TODO Dot product duality?
-Notice that ~[a b]~ appears on both sides of the dot product equation. In this case a 1x2 matrix roughly behaves the same as a 2x1 column vector. Are there other cases like this? Maybe this is simply a result of the way the dot production operation is defined? Remember that one side of the equation is doing matrix multiplication and the other is doing a dot product, they are not the same operation.
+** Dot product duality
+A projection onto one dimension can be reprsented as a vector.
+
+There is a dot product operation to perform projections onto one dimension, but this operation is not necessary; remember that:
+\begin{equation*}
+\begin{bmatrix}
+a & b
+\end{bmatrix}
+\begin{bmatrix}
+c \\
+d
+\end{bmatrix}
+=
+\begin{bmatrix}
+a \\
+b
+\end{bmatrix}
+\cdot
+\begin{bmatrix}
+c \\
+d
+\end{bmatrix}
+\end{equation*}
 * Determinant
 The determinant is the "scaling factor" of a transformation.
 
@@ -243,3 +266,5 @@ The dot product is commutative, the order of the operands does not effect the re
 If a dot product is positive, it means the two vectors point in generally the same direction.
 If a dot product is negative, it means the two vectors point in generally opposite directions.
 If a dot product is zero, it means the two vectors are perpendicular.
+* Cross product
+The cross product is an operation that only works in three dimensions. It takes two vectors and produces a vector that is perpendicular to both, with a magnitude equal to twice the area between the original two vectors.
