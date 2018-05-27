@@ -1,0 +1,343 @@
+#+STARTUP: entitiespretty
+* Goal: Study Deep Reinforcement Learning for 30 hours
+** Path
+*** TODO Do the fast.ai course
+The videos are engaging and give me motivation. This is a great way to increase my energy.
+*** TODO Learn PyTorch
+*** DONE Read: https://karpathy.github.io/2016/05/31/rl/
+CLOSED: [2018-05-28 Mon 16:32]
+*** TODO Review "Reinforcement Learning: An Introduction"
+Don't forget to look at my own notes on this book.
+*** DONE Create a demo project from what I've learned
+CLOSED: [2018-06-11 Mon 12:25]
+*** TODO Review global optimization methods: https://news.ycombinator.com/item?id=16438614
+*** DONE Look at OpenAI Gym
+CLOSED: [2018-06-03 Sun 11:49]
+** Log
+Sun May 27 - Begin
+Sun May 27 - 2.5 hours
+Sun May 27 - 2.2 hours
+Mon May 28 - 0.6 hours
+Mon May 28 - 3.0 hours
+Mon May 28 - 1.0 hours
+Mon May 28 - 1.3 hours
+Tue May 29 - 0.4 hours
+Tue May 29 - 0.8 hours
+Tue May 29 - 0.5 hours
+Wed May 30 - 0.6 hours
+Wed May 30 - 0.7 hours
+Wed May 30 - 0.7 hours
+Thu May 31 - 1.0 hours
+Fri Jun 01 - 1.5 hours
+Sat Jun 02 - 1.4 hours
+Sat Jun 02 - 1.3 hours
+Sun Jun 03 - 1.7 hours
+Sun Jun 03 - 1.9 hours
+Mon Jun 04 - 1.0 hours
+Tue Jun 05 - 1.0 hours
+Wed Jun 06 - 0.5 hours
+Thu Jun 07 - 1.5 hours
+Fri Jun 08 - 1.5 hours
+Sat Jun 09 - 4.1 hours
+** Follow-up ideas
+*** Deep work the Julia programming language
+*** Deep work linear algebra
+fast.ai has a good linear algebra course.
+*** What insight can be gained by manually programming a small Boltzmann machine?
+What's the most I can do with a small Boltzmann machine if I manually program it by setting the weights myself? What kinds of tasks can it learn to do?
+*** Deep work game theory and the Nash equilibrium
+* Fast.ai course
+** Automatic learning rate adjustment
+Lesson 1 describes a method for automatically adjusting the learning rate.
+
+https://arxiv.org/pdf/1506.01186.pdf
+*** The algorithm
+Remember, the learning rate tradeoff:
+- if the learning rate is too small, we will approach the optima very slowly, thus having to do more work than necessary
+- if the learning rate is too high, we will "bounce around" and diverge, we wont have the sensitivity needed to get close to the optima
+- if the learning rate is just right, we will approach the optima at the maximum possible speed, and then stay at the optima
+
+Start with a very low learning rate, and then gradually increase it. For each learning rate, test how it approaches the optima at multiple points.
+
+With the very low learning rate, you will invariably approach the optima (improve the loss function value), but slowly.
+As the learning rate increase you will approach the optima faster and faster.
+Eventually the learning rate will become too high, and you will begin to see divergence at some or all the points.
+
+Now that you have observed the effects of various learning rates, you can pick a good learning rate based on those observations.
+** Data augmentation
+Data augmentation is a way of decreasing overfitting by artificially creating more data.
+
+Remember: The best thing you can do for your learning algorithm is give it more data!
+
+For recognizing digits, you might shift the data images around, or skew them, because neither of these things alters the meaning of the data (image).
+You would not want to invert the images of digits (either horizontally or vertically) because this would change their meaning.
+However, learning to recognize icebergs from satelite images, you would invert the images (both horizontally and vertically), because it would not change their meaning in this context.
+
+To "talk" to a learning algorithm, we have to speak their language. This is a way of conveying to a learning algorithm which aspects of the data are important, and which are not.
+
+This technique has not been used much outside of image data.
+** Each layer can have a different learning rate
+** Pytorch allows you to write arbitrary GPU accelerated code
+** General neural networks as a starting point
+If you are doing a image classification task, you can start with a general image classification network, like ImageNet, and then train it further to adjust it to your purposes.
+** TODO Resume watching lesson 3 @ 1:37
+* PyTorch
+** Tensors
+Tensors are n-dimensional arrays that support math operations in a straight forward way.
+* Deep Reinforcement Learning: Pong from Pixels (https://karpathy.github.io/2016/05/31/rl/)
+** What's the difference between Deep Q-Learning and Policy Gradients?
+* Grokking Deep Reinforcement Learning
+** Chapter 1
+*** Having large data sets is important for machine learning. What are the best ways to get new large data sets?
+*** Advances in AI are unlikely to slow down soon, there will be room to create value and disruption here for awhile.
+*** "Inverse reinforcement learning" (IRL) has an agent learn from human demonstration.
+*** Deep reinforcement learning learns from supervised learning.
+In 2013 deep supervised learning took off, deep reinforcement learning followed soon after. Supervised learning has always had more hype and effort it seems. This is a good example of how advancement in a popular field can be brought to other fields to create value.
+*** AlphaGo progression
+AlphaGo << AlphaGo Zero < AlphaZero
+*** Transfer learning
+Transfer learning is an interesting area of research. Can an agent that knows how to pick up a hammer learn to pick up a screwdriver more quickly than starting from scratch? This is the question transfer learning tries to answer.
+*** Hierarchical reinforcement learning
+Tries to train hierarchies of actions.
+*** Is there a way to have multiple reward signals?
+Perhaps a basic agent could be rewarded for successfully completing basic tasks, and from these basic agents we could build a higher level agent that would be rewarded for higher level tasks.
+*** Curiosity
+Humans seem to have "curiosity", which is a desire to explore situations we are unfamiliar with. Can this be replicated in a machine?
+
+Consider the pole balancing task: Can a machine learn that the default situation is for the pole to fall down? And from that realization might the machine be made "curious" to know what will happen if the pole is balanced? Still, what would the reward for all of this be? Balancing a pole is interesting and new (but not especially useful), starting the house on fire would also be interesting and new.
+*** The biggest problem with RL is that agents learn slowly
+All types of need many many more examples to learn than humans do, but this is especially hard on RL because it learns by interacting with the environment. You don't want a novice RL agents running around for millions of iterations.
+*** "Intrinsic motivation" is an area of research to give RL agents "curiosity"
+** Chapter 2
+*** The reward is a scalar, but could it be something else?
+People seem to have some control over their rewards. We have some ability to choose what things we will consider to be rewarding. Can a RL agent be allowed to choose its own reward?
+*** DONE Try to solve the given problem before reading the books solution
+CLOSED: [2018-05-30 Wed 12:40]
+**** Even for this simple problem, the programming is tricky
+**** I should abstract the details and work in terms of state and actions
+I programmed specifically to this one simple problem. It would probably help to abstract away the details and work in terms of state and action. This would separate the learning algorithm from the details of the specific problem.
+**** I forgot the update rule
+I forgot how to update values. I remembered the idea, but I couldn't think of the math to do it, even though it is simple math. The formula is: ~v = v + 0.1 * (new_value - v)~
+*** Common RL functions
+These functions are often just guesses. For example, we don't know for sue what the reward will be, but we will try to estimate it.
+
+p(s' | s, a)  - transition function: probability of the next state
+r(s, a, s')   - reward function
+r(s, a)       - reward function
+v(s)          - value function: state value under policy
+q(s, a)       - value function: action value, assuming a certain policy is followed afterwards
+
+*** DONE I misunderstood the problem, retry solving it
+CLOSED: [2018-06-03 Sun 10:07]
+I solved the problem correctly. It was tricky to get the constants right to have a stable learning algorithm. It was pretty good about getting the obvious actions correct, but there were some subtle cases where it did things that made sense at first glance, but were not optimal.
+
+Part of the difficulty was that I was not using the transition probabilities between states. I think this is a more realistic scenerio, since the exact transition probabilities will not be known in real world problems.
+
+*** Common RL terms
+Markov Decision Process (MDP)
+state
+action
+reward
+episode
+discount factor
+agent
+policy
+state-value function   - a form of value function: v(s)
+action-value function  - a form of value function: q(s, a)
+policy evaluation      - update value function based on policy
+policy improvement     - update policy based on value function
+policy iteration
+value iteration        - just an optimization of policy iteration
+*** What is a Markov Decision Process (MDP)?
+It sounds difficult, but it's any process that can be described by a 5-tuple containing:
+
+- a set of all states
+- a set of all actions
+- a transition probability function: p(s' | s, a)
+- an immediate reward function: r(s, a, s')
+- a discount factor between 0 and 1
+** Chapter 3
+*** Exploration vs Exploitation is hard, and the core of Reinforcement Learning
+Even human struggle with the exploration vs exploitation. Society as a whole struggles with it. We cannot know what might have been.
+*** Thought: Is there a way to identify states where exploration is more or less risky or potentially rewarding?
+It's easy to know which states we are more or less certain about, but can we identify which states have higher risk or higher potential?
+*** Thought: Can a RL algorithm adjust its own learning rate?
+Maybe RL algorithms can adjust their learning rate the same way proposed in lesson 2 of the fast.ai course.
+*** Review of common terms
+Monte-carlo (MC)          - update value functions based on full episodes (at the end of full episodes)
+Temporal-difference (TD)  - update value functions after each reward
+
+policy evaluation or prediction problem  - improve value functions (V(s) and Q(s))
+policy improvement or control problem    - improve policy
+*** Leaving DP
+If we do not know the full dynamics of the environment, we have to leave the DP (dynamic programming) methods of chapter 2 behind. Instead we must:
+
+- do policy evaluation using MC or TD methods
+- choose an exploration / exploitation strategy
+- use the action-value function ~Q(s, a)~ instead of the state-value function ~V(s)~
+- (maybe) use off-policy learning, but beware of its maximization bias
+          (maximization bias happens because off-policy learning is maximally optimistic at every step,
+           even though the actual actions taken will include some exploration,
+           off-policy learning assumes we will only exploit, and never explore)
+*** MC vs TD
+Both MC and TD are policy evaluation methods, meaning they are used the improve value functions for a given policy.
+**** MC
+G_t = R_{t+1} + yR_{t+2} ...
+
+Remember that MC evaluation is done at the end of the episode, so we know the "future" rewards for each step during the episode.
+
+V(s) = V(s) + a(G_t - V(s))
+
+where ~a~ is a learning rate and
+      ~y~ is a discount factor.
+**** TD
+V(s) = V(s) + a(R_{t+1} + yV(s_{t+1}) - V(s))
+
+where ~a~ is a learning rate and
+      ~y~ is a discount factor.
+*** Bias vs Variance
+In statistics and machine learning we gather more and more data in order to estimate some probability or other data point. At first, our estimates have low confidence, and a probably inaccurate. As we gather more data, our estimates improve.
+
+High variance means we jump all around the true value, but get closer with more data: high, low, high, low, etc.
+High bias means we tend to stay on one side of the true value, and get closer with more data: very high, moderately high, a little high, etc.
+* OpenAI Gym
+It is a collection of environments to use for reinforcement learning research.
+
+Right now there are about 800 environments, many of which require additional dependencies (and even some commercial dependencies).
+* Project
+** Thoughts
+Keep track of the raw observations, and repeatedly train your ML model on these observations. If you preprocess the raw observations using Monte-Carlo or the like, do not destroy the raw observations.
+
+A little exploring goes a long way. Even a single exploration action can break a cycle. I've seen a single exploration action cause immediate large changes to a previously stable greedy system.
+
+I thought the ML model was the policy. I have a habit of thinking of policies as GridWorld tables, but they can take many shapes. I was wrong about the ML model being the policy. The ML model is the evaluation of the policy. This is subtle but important stuff.
+
+Don't forget your episode ends in MC. Don't propagate rewards from one episode to the next or previous episode.
+** Code
+
+This code is a bit of a mess, and does not perform the best. There's some half implemented ideas, and half removed ideas.
+
+#+BEGIN_SRC python
+  import time
+  import numpy as np
+  import random
+  from sklearn.neighbors import KNeighborsRegressor
+  from sklearn.neural_network import MLPRegressor
+  from sklearn.ensemble import RandomForestRegressor
+  from sklearn.exceptions import NotFittedError
+  from IPython.display import clear_output
+  from functools import lru_cache
+  import itertools
+
+  import gym
+  env = gym.make('LunarLander-v2')
+
+  model = MLPRegressor((40, 80, 40, 40), learning_rate='adaptive')
+
+  def bin_a(a):
+      a_bool = np.zeros(env.action_space.n)
+      a_bool[a] = 1
+      return a_bool
+
+  def q(s, a):
+      try:
+          return model.predict(np.hstack([s, bin_a(a)]).reshape(1, 12))[0]
+      except NotFittedError:
+          return 0
+
+  def best_move(s, actions):
+      return max(actions, key=lambda a: q(s, a))
+
+  def mc(observed_sar, discount=0.99, learning_rate=0.99):
+      mc_sav = []
+      for i in range(len(observed_sar)):
+          s, a, _r, _d = observed_sar[i]
+          qsa = q(s, a)
+          g = 0
+          for j in range(len(observed_sar) - i):
+              g += (discount ** j) * observed_sar[i+j][2]
+              if observed_sar[i+j][3]:
+                  break
+          mc_value = qsa + learning_rate * (g - qsa)
+          mc_sav.append((s, a, mc_value))
+      assert len(mc_sav) == len(observed_sar)
+      return mc_sav
+
+  def update_model(mc_sav):
+      model.partial_fit(
+          np.vstack([np.hstack([s, bin_a(a)]).reshape(1, 12) for s, a, _v in mc_sav]),
+          np.vstack([v for _s, _a, v in mc_sav]),
+      )
+
+  def avg(iterable):
+      return sum(iterable) / len(iterable)
+
+actions = list(range(env.action_space.n))
+
+episode_rewards = [0]
+episode_rewards_limit = 200
+episode_lengths = [0]
+deltas = [0]
+past_observed_sar = []
+obs_limit = 0
+
+
+def episode(explore=0.1, render=True):
+    random.shuffle(actions)
+    current_state = env.reset()
+    observed_sar = []
+    for step in itertools.count(1):
+        a = best_move(current_state, actions)
+        if random.random() < explore:
+            a = random.choice(actions)
+        new_state, reward, done, info = env.step(a)
+        if render:
+            env.render()
+        observed_sar.append((current_state, a, reward, done))
+        
+        if done:
+            return observed_sar
+        current_state = new_state
+
+try:        
+    for episode_n in itertools.count(0):
+        clear_output(True)
+        print(episode_n, len(past_observed_sar))
+        a = avg(episode_lengths[:int(episode_rewards_limit/2)])
+        b = avg(episode_rewards[:int(episode_rewards_limit/2)])
+        c = avg(episode_lengths[-int(episode_rewards_limit/2):])
+        d = avg(episode_rewards[-int(episode_rewards_limit/2):])
+        if episode_n < 10:
+            max_d = -999999999
+        max_d = max(max_d, d)
+        deltas.append(abs(b-d))
+        deltas = deltas[-int(episode_rewards_limit):]
+        if avg(deltas) == 0:
+            explore = 0
+        else:
+            explore = max((b-d) / avg(deltas) / 10, 0)
+        print('Oldest rewards:',
+              '{:.2f}'.format(a),
+              '{:.2f}'.format(b),
+            )
+        print('Newest rewards:',
+              '{:.2f}'.format(c),
+              '{:.2f}'.format(d),
+              '{:.2f}'.format(max_d),
+            )
+        print('Explore:', '{:.2f}'.format(explore), '{:.2f}'.format(avg(deltas)))
+        print('Learning rate:', model.learning_rate_init)
+        render = episode_n % 25 == 0
+        observed_sar = episode(explore=1 - episode_n / 500, render=episode_n % 10 == 0 or max_d > 0)
+        past_observed_sar.extend(observed_sar)
+        obs_limit += len(observed_sar) / 5
+        past_observed_sar = past_observed_sar[-int(round(obs_limit)):]
+        last_max_d = max_d
+        episode_rewards.append(sum(i[2] for i in observed_sar))
+        episode_lengths.append(len(observed_sar))
+        episode_rewards = episode_rewards[-int(episode_rewards_limit):]
+        episode_lengths = episode_lengths[-int(episode_rewards_limit):]
+        update_model(mc(past_observed_sar))        
+finally:
+    env.close()
+#+END_SRC
