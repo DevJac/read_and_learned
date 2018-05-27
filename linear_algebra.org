@@ -268,3 +268,9 @@ If a dot product is negative, it means the two vectors point in generally opposi
 If a dot product is zero, it means the two vectors are perpendicular.
 * Cross product
 The cross product is an operation that only works in three dimensions. It takes two vectors and produces a vector that is perpendicular to both, with a magnitude equal to twice the area between the original two vectors.
+* Change of basis
+It's easy to transform from our basis to another, just apply a transformation using matrix multiplication. To go the other way, apply the inverse of that transformation.
+
+Remember that all coordinates, vectors, matrices -- all numbers -- are scalars of basis vectors. A transformation in one basis might behave differently in another basis.
+
+$A^{-1}MA$ is a common pattern for applying transformation ~M~ to another basis.
