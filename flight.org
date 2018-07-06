@@ -1,0 +1,34 @@
+* Flight Physics
+** Related Books
+*** NASA's Introduction to the Aerodynamics of Flight
+by Theodore A. Talay
+** History of Flight
+- The first flying machine to carry a man was a hot-air balloon in 1783, in France.
+- Gliders were flown during the late 1800's, and possibly as early as 1853.
+- Around 1900 powered flight began to appear. The Wright brothers were part of this success.
+- The two world wars (1918, 1945) spurred advances in flight.
+** Dimensions and Units
+A /dimension/ is an inherent physical property that is independent of any measurement scheme. For example, mass and length.
+
+A /unit/ is part of the scheme used to denote the magnitude of a physical property.
+*** Basic Dimensions in Aerodynamics
+- length
+- mass
+- time
+- temperature
+- angle
+** Atmosphere
+- Roughly speaking, pressure, density, temperature, and speed of sound decrease linearly as elevation increases in the troposphere.
+- Average wind speed increases until 10 km then falls.
+- Humidity makes air less dense.
+** Airplane
+- 4 main forces act on the airplane: weight, thrust, lift, drag
+** The Fluid of Air
+- At low speed, air can be considered a incompressible fluid.
+- Air flow may be steady or unsteady, and rotational or irrotational.
+*** Turbulence
+A turbulent flow increases surface friction drag, but can reduce pressure drag by delaying boundary-layer separation for certain shapes (like a sphere). The reasons why are not fully understood.
+
+Nobel-winning physicist Richard Feynman made this observation: “There is a physical problem that is common to many fields, that is very old, and that has not been solved. It is not the problem of finding new fundamental particles, but something left over from a long time ago — over a hundred years.
+
+“Nobody in physics has really been able to analyze it mathematically satisfactorily in spite of its importance to the sister sciences. It is the analysis of circulating or turbulent fluids.”
