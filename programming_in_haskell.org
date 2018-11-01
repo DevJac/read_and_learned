@@ -1,0 +1,208 @@
+* About
+These are personal notes I took while reading through Programming in Haskell, Second Edition by Graham Hutton.
+* GHCI
+** :set examples
+*** :set -Wno-type-defaults
+Disables type default warnings.
+*** :show
+Lists set options and flags.
+*** :show modules
+List loaded modules.
+*** :set +m
+Set smart multi-line mode.
+*** :set +t
+Display the type(s) of every statement.
+*** :set +s
+Display timing and memory usage statistics after every statement.
+** : commands
+*** :! command
+Run a command outside of GHCI.
+*** :{ ... :} multi-line syntax
+:{ and :} are the multi-line tags. You might also use :set +m to enable smart multi-line mode.
+*** :edit <file>
+Opens the file in the configured editor. If file is omitted, it will open the most recently loaded module.
+*** :browse <module>
+Lists identifiers exported by the given module.
+*** :load[!] [*]<module> / :reload[!]
+Loads a module or filename, and forgets all previously loaded modules. If not given a module or filename, all modules will be forgotten.
+
+The * option forces the module to be loaded as byte-code.
+
+The ! option turns type errors into warnings, thus allowing you to work on partially complete modules.
+
+:reload reloads the last :loaded module, and also supports the ! option.
+*** :main <args> / :run <args>
+Runs the main function with the given command line args.
+*** :type <expression>
+Show the type of the given expression.
+*** :info[!] <name>
+Displays information about the given name. The ! option will give additional information.
+
+This is useful for finding the fixity of operators.
+** it variable
+The it variable contains the result of the last expression.
+** .ghci file
+When GHCI starts, it will run commands in the ./.ghci file, $HOME/.ghc/ghci.conf, and $HOME/.ghci files. These files can be used to set commonly used settings and flags automatically.
+* Notes
+** functional vs imperative programming
+Functional programming is a *style* of programming in which the *application of functions* is fundamental. A functional programming language is a programming language that encourages that *style*.
+
+Imperative programming is a *style* of programming in which *storing and changing values* is fundamental. An imperative programming language is a programming language that encourages that *style*.
+*** Example
+How would you sum the list of integers from 1 to 100?
+
+Using a functional style, you might call a function to create the list, and then apply another function to sum the elements of that list.
+
+Using an imperative style, you might create a couple variables (like step and total) and then use a loop to step one variable from 1 to 100 while keeping a running total in another variable.
+** pattern matching and guards
+Guards are something I haven't used much. I wasn't 100% comfortable with how they interacted with pattern matching. I created this odd function to demonstrate their interaction:
+
+foo [1, a, b] | a > b     = True
+              | otherwise = False
+foo [2, a, b] | a < b     = True
+              | otherwise = False
+foo _ = False
+** list comprehensions
+List comprehensions are something I haven't used much. Here is a good example:
+
+pythagoreanTriples n = [ (a, b, c) | a <- [1..n], b <- [a..n], c <- [b..n], a^2 + b^2 == c^2 ]
+
+a <- [1..n] is an example of a generator.
+
+a^2 + b^2 == c^2 is an example of a guard.
+
+Note that generator variables can be used in later generators and guards.
+
+The generators behave like nested loops, with the latter generators "iterating faster" than the earlier generators.
+** recursion
+A general tip for recursive functions: Identify a "base case" and a "recursive case"; the recursive call (of the recursive case) should move ever closer to the base case, and the base case should end the recursion.
+
+There may be multiple base cases. To find base cases, start listing conditions where you already know the answer. It's OK to have extra bases cases, but you may want to eventually remove extra bases cases for clarity. The more base cases you have, the more targets you have to move your recursive calls towards.
+
+First, make a recursive function work for a specific case (or a specific type); try the simplest case. Afterwards, it might be worthwhile it generalize the function.
+
+"Defining recursive functions is like riding a bicycle: it looks easy when someone else is doing it, may seem impossible when you first try to do it yourself, but becomes simple and natural with practice."
+** folds
+foldr or "fold right" can be thought of as folding a function from right to left over a list, or as replacing all the cons in a list with a right associative operation. Likewise for foldl or "fold left".
+
+Remember that cons (:) is right associative, and thus foldr is a corollary to lists.
+
+foldr and foldl are easily swapped for associative operations. The difference between the two is most prominent for non-associative operations.
+** parameterized types
+Type declarations can be parameterized:
+
+type Assoc k v = [(k, v)]
+
+Data declarations can be parameterized:
+
+data List a = Nil | Cons a (List a)
+** functor, applicative functor, and monad
+*** functor
+fmap :: (a -> b) -> f a -> f b
+
+fmap applies an outside function inside the functor.
+*** applicative functor
+pure :: a -> f a
+(<*>) :: f (a -> b) -> f a -> f b
+
+Notice how similar normal function application (a -> b) -> a -> b and (<*>) are. They have the same structure; (<*>) is function application inside a functor. This allows the surrounding functor to alter the nature of function application.
+*** monad
+Consider a function like safediv :: Int -> Int -> Maybe Int that does safe division and returns Nothing if the divisor is zero. This is a reasonable function, and its more general form is (a -> f b). This doesn't work in an applicative functor, look at the difference:
+
+(<*>) :: f (a ->   b) -> f a -> f b
+(???) :: f (a -> f b) -> f a -> f b
+
+The function being applied doesn't quite fit entirely inside the functor: (a -> b) fits, but (a -> f b) is sort of "poking out" with f b as its result. In this case we need a monad.
+
+If we were to try using (<*>) in the above case, we'd have f (a -> f b) -> f a -> f (f b) with f (f b) as our result. We could then use join :: f (f b) -> f b to "squish" the result back into the desired f b shape. Monads can be defined in terms of join.
+
+However, in Haskell monads are defined in terms of bind, which is an alternative way of defining the same thing:
+
+(>>=) :: f a -> (a -> f b) -> f b
+
+With monads we have a place for safediv and other (a -> f b) functions.
+*** related functions
+pure :: a -> f a
+return :: a -> m a
+(<*>) :: f (a -> b) -> f a -> f b
+(<**>) :: f a -> f (a -> b) -> f b
+liftA :: (a -> b) -> f a -> f b
+liftA2 :: (a -> b -> c) -> f a -> f b -> f c
+liftA3 :: (a -> b -> c -> d) -> f a -> f b -> f c -> f d
+liftM :: (a -> r) -> m a -> m r
+liftM2 :: (a -> b -> r) -> m a -> m b -> m r
+liftM5 :: (a -> b -> c -> d -> e -> r) -> m a -> m b -> m c -> m d -> m e -> m r
+ap :: m (a -> b) -> m a -> m b
+(*>) :: f a -> f b -> f b
+(<*) :: f a -> f b -> f a
+(<$>) :: (a -> b) -> f a -> f b  -- same as fmap
+fmap :: (a -> b) -> f a -> f b
+(<$) :: a -> f b -> f a
+(>>=) :: m a -> (a -> m b) -> m b
+(=<<) :: (a -> m b) -> m a -> m b
+(>=>) :: (a -> m b) -> (b -> m c) -> a -> m c
+(<=<) :: (b -> m c) -> (a -> m b) -> a -> m c
+(>>) :: m a -> m b -> m b
+mapM :: (a -> m b) -> t a -> m (t b)  -- related: mapM_, forM, forM_
+sequence :: t (m a) -> m (t a)  -- related: sequence_
+forever :: f a -> f b
+when :: Bool -> f () -> f ()  -- opposite is unless
+join :: m (m a) -> m a
+mfilter :: (a -> Bool) -> m a -> m a
+** typeclass instance syntax
+data Maybe a = Nothing | Just a
+
+class Functor f where
+    fmap :: (a -> b) -> f a -> f b
+
+instance Functor Maybe where
+    fmap :: (a -> b) -> Maybe a -> Maybe b
+    fmap _ Nothing  = Nothing
+    fmap g (Just x) = Just (g x)
+
+Notice that you do "instance Functor Maybe", and not "instance Functor Maybe a".
+** assume the types check
+Earlier I was wondering how Maybe could be an instance of Show. I was confused because Maybe x is not a complete type, and whether it can be shown or not depends on what type x is, which lead me to question how you could write an instance Show Maybe when the full type of that maybe is not known.
+
+I now realize that when writing the "body" of a function, you can assume all the types check. Thus you can write something like:
+
+data MyMaybe a = Nope | A a
+
+instance Show a => Show (MyMaybe a) where
+  show :: Show a => MyMaybe a -> String
+  show Nope = "Nope"
+  show (A a) = "A (" ++ show a ++ ")"
+
+Just as the body of any function determines its type and class constraints, so does the body of the Show instance above determine the class constraints.
+** foldable and traversable
+Foldable indicates the ability of a type to be "folded" down into a simpler or singular value. This implies the type is a "container" of sorts.
+
+Functor indicates the ability to map a function over a type.
+
+Applicative indicates that a type can provide a surrounding context which may alter the nature of function application.
+
+Traversable is a combination of all the above, or at least involves all of the above. It's probably best explained with it's class definition:
+
+class (Functor t, Foldable t) => Traversable t where
+    traverse :: Applicative f => (a -> f b) -> t a -> f (t a)
+
+A good solid example is let t be a list, and f be a Maybe.
+** foldable is crushable
+It's arguable that a "fold" should be called a "crush". Folding and crushing are both memorable mental images, so it's worth keeping both in mind. (Reference: page 210)
+* Project Ideas
+** solve substitution ciphers
+This should be possible using letter frequencies and a dictionary.
+** visualize sorting algorithms
+Once I've finished my raylib bindings, use it to visualize different sorting algorithms.
+** runoff voting
+Implement the runoff voting algorithm and compare with the implementation in chapter 7.
+** balanced tree
+Maybe even a red-black tree? I've heard they're difficult to implement.
+** tautology checker
+After I learn a parsing library, implement a tautology checker which can parse nicely formatted propositions and determine if they are tautologies.
+** rewrite systems
+Rewriting seems like a deep an interesting topic. It might be worth studying.
+** grammars
+Construction grammars seems like a deep topic. Chapter 13 provides some good exercises to get started with.
+** typeclass cheatsheet
+Create a cheatsheet of common functions related to Functor, Applicative, Monad, Alternative, MonadPlus, Monoid, Foldable, and Traversable.
