@@ -69,8 +69,7 @@ A type:
   type Entry =
     { firstName :: String
     , lastName :: String
-    , address
-    :: Address
+    , address :: Address
     }
   ```
 Note this uses the "type" keyword rather than "data". This is a record rather
