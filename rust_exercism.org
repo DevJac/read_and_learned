@@ -116,8 +116,8 @@ The ~Boolean~ values are ~true~ and ~false~ (lowercase).
   let score = scores.get(&team_name);
 #+END_SRC
 *** String
-~&str~ is a "string slice", it is the "slice" of the compiled binary that contains a string literal.
-String literals have type ~&str~, they are a borrowed reference to a "slice" of the compiled binary, who is the owner of the string.
+~&str~ is a "string slice", it is a "slice" of another string.
+String literals have type ~&'static str~, they are a borrowed reference to a "slice" of the compiled binary, who is the owner of the string.
 ~String~ is a struct.
 Rust will coerce ~&String~ into ~&str~, using "deref coercion".
 ** control flow
