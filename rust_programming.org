@@ -29,3 +29,35 @@ The lifetime rules of such intermediate values are:
 1. If the intermediate value ends up being part of a variable's value, then its lifetime is the enclosing block. This is the common case.
 2. If the intermediate value is in the conditional expression of an ~if~ or ~while~ loop, then its lifetime is that single conditional expression.
 3. Otherwise, its lifetime is the innermost enclosing statement. Note that the tail expression of a block is part of the statement that encloses the block.
+** type conversion traits
+*** Deref / DerefMut
+Controls the deref operation. Rust will implicitly add derefs to make the code typecheck.
+*** AsRef / AsMut
+Controls implicit conversion to references.
+**** Example
+#+begin_src rust
+#[derive(Debug)]
+struct Point {
+    x: f64,
+    y: f64,
+}
+
+impl AsRef<Self> for Point {
+    fn as_ref(&self) -> &Self {
+        self
+    }
+}
+
+fn foo(x: impl AsRef<Point> + std::fmt::Debug) {
+    dbg!(x);
+}
+
+fn main() {
+    let p = Point { x: 1.0, y: 2.0 };
+    foo(p);
+}
+#+end_src
+*** Borrow / BorrowMut
+Same as ~AsRef~ and ~AsMut~ except has more implicit restrictions.
+*** From / Into
+Type conversion that takes ownership. It takes ownership of type ~T~ and implicitly converts to a type ~U~.
