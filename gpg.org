@@ -1,0 +1,47 @@
+* Tutorials
+https://www.devdungeon.com/content/gpg-tutorial
+* Basic Usage
+** List Keys
+~gpg --list-keys~ and ~gpg --list-secret-keys~
+** Export / Backup Keys
+~gpg --list-secret-keys~ then ~gpg --export-secret-keys --armor ID > ~/my-private-gpg-key.asc~
+
+~--armor~ is needed for ASCII output.
+* ~~/.gnupg/~ Layout
+This is what my ~~/.gnupg/~ directory looked like after running ~gpg --full-gen-key~ for the first time.
+
+#+begin_example
+  ➜  .gnupg tree -a .
+  .
+  ├── openpgp-revocs.d
+  │   └── D60A860079C9BAC22BBBD6AE515BBCFF05A19B0A.rev
+  ├── private-keys-v1.d
+  │   ├── B65C3BDFAFA9C5AE7B6486141513140F010BCBD2.key
+  │   └── CBFBD36270FE872697E6A862BF24BCEC5A301D44.key
+  ├── pubring.kbx
+  ├── pubring.kbx~
+  └── trustdb.gpg
+
+  2 directories, 6 files
+
+  ➜  .gnupg ls -alh
+  total 28K
+  drwx------.  4 buttons buttons 4.0K Jan  3 16:53 ./
+  drwx------. 46 buttons buttons 4.0K Jan  3 16:50 ../
+  drwx------.  2 buttons buttons 4.0K Jan  3 16:53 openpgp-revocs.d/
+  drwx------.  2 buttons buttons 4.0K Jan  3 16:53 private-keys-v1.d/
+  -rw-r--r--.  1 buttons buttons 1.5K Jan  3 16:53 pubring.kbx
+  -rw-------.  1 buttons buttons   32 Jan  3 16:50 pubring.kbx~
+  -rw-------.  1 buttons buttons 1.3K Jan  3 16:53 trustdb.gpg
+  ➜  .gnupg ls -alh openpgp-revocs.d/
+  total 12K
+  drwx------. 2 buttons buttons 4.0K Jan  3 16:53 ./
+  drwx------. 4 buttons buttons 4.0K Jan  3 16:53 ../
+  -rw-------. 1 buttons buttons 1.5K Jan  3 16:53 D60A860079C9BAC22BBBD6AE515BBCFF05A19B0A.rev
+  ➜  .gnupg ls -alh private-keys-v1.d/
+  total 16K
+  drwx------. 2 buttons buttons 4.0K Jan  3 16:53 ./
+  drwx------. 4 buttons buttons 4.0K Jan  3 16:53 ../
+  -rw-------. 1 buttons buttons 1.2K Jan  3 16:53 B65C3BDFAFA9C5AE7B6486141513140F010BCBD2.key
+  -rw-------. 1 buttons buttons 1.2K Jan  3 16:53 CBFBD36270FE872697E6A862BF24BCEC5A301D44.key
+#+end_example
