@@ -1,0 +1,150 @@
+* Book: Linear Algebra, Jim Hefferon, Third Edition
+** Linear Operations
+These /elementary row operations/ may be performed on a matrix while maintaining /row equivalence/:
+
+1. Reorder rows.
+2. Multiply a row by a non-zero constant.
+3. Replace a row by the sum of itself and a multiple of another.
+** Linear Combinations
+$r_1 \vec{s}_1 + ... + r_n \vec{s}_n$ where $r_i$ are scalars, and $\vec{s}_i$ are vectors.
+
+A linear combination of linear combinations is a linear combination.
+** Linear Maps as Matrices
+A linear map can be represented as a matrix. In the matrix representing a linear map, the columns represent how the basis vectors will be transformed.
+
+If A and B are matrices, then in AB, A is the matrix being applied to B; A is the linear map.
+** Matrix Multiplication
+Matrix multiplication is both the application and composition of linear maps.
+
+If A and B are linear maps, and C is some data. Then $(A \circ B)\ C = (AB)C = A(BC) = ABC$. Beautiful.
+
+Also, $A(B + C) = AB + AC$ and $(A + B)C = AC + BC$.
+** Matrix Division
+In Julia: If A, B, and C are matrices, then you can solve for any of the 3 with the following equations.
+
+#+begin_example
+  AB = C
+  A \ C = B
+  C / B = A
+#+end_example
+
+This allows for matrix division, of sorts. ~/~ requires an equal number of columns, and ~\~ requires an equal number of rows.
+
+This doesn't seem to work in all circumstances, but I haven't yet figured out when it works.
+** Vector Space Requirements
+Roughly, any set $S$ is a vector space if $r_1 \vec{s}_1 + r_2 \vec{s}_2$ is a member of $S$ for any $s_1, s_2 \in S$ and any scalars $r_1, r_2$.
+
+A good way to think of a vector space is as a collection of unrestricted linear combinations.
+
+In vector space $S$, $[S] \in S$; that is, the span of $S$ is in $S$.
+** REP - Representation of a vector with respect to some basis
+Given:
+
+$$\textrm{Rep}_B(\vec{v}) = \begin{pmatrix} c_1 \\ c_2 \\ \vdots \\ c_n \end{pmatrix}$$
+
+then:
+
+$$B \cdot \textrm{Rep}_B(\vec{v}) = \vec{v}$$
+
+thus in Julia:
+
+$$\textrm{Rep}_B(\vec{v}) = \texttt{B \textbackslash\ v}$$
+
+And for homomorphisms:
+
+$$\textrm{Rep}_{B,D}(\vec{h}) = D^{-1} \ \vec{h} \ B$$
+** Definitions
+*** Echelon Form
+In each row of a system, the first variable with a nonzero coefficient
+is the row’s /leading variable/. A system is in /echelon form/ if each leading
+variable is to the right of the leading variable in the row above it, except for the
+leading variable in the first row, and any all-zero rows are at the bottom.
+
+In an echelon form matrix, no nonzero row is a linear combination
+of the other nonzero rows.
+
+The nonzero rows of an echelon form matrix make up a linearly
+independent set.
+*** Reduced Echelon Form
+A matrix or linear system is in /reduced echelon form/ if, in addition
+to being in echelon form, each leading entry is a 1 and is the only nonzero entry
+in its column.
+
+All row equivalent matrices reduce to a single unique reduced echelon form.
+*** Free Variables
+In an echelon form linear system the variables that are not leading
+are /free/.
+*** Singular
+A square matrix is /singular/ if its rows / columns are linearly dependent.
+
+In other words, one of the rows / columns is a "repeat" of the others.
+*** Row Equivalent
+Two matrices that are interreducible by elementary row operations
+are /row equivalent/.
+*** Subspace
+For any vector space, a /subspace/ is a subset that is itself a vector
+space, under the inherited operations.
+
+A /subset/ is a /subspace/ if and only if it is closed under linear combinations.
+
+In a vector space, the span of any subset is a subspace.
+*** Span
+The /span/ (or /linear closure/) of a nonempty subset $S$ of a vector
+space is the set of all linear combinations of vectors from $S$.
+
+$$[S] = \{c_1 \vec{s}_1 + ... + c_n \vec{s}_n \ | \ c_1,...,c_n \in \mathbb{R} \textnormal{ and } \vec{s}_1,...,\vec{s}_n \in S\}$$
+*** Linear Independence / Linear Dependence
+In any vector space, a set of vectors is /linearly independent/ if none
+of its elements is a linear combination of the others from the set. Otherwise
+the set is /linearly dependent/.
+
+No linearly independent set can have a size greater than the
+dimension of the enclosing space.
+
+In an n-dimensional space, a set composed of n vectors is linearly
+independent if and only if it spans the space.
+*** Basis
+A /basis/ for a vector space is a sequence of vectors that is linearly
+independent and that spans the space.
+
+The /standard/ (or /natural/) basis is the identity matrix.
+*** Dimension
+The /dimension/ of a vector space is the number of vectors in its basis.
+
+In any finite-dimensional vector space, all bases have the same number of elements.
+*** Rank
+The /rank/ of a matrix is the dimension of its span.
+
+For a homomorphism, the rank is the dimension of the range space.
+*** Functions
+Functions map values from a /domain/ to a /range/ of values in a /codomain/.
+
+A function is /onto/ if its range and codomain are the same, that is, all values in the codomain may be produced by the function.
+
+A function is /one-to-one/ if it maps every value in the domain to a unique value in the codomain.
+
+A function is a /correspondence/ if it is both onto and one-to-one.
+
+The composition of onto functions is onto.
+The composition of one-to-one functions is one-to-one.
+The composition of correspondence functions is a correspondence.
+*** Image
+The /image/ of a function is the set of all output values it may produce.
+
+More generally, evaluating a given function $f$ at each element of a given subset A produces
+a set called the "image of A under (or through) $f$".
+*** Isomorphism
+A function between vector spaces that is a correspondence, and a homomorphism.
+
+If spaces are isomorphic then they have the same dimension.
+If spaces have the same dimension then they are isomorphic.
+
+Each finite-dimensional vector space is isomorphic to one and only one of the $\mathbb{R}^n$.
+*** Homomorphism
+A function between vector spaces that preserves addition and scalar multiplication:
+
+If $\vec{v}_1, \vec{v}_2 \in V$ then $h(\vec{v}_1 + \vec{v}_2) = h(\vec{v}_1}) + h(\vec{v}_2})$
+
+and if $\vec{v} \in V$ and $r \in \mathbb{R}$ then $h(r \cdot \vec{v}) = r \cdot h(\vec{v})$
+*** Null Space / Kernel
+The /null space/ or /kernel/ of a linear map are those vectors in the domain which will be mapped to zero in the codomain.
